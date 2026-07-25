@@ -38,7 +38,7 @@ SINCE=2026-07-13T07:55:44.000Z npm run loadtest:lag
 
 ## Reading the results
 
-The interesting number is not the checkout latency, which is comfortably fast. It is the relationship between the arrival rate and the outbox drain rate — the speed at which the ledger, the loyalty points, and the kitchen display catch up with what the till has already sold.
+Checkout latency is comfortably fast and rarely the interesting number. What matters is the relationship between the arrival rate and the outbox drain rate: the speed at which the ledger, the loyalty points, and the kitchen display catch up with what the till has already sold.
 
 This harness is what found the original bottleneck: the processor polled once every 10 seconds for a batch of 10 events, so it applied at most **one event per second** no matter how many orders arrived, and a 30-second rush left the ledger nine and a half minutes behind. It now drains in a loop until the queue is empty and polls every second, which tracks the arrival rate up to the 150 orders/sec I tested, with the lag bounded by the poll interval. The before-and-after numbers are in the main [README](../README.md#performance--the-bottleneck-the-load-test-found-and-the-fix).
 

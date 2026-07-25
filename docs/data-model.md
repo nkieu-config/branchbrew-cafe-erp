@@ -1,10 +1,10 @@
 # BranchBrew ERP — Data model
 
-The core of the 41-table Prisma schema and the invariants the database itself enforces. This is the companion to [architecture.md](architecture.md) — read that first for why the system is shaped this way. The full schema lives in [`backend/prisma/schema.prisma`](../backend/prisma/schema.prisma).
+The core of the 41-table Prisma schema and the invariants the database itself enforces. This is the companion to [architecture.md](architecture.md); read that first for why the system is shaped this way. The full schema lives in [`backend/prisma/schema.prisma`](../backend/prisma/schema.prisma).
 
 ## Core ERD
 
-The spine of the system — the tables a sale, a delivery, and a journal entry flow through. Supporting domains (HR, equipment, notifications, audit) are listed in the domain map below.
+The spine of the system: the tables a sale, a delivery, and a journal entry flow through. Supporting domains (HR, equipment, notifications, audit) are listed in the domain map below.
 
 ```mermaid
 erDiagram
@@ -99,7 +99,7 @@ Rules that hold even if application code is wrong, racing, or retried:
 
 Almost every operational table hangs off `Branch`, and branch-owned queries resolve through a shared scope helper (see [auth in architecture.md](architecture.md#authentication-and-authorization)). Two deliberate exceptions:
 
-- **`Customer` is chain-level** — loyalty follows the member across branches, so it has no `branchId`. The privacy consequence (any staff account can look up any member) is a documented gap, not an accident.
+- **`Customer` is chain-level** — loyalty follows the member across branches, so it has no `branchId`. The privacy consequence is that any staff account can look up any member, which is a documented gap.
 - **`Account` (chart of accounts) and `SystemSetting` are global** — one ledger taxonomy and one settings store for the whole chain.
 
 ## Domain map — all 41 tables

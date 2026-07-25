@@ -29,14 +29,14 @@ Part of the [BranchBrew monorepo](../). See [`docs/demo.md`](../docs/demo.md) fo
 ## Conventions
 
 - Auth gating is server-side: `getSession` (`src/lib/auth/server.ts`) runs before a protected layout renders.
-- Cache keys and cross-resource invalidations live in `src/lib/query-keys/` — add new ones there, not inline.
+- Cache keys and cross-resource invalidations live in `src/lib/query-keys/`. Add new ones there rather than inline.
 - Realtime updates patch the TanStack Query cache via `setQueryData` (`useKdsSocketSync`) rather than refetching.
 
 Why it is built this way: [`docs/architecture.md`](../docs/architecture.md#frontend-architecture) and [`docs/design-system.md`](../docs/design-system.md).
 
 ## Setup
 
-Everything after `npm install` is a workspace script — run it from `frontend/`, not the monorepo root. (From the root, use `npm run dev:frontend`.)
+Everything after `npm install` is a workspace script: run it from `frontend/`, not the monorepo root. (From the root, use `npm run dev:frontend`.)
 
 ```bash
 npm install                  # once, from the monorepo root
@@ -56,7 +56,7 @@ npm run generate:api         # from frontend/ — reads ../backend/openapi.json
 ```
 
 > [!NOTE]
-> Never edit the generated types by hand — regenerate them instead. CI fails on any drift between `openapi.json` and the committed client types.
+> Never edit the generated types by hand; regenerate them instead. CI fails on any drift between `openapi.json` and the committed client types.
 
 ## Tests
 

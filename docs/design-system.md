@@ -96,7 +96,7 @@ Use `FormFieldTextarea` (reads `useFormField()` context).
 | Complex table features (fixed columns, expand rows)       | POS/KDS immersive UI          |
 | Components bridged in `styles/theme/utilities/tables.css` | New modals and settings forms |
 
-**Theme sync:** antd reads tokens via `getAntdThemeConfig()` in `lib/theme/antd-bridge.ts` and CSS-variable overrides in `.data-table-shell` — do not hardcode antd colors in TS.
+**Theme sync:** antd reads tokens via `getAntdThemeConfig()` in `lib/theme/antd-bridge.ts` and CSS-variable overrides in `.data-table-shell`. Do not hardcode antd colors in TS.
 
 ## Adding a hub color
 
@@ -116,7 +116,7 @@ Example hubs: `--hub-crm`, `--hub-hr`, `--hub-pos` (see `tokens.css`).
 
 ## Responsive & mobile
 
-Mobile-first: layouts are built for a phone and progressively enhanced with Tailwind breakpoints (`sm` 640 / `md` 768 / `lg` 1024 / `xl` 1280). JS-driven breakpoints read from a single `useMediaQuery` hook — `useIsSmDown()` (≤ 639px) and `useIsLgUp()` (≥ 1024px) — so components branch on the same source of truth the CSS uses.
+Mobile-first: layouts are built for a phone and progressively enhanced with Tailwind breakpoints (`sm` 640 / `md` 768 / `lg` 1024 / `xl` 1280). JS-driven breakpoints read from a single `useMediaQuery` hook, `useIsSmDown()` (≤ 639px) and `useIsLgUp()` (≥ 1024px), so components branch on the same source of truth the CSS uses.
 
 Screens **reshape** rather than shrink:
 

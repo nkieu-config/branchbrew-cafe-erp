@@ -1,6 +1,6 @@
 # BranchBrew ERP — Infrastructure & Deployment
 
-Compose files, environment templates, and deployment reference for BranchBrew ERP — local Docker stack, production modes (managed or bundled Postgres), and optional TLS for self-hosted VPS.
+Compose files, environment templates, and deployment reference for BranchBrew ERP: local Docker stack, production modes (managed or bundled Postgres), and optional TLS for a self-hosted VPS.
 
 Part of the [BranchBrew monorepo](../). See [`docs/architecture.md`](../docs/architecture.md#deployment) for the deployment topology and its trade-offs.
 
@@ -11,7 +11,7 @@ cp infra/.env.compose.example infra/.env.compose
 npm run docker:up
 ```
 
-Open [localhost:3001/login](http://localhost:3001/login) — demo login `manager@branchbrew.dev` / `password123`.
+Open [localhost:3001/login](http://localhost:3001/login) and sign in with `manager@branchbrew.dev` / `password123`.
 
 Migrations run automatically via the one-shot `migrate` service, and the demo seed runs via the one-shot `seed` service whenever the database has no users. The API is on [localhost:3000](http://localhost:3000), with Swagger UI at [localhost:3000/docs](http://localhost:3000/docs) on the dev image.
 
@@ -57,7 +57,7 @@ cp infra/.env.compose.example infra/.env.compose
 Fixed non-production values so CI can run `docker compose up` and smoke tests without a private env file.
 
 > [!WARNING]
-> Do not copy or edit this file for daily development — CI reads it directly, and changes will break the pipeline.
+> Do not copy or edit this file for daily development. CI reads it directly, and changes will break the pipeline.
 
 ### `.env.supabase.example`
 
@@ -80,7 +80,7 @@ Production vars include `DATABASE_URL` (pooler), `DIRECT_URL` (migrations), `COR
 
 ### Postgres access
 
-The database sits on an internal-only Docker network — it has **no host port** (published
+The database sits on an internal-only Docker network with **no host port** (published
 ports do not work on internal networks, and the demo stack never needs one). To reach psql:
 
 ```bash
@@ -122,6 +122,6 @@ Caddy provisions Let's Encrypt certificates for both domains automatically.
 
 The live demo splits across two free tiers, both fed by the Supabase managed Postgres:
 
-- **Frontend → Vercel.** Root Directory `frontend`, `NEXT_PUBLIC_API_URL=/backend`, `INTERNAL_API_URL=<render-api-url>`. The Next.js config rewrites `/backend/*` to the API so all traffic is same-origin — the auth cookie stays first-party to the Vercel domain, which is what the server-side session gate reads (a cross-origin cookie would be invisible to it and loop the login page). Socket.io falls back to long-polling through the same rewrite because Vercel can't upgrade WebSockets.
+- **Frontend → Vercel.** Root Directory `frontend`, `NEXT_PUBLIC_API_URL=/backend`, `INTERNAL_API_URL=<render-api-url>`. The Next.js config rewrites `/backend/*` to the API so all traffic is same-origin, which keeps the auth cookie first-party to the Vercel domain, which is what the server-side session gate reads (a cross-origin cookie would be invisible to it and loop the login page). Socket.io falls back to long-polling through the same rewrite because Vercel can't upgrade WebSockets.
 - **API → Render.** Provisioned from [`render.yaml`](../render.yaml) (backend Docker target). Secrets: `DATABASE_URL` (Supabase **pooler**, port 6543 — the direct 5432 host is IPv6-only and unreachable from Render), `DIRECT_URL`, `CORS_ORIGIN=<vercel-url>`, `JWT_SECRET` (auto-generated). Free instances sleep after ~15 min idle; the first request wakes them in ~30–60s.
-- **Demo data** is reseeded by [`refresh-demo.yml`](../.github/workflows/refresh-demo.yml) (repo secrets `DEMO_DATABASE_URL` / `DEMO_DIRECT_URL`), which also keeps the Supabase project from pausing on inactivity. Schema changes are applied by [`migrate-demo.yml`](../.github/workflows/migrate-demo.yml) — the Render deploy itself never runs migrations.
+- **Demo data** is reseeded by [`refresh-demo.yml`](../.github/workflows/refresh-demo.yml) (repo secrets `DEMO_DATABASE_URL` / `DEMO_DIRECT_URL`), which also keeps the Supabase project from pausing on inactivity. Schema changes are applied by [`migrate-demo.yml`](../.github/workflows/migrate-demo.yml); the Render deploy itself never runs migrations.
