@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { AccountType, Prisma } from '@prisma/client';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrderCreatedEvent } from '../orders/events/order-created.event';
 import { OrderVoidedEvent } from '../orders/events/order-voided.event';
@@ -23,6 +23,7 @@ import {
   paymentAccountLabel,
   resolvePaymentAccountCode,
 } from './payment-accounts.util';
+import { normalBalanceOf } from './normal-balance.util';
 import { OrderSnapshot } from '../orders/domain/order.snapshot';
 
 @Injectable()
@@ -178,6 +179,9 @@ export class AccountingService {
     const totalAmount = roundMoney(event.totalAmount);
     if (totalAmount <= 0) return;
 
+    const standardAmount = roundMoney(event.standardAmount);
+    const variance = roundMoney(totalAmount - standardAmount);
+
     await this.createJournalEntry({
       branchId: event.branchId,
       reference: event.poNumber,
@@ -185,10 +189,27 @@ export class AccountingService {
       lines: [
         {
           accountCode: '1030',
-          debit: totalAmount,
+          debit: standardAmount,
           credit: 0,
-          description: 'Inventory received',
+          description: 'Inventory received (standard cost)',
         },
+        ...(variance !== 0
+          ? [
+              variance > 0
+                ? {
+                    accountCode: '5035',
+                    debit: variance,
+                    credit: 0,
+                    description: 'Purchase price variance (unfavorable)',
+                  }
+                : {
+                    accountCode: '5035',
+                    debit: 0,
+                    credit: Math.abs(variance),
+                    description: 'Purchase price variance (favorable)',
+                  },
+            ]
+          : []),
         {
           accountCode: '2010',
           debit: 0,
@@ -605,5 +626,75 @@ export class AccountingService {
         expense: roundMoney(data.expense),
       }))
       .sort((a, b) => a.month.localeCompare(b.month));
+  }
+
+  async getTrialBalance(branchId?: number, asOf?: string) {
+    const branchFilter = branchId
+      ? Prisma.sql`AND je."branchId" = ${branchId}`
+      : Prisma.empty;
+
+    const asOfFilter = asOf
+      ? Prisma.sql`AND je."date" <= ${asOf}::date`
+      : Prisma.empty;
+
+    const rows = await this.prisma.$queryRaw<
+      {
+        account_id: number;
+        code: string;
+        name: string;
+        type: AccountType;
+        total_debit: string | number;
+        total_credit: string | number;
+      }[]
+    >`
+      SELECT
+        a.id AS account_id,
+        a.code AS code,
+        a.name AS name,
+        a."type" AS type,
+        SUM(jel.debit) AS total_debit,
+        SUM(jel.credit) AS total_credit
+      FROM "JournalEntryLine" jel
+      INNER JOIN "JournalEntry" je ON jel."journalEntryId" = je.id
+      INNER JOIN "Account" a ON jel."accountId" = a.id
+      WHERE je."status" = 'POSTED'
+      ${asOfFilter}
+      ${branchFilter}
+      GROUP BY a.id, a.code, a.name, a."type"
+      HAVING SUM(jel.debit) <> 0 OR SUM(jel.credit) <> 0
+      ORDER BY a.code ASC
+    `;
+
+    const accounts = rows.map((row) => {
+      const debit = dec(row.total_debit);
+      const credit = dec(row.total_credit);
+      const normalBalance = normalBalanceOf(row.type);
+      const balance =
+        normalBalance === 'DEBIT' ? debit.minus(credit) : credit.minus(debit);
+
+      return {
+        accountId: row.account_id,
+        code: row.code,
+        name: row.name,
+        type: row.type,
+        normalBalance,
+        debit: roundMoney(debit),
+        credit: roundMoney(credit),
+        balance: roundMoney(balance),
+      };
+    });
+
+    const totalDebit = sumMoney(accounts.map((account) => account.debit));
+    const totalCredit = sumMoney(accounts.map((account) => account.credit));
+
+    return {
+      scope: branchId ? ('BRANCH' as const) : ('CHAIN' as const),
+      branchId: branchId ?? null,
+      asOf: asOf ?? null,
+      accounts,
+      totalDebit: roundMoney(totalDebit),
+      totalCredit: roundMoney(totalCredit),
+      isBalanced: isBalancedMoney(totalDebit, totalCredit),
+    };
   }
 }

@@ -134,3 +134,23 @@ export class ExecutiveSummaryResponseDto {
   @ApiProperty({ example: 3 })
   expiryCount: number;
 }
+
+export class FoodCostActualResponseDto {
+  @ApiProperty({ example: 412 })
+  orderCount: number;
+
+  @ApiProperty({ example: 198500 })
+  totalRevenue: number;
+
+  @ApiProperty({ example: 61535 })
+  totalCogs: number;
+
+  @ApiProperty({ example: 136965 })
+  grossProfit: number;
+
+  @ApiProperty({ example: 31 })
+  actualFoodCostPercent: number;
+
+  @ApiProperty({ example: 69 })
+  grossMarginPercent: number;
+}

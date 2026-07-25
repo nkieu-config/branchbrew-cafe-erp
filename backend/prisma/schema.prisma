@@ -313,14 +313,15 @@ model RecipeItem {
 }
 
 model Customer {
-  id        Int      @id @default(autoincrement())
-  phone     String   @unique
-  name      String
-  points    Int      @default(0)
-  tier      Tier     @default(REGULAR)
-  orders    Order[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int       @id @default(autoincrement())
+  phone        String    @unique
+  name         String
+  points       Int       @default(0)
+  tier         Tier      @default(REGULAR)
+  anonymizedAt DateTime?
+  orders       Order[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 enum Tier {

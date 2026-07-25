@@ -13,15 +13,24 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import type { RequestWithUser } from '../auth/interfaces/request-with-user.interface';
 import { resolveOptionalBranchId } from '../auth/branch-scope.util';
-import { parseOptionalPositiveInt } from '../common/query-params.util';
+import {
+  parseOptionalDateString,
+  parseOptionalPositiveInt,
+} from '../common/query-params.util';
 import {
   AccountResponseDto,
   JournalEntryResponseDto,
   ProfitLossMonthResponseDto,
   SeedAccountsResponseDto,
+  TrialBalanceResponseDto,
   VatReportMonthResponseDto,
 } from './dto/accounting-response.dto';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators';
 
 @ApiTags('accounting')
@@ -98,6 +107,39 @@ export class AccountingController {
       parseOptionalPositiveInt(branchId, 'branchId'),
     );
     return this.accountingService.getProfitLoss(resolvedBranchId);
+  }
+
+  @Get('trial-balance')
+  @Roles('SUPER_ADMIN', 'MANAGER')
+  @ApiOperation({
+    summary:
+      'Trial balance — every account balance and the debit/credit totals',
+  })
+  @ApiQuery({ name: 'branchId', required: false, type: Number })
+  @ApiQuery({
+    name: 'asOf',
+    required: false,
+    type: String,
+    example: '2026-07-25',
+    description: 'Inclusive cut-off date in YYYY-MM-DD form',
+  })
+  @ApiOkResponse({
+    type: TrialBalanceResponseDto,
+    description: 'Trial balance retrieved',
+  })
+  async getTrialBalance(
+    @Request() req: RequestWithUser,
+    @Query('branchId') branchId?: string,
+    @Query('asOf') asOf?: string,
+  ) {
+    const resolvedBranchId = resolveOptionalBranchId(
+      req.user,
+      parseOptionalPositiveInt(branchId, 'branchId'),
+    );
+    return this.accountingService.getTrialBalance(
+      resolvedBranchId,
+      parseOptionalDateString(asOf, 'asOf'),
+    );
   }
 
   @Post('seed')

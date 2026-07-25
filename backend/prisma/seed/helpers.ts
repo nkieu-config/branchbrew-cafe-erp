@@ -1,5 +1,7 @@
 const BANGKOK_UTC_OFFSET_HOURS = 7;
 
+export const SEED_VAT_RATE_PERCENT = 7;
+
 export function dateMinutesAgo(minutes: number): Date {
   return new Date(Date.now() - minutes * 60_000);
 }

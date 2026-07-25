@@ -16,4 +16,6 @@ export const REPORT_ENDPOINTS = {
   },
   profitLoss: (branchId?: number) =>
     `/reports/profit-loss${branchId ? `?branchId=${branchId}` : ''}`,
+  foodCostActual: (branchId?: number) =>
+    `/reports/food-cost-actual${branchId ? `?branchId=${branchId}` : ''}`,
 } as const;

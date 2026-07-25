@@ -254,4 +254,48 @@ describe('ReportsService', () => {
       expect(prisma.branch.findUnique).not.toHaveBeenCalled();
     });
   });
+  describe('getFoodCostActual', () => {
+    it('derives food cost and margin from one aggregate query', async () => {
+      jest.spyOn(repository, 'aggregateFoodCostActual').mockResolvedValue({
+        _sum: { netAmount: '1000', totalCogs: '310' },
+        _count: 4,
+      } as never);
+
+      const result = await service.getFoodCostActual(2);
+
+      expect(repository.aggregateFoodCostActual).toHaveBeenCalledWith(2);
+      expect(result).toEqual({
+        orderCount: 4,
+        totalRevenue: 1000,
+        totalCogs: 310,
+        grossProfit: 690,
+        actualFoodCostPercent: 31,
+        grossMarginPercent: 69,
+      });
+    });
+
+    it('returns zero percentages instead of dividing by zero revenue', async () => {
+      jest.spyOn(repository, 'aggregateFoodCostActual').mockResolvedValue({
+        _sum: { netAmount: null, totalCogs: null },
+        _count: 0,
+      });
+
+      const result = await service.getFoodCostActual();
+
+      expect(result.actualFoodCostPercent).toBe(0);
+      expect(result.grossMarginPercent).toBe(0);
+      expect(result.totalRevenue).toBe(0);
+    });
+
+    it('keeps the percentage in decimal space', async () => {
+      jest.spyOn(repository, 'aggregateFoodCostActual').mockResolvedValue({
+        _sum: { netAmount: '0.30', totalCogs: '0.10' },
+        _count: 1,
+      } as never);
+
+      const result = await service.getFoodCostActual();
+
+      expect(result.actualFoodCostPercent).toBe(33.33);
+    });
+  });
 });

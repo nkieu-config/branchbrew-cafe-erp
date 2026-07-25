@@ -1,8 +1,6 @@
 import type { Order, OrderStatus } from "@/types/api";
 import { formatQueueNumber } from "@/lib/queue";
 
-export const POS_ORDER_LOOKBACK_DAYS = 14;
-
 export function isOrderToday(iso: string): boolean {
   const d = new Date(iso);
   const now = new Date();
@@ -15,19 +13,6 @@ export function isOrderToday(iso: string): boolean {
 
 export function isTerminalOrderStatus(status: OrderStatus): boolean {
   return status === "CANCELLED" || status === "REFUNDED";
-}
-
-export function filterRecentOrders(
-  orders: Order[],
-  lookbackDays = POS_ORDER_LOOKBACK_DAYS,
-): Order[] {
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - lookbackDays);
-  return [...orders]
-    .filter((order) => new Date(order.createdAt) >= cutoff)
-    .sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
 }
 
 export function matchesPosOrderSearch(order: Order, search: string): boolean {

@@ -1,6 +1,9 @@
 import type { components } from './generated/api';
+import type { Paginated } from './pagination';
 
 export type Order = components['schemas']['OrderResponseDto'];
+
+export type OrderPage = Paginated<Order>;
 
 export type OrderItem = components['schemas']['OrderItemResponseDto'];
 

@@ -36,6 +36,12 @@ test.describe("authenticated accessibility", () => {
     });
   });
 
+  test("trial balance has no serious axe violations", async ({ page }) => {
+    await page.goto("/finance/trial-balance");
+    await locators.trialBalanceStatus(page).waitFor();
+    await expectNoSeriousViolations(page, "trial balance");
+  });
+
   test("schedule shift dialog has no serious axe violations", async ({ page }) => {
     await page.goto("/hr/shifts");
     await locators.hrScheduleShift(page).first().click();

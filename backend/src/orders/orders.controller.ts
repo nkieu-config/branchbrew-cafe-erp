@@ -19,10 +19,28 @@ import type { RequestWithUser } from '../auth/interfaces/request-with-user.inter
 import { assertBranchAccess, resolveBranchId } from '../auth/branch-scope.util';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { parseOptionalPositiveInt } from '../common/query-params.util';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators';
 import { OrderResponseDto } from './dto/order-response.dto';
+import {
+  ORDER_LIST_DEFAULT_LIMIT,
+  ORDER_LIST_DEFAULT_LOOKBACK_DAYS,
+  OrderListQueryDto,
+} from './dto/order-list-query.dto';
+import { resolvePageWindow } from '../common/pagination/pagination-query.dto';
+import {
+  ApiPaginatedResponse,
+  paginated,
+} from '../common/pagination/paginated-response.dto';
+
+function resolveOrderListSince(since?: string): Date {
+  if (since) return new Date(`${since}T00:00:00.000Z`);
+
+  const fallback = new Date();
+  fallback.setDate(fallback.getDate() - ORDER_LIST_DEFAULT_LOOKBACK_DAYS);
+  fallback.setHours(0, 0, 0, 0);
+  return fallback;
+}
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('orders')
@@ -47,25 +65,27 @@ export class OrdersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List orders' })
-  @ApiOkResponse({
-    type: OrderResponseDto,
-    isArray: true,
-    description: 'Orders retrieved',
-  })
+  @ApiOperation({ summary: 'List orders in a bounded, paginated window' })
+  @ApiPaginatedResponse(OrderResponseDto, 'Orders retrieved')
   @ApiCommonErrorResponses()
-  findAll(
+  async findAll(
     @Request() req: RequestWithUser,
-    @Query('branchId') branchIdQuery?: string,
+    @Query() query: OrderListQueryDto,
   ) {
-    if (req.user.role === 'SUPER_ADMIN' && !branchIdQuery) {
-      return this.ordersService.findAll();
-    }
-    const branchId = resolveBranchId(
-      req.user,
-      parseOptionalPositiveInt(branchIdQuery, 'branchId'),
-    );
-    return this.ordersService.findByBranch(branchId);
+    const isChainWide =
+      req.user.role === 'SUPER_ADMIN' && query.branchId == null;
+    const branchId = isChainWide
+      ? undefined
+      : resolveBranchId(req.user, query.branchId);
+
+    const window = resolvePageWindow(query, ORDER_LIST_DEFAULT_LIMIT);
+    const { items, total } = await this.ordersService.findPage({
+      branchId,
+      since: resolveOrderListSince(query.since),
+      ...window,
+    });
+
+    return paginated(items, total, window);
   }
 
   @Get('kds')

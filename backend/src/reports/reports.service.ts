@@ -149,6 +149,30 @@ export class ReportsService {
     };
   }
 
+  async getFoodCostActual(branchId?: number) {
+    const orders =
+      await this.reportsRepository.aggregateFoodCostActual(branchId);
+
+    const totalRevenue = dec(orders._sum.netAmount ?? 0);
+    const totalCogs = dec(orders._sum.totalCogs ?? 0);
+    const hasRevenue = totalRevenue.greaterThan(0);
+
+    return {
+      orderCount: orders._count,
+      totalRevenue: roundMoney(totalRevenue),
+      totalCogs: roundMoney(totalCogs),
+      grossProfit: roundMoney(totalRevenue.minus(totalCogs)),
+      actualFoodCostPercent: hasRevenue
+        ? roundMoney(totalCogs.dividedBy(totalRevenue).times(100))
+        : 0,
+      grossMarginPercent: hasRevenue
+        ? roundMoney(
+            totalRevenue.minus(totalCogs).dividedBy(totalRevenue).times(100),
+          )
+        : 0,
+    };
+  }
+
   async getExecutiveSummary(branchId?: number) {
     const today = this.startOfToday();
     const yesterday = new Date(today);

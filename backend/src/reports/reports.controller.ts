@@ -10,6 +10,7 @@ import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators';
 import {
   ExecutiveSummaryResponseDto,
+  FoodCostActualResponseDto,
   ReportsProfitLossResponseDto,
   SalesTrendPointResponseDto,
   TopProductReportResponseDto,
@@ -76,6 +77,25 @@ export class ReportsController {
       parseOptionalPositiveInt(branchIdQuery, 'branchId'),
     );
     return this.reportsService.getProfitLoss(branchId);
+  }
+
+  @Get('food-cost-actual')
+  @ApiOperation({
+    summary: 'Actual food cost and gross margin across recorded orders',
+  })
+  @ApiOkResponse({
+    type: FoodCostActualResponseDto,
+    description: 'Actual food cost retrieved',
+  })
+  getFoodCostActual(
+    @Request() req: RequestWithUser,
+    @Query('branchId') branchIdQuery?: string,
+  ) {
+    const branchId = resolveOptionalBranchId(
+      req.user,
+      parseOptionalPositiveInt(branchIdQuery, 'branchId'),
+    );
+    return this.reportsService.getFoodCostActual(branchId);
   }
 
   @Get('executive-summary')

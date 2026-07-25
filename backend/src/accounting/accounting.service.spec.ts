@@ -4,6 +4,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { BadRequestException } from '@nestjs/common';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { PurchaseOrderReceivedEvent } from '../procurement/events/purchase-order-received.event';
+import { roundMoney } from '../common/decimal.util';
 
 describe('AccountingService', () => {
   let service: AccountingService;
@@ -225,26 +227,99 @@ describe('AccountingService', () => {
   });
 
   describe('handlePurchaseOrderReceived', () => {
-    it('recognizes inventory and accounts payable for the PO total', async () => {
+    type PostedLine = { accountCode: string; debit: number; credit: number };
+
+    function receiveEvent(snapshot: {
+      totalAmount: number;
+      standardAmount?: number;
+      poNumber?: string;
+    }) {
+      return new PurchaseOrderReceivedEvent({
+        poId: 12,
+        poNumber: snapshot.poNumber ?? 'PO-000123',
+        branchId: 2,
+        totalAmount: snapshot.totalAmount,
+        standardAmount: snapshot.standardAmount,
+      });
+    }
+
+    function expectBalanced(lines: PostedLine[]) {
+      const debits = lines.reduce((sum, line) => sum + line.debit, 0);
+      const credits = lines.reduce((sum, line) => sum + line.credit, 0);
+      expect(roundMoney(debits)).toBe(roundMoney(credits));
+    }
+
+    it('debits inventory at standard and parks an overpayment in 5035', async () => {
       const createSpy = jest
         .spyOn(service, 'createJournalEntry')
         .mockResolvedValue({ id: 1 } as any);
 
-      await service.handlePurchaseOrderReceived({
-        poNumber: 'PO-000123',
-        branchId: 2,
-        totalAmount: 1234.56,
-      } as any);
-
-      expect(createSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          reference: 'PO-000123',
-          lines: [
-            expect.objectContaining({ accountCode: '1030', debit: 1234.56 }),
-            expect.objectContaining({ accountCode: '2010', credit: 1234.56 }),
-          ],
-        }),
+      await service.handlePurchaseOrderReceived(
+        receiveEvent({ totalAmount: 450, standardAmount: 400 }),
       );
+
+      const lines = createSpy.mock.calls[0][0].lines as PostedLine[];
+      expect(lines).toEqual([
+        expect.objectContaining({ accountCode: '1030', debit: 400 }),
+        expect.objectContaining({ accountCode: '5035', debit: 50, credit: 0 }),
+        expect.objectContaining({ accountCode: '2010', credit: 450 }),
+      ]);
+      expectBalanced(lines);
+      createSpy.mockRestore();
+    });
+
+    it('credits 5035 when the goods cost less than standard', async () => {
+      const createSpy = jest
+        .spyOn(service, 'createJournalEntry')
+        .mockResolvedValue({ id: 1 } as any);
+
+      await service.handlePurchaseOrderReceived(
+        receiveEvent({ totalAmount: 450, standardAmount: 500 }),
+      );
+
+      const lines = createSpy.mock.calls[0][0].lines as PostedLine[];
+      expect(lines).toEqual([
+        expect.objectContaining({ accountCode: '1030', debit: 500 }),
+        expect.objectContaining({ accountCode: '5035', debit: 0, credit: 50 }),
+        expect.objectContaining({ accountCode: '2010', credit: 450 }),
+      ]);
+      expectBalanced(lines);
+      createSpy.mockRestore();
+    });
+
+    it('omits the variance line when the PO was bought at standard', async () => {
+      const createSpy = jest
+        .spyOn(service, 'createJournalEntry')
+        .mockResolvedValue({ id: 1 } as any);
+
+      await service.handlePurchaseOrderReceived(
+        receiveEvent({ totalAmount: 450, standardAmount: 450 }),
+      );
+
+      const lines = createSpy.mock.calls[0][0].lines as PostedLine[];
+      expect(lines).toEqual([
+        expect.objectContaining({ accountCode: '1030', debit: 450 }),
+        expect.objectContaining({ accountCode: '2010', credit: 450 }),
+      ]);
+      expectBalanced(lines);
+      createSpy.mockRestore();
+    });
+
+    it('falls back to the actual cost for events enqueued before standard cost was captured', async () => {
+      const createSpy = jest
+        .spyOn(service, 'createJournalEntry')
+        .mockResolvedValue({ id: 1 } as any);
+
+      await service.handlePurchaseOrderReceived(
+        receiveEvent({ totalAmount: 1234.56 }),
+      );
+
+      const lines = createSpy.mock.calls[0][0].lines as PostedLine[];
+      expect(lines).toEqual([
+        expect.objectContaining({ accountCode: '1030', debit: 1234.56 }),
+        expect.objectContaining({ accountCode: '2010', credit: 1234.56 }),
+      ]);
+      expectBalanced(lines);
       createSpy.mockRestore();
     });
 
@@ -253,11 +328,9 @@ describe('AccountingService', () => {
         .spyOn(service, 'createJournalEntry')
         .mockResolvedValue({ id: 1 } as any);
 
-      await service.handlePurchaseOrderReceived({
-        poNumber: 'PO-000124',
-        branchId: 2,
-        totalAmount: 0,
-      } as any);
+      await service.handlePurchaseOrderReceived(
+        receiveEvent({ totalAmount: 0, standardAmount: 0 }),
+      );
 
       expect(createSpy).not.toHaveBeenCalled();
       createSpy.mockRestore();
@@ -560,6 +633,123 @@ describe('AccountingService', () => {
       );
 
       createSpy.mockRestore();
+    });
+  });
+
+  describe('getTrialBalance', () => {
+    const rawRows = [
+      {
+        account_id: 1,
+        code: '1010',
+        name: 'Cash',
+        type: 'ASSET',
+        total_debit: '1200.50',
+        total_credit: '200.50',
+      },
+      {
+        account_id: 2,
+        code: '2020',
+        name: 'Output VAT Payable',
+        type: 'LIABILITY',
+        total_debit: '0',
+        total_credit: '70.00',
+      },
+      {
+        account_id: 3,
+        code: '4010',
+        name: 'Sales Revenue',
+        type: 'REVENUE',
+        total_debit: '0',
+        total_credit: '930.00',
+      },
+    ];
+
+    it('nets each account onto its normal side', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(rawRows);
+
+      const result = await service.getTrialBalance();
+
+      expect(result.accounts).toEqual([
+        expect.objectContaining({
+          code: '1010',
+          normalBalance: 'DEBIT',
+          debit: 1200.5,
+          credit: 200.5,
+          balance: 1000,
+        }),
+        expect.objectContaining({
+          code: '2020',
+          normalBalance: 'CREDIT',
+          balance: 70,
+        }),
+        expect.objectContaining({
+          code: '4010',
+          normalBalance: 'CREDIT',
+          balance: 930,
+        }),
+      ]);
+    });
+
+    it('reports the ledger as balanced when debits equal credits', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(rawRows);
+
+      const result = await service.getTrialBalance();
+
+      expect(result.totalDebit).toBe(1200.5);
+      expect(result.totalCredit).toBe(1200.5);
+      expect(result.isBalanced).toBe(true);
+    });
+
+    it('reports the ledger as unbalanced when a single cent is off', async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { ...rawRows[0] },
+        { ...rawRows[1], total_credit: '70.01' },
+        { ...rawRows[2] },
+      ]);
+
+      const result = await service.getTrialBalance();
+
+      expect(result.totalCredit).toBe(1200.51);
+      expect(result.isBalanced).toBe(false);
+    });
+
+    it('sums in decimal space so repeating fractions do not drift', async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { ...rawRows[0], total_debit: '0.1', total_credit: '0' },
+        { ...rawRows[1], total_debit: '0.2', total_credit: '0' },
+      ]);
+
+      const result = await service.getTrialBalance();
+
+      expect(result.totalDebit).toBe(0.3);
+    });
+
+    it('marks a branch-filtered view as a partial scope', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(rawRows);
+
+      const result = await service.getTrialBalance(2, '2026-07-25');
+
+      expect(result).toEqual(
+        expect.objectContaining({
+          scope: 'BRANCH',
+          branchId: 2,
+          asOf: '2026-07-25',
+        }),
+      );
+    });
+
+    it('defaults to the whole chain with no cut-off date', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(rawRows);
+
+      const result = await service.getTrialBalance();
+
+      expect(result).toEqual(
+        expect.objectContaining({
+          scope: 'CHAIN',
+          branchId: null,
+          asOf: null,
+        }),
+      );
     });
   });
 });

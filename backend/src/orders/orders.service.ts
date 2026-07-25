@@ -20,12 +20,13 @@ export class OrdersService {
     return this.creationService.createOrder(data);
   }
 
-  findAll() {
-    return this.lifecycleService.findAll();
-  }
-
-  findByBranch(branchId: number) {
-    return this.lifecycleService.findByBranch(branchId);
+  findPage(options: {
+    branchId?: number;
+    since: Date;
+    take: number;
+    skip: number;
+  }) {
+    return this.lifecycleService.findPage(options);
   }
 
   findOne(id: number, user?: BranchScopedUser) {

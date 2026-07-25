@@ -2,21 +2,21 @@
 
 Portfolio demo script for reviewers and interview walkthroughs. New here? Start at the [project README](../README.md).
 
-**Fastest path: the [live demo](https://branchbrew-cafe-erp.vercel.app)** — click a demo account on the login page and follow the walkthrough below. To run it locally instead, use the quick start below.
+**Fastest path: the [live demo](https://branchbrew-cafe-erp.vercel.app).** Click a demo account on the login page and follow the walkthrough below. To run it locally, use the quick start below.
 
 > **Warning:** `npm run db:seed` wipes the target database before inserting demo data. Use only on a local database or an intentional demo/staging instance.
 
 ## Quick start
 
-One command with Docker — `npm run docker:up` (see the [root Quick start](../README.md#quick-start)) — or local Node against a running Postgres:
+One command with Docker (`npm run docker:up`, see the [root Quick start](../README.md#quick-start)), or local Node against a running Postgres:
 
 ```bash
 npm install
 cp backend/.env.example backend/.env   # set DATABASE_URL, JWT_SECRET
 npm run migrate
 npm run db:seed
-npm run dev:backend   # terminal 1 — port 3000
-npm run dev:frontend  # terminal 2 — port 3001
+npm run dev:backend   # terminal 1, port 3000
+npm run dev:frontend  # terminal 2, port 3001
 ```
 
 Open [localhost:3001/login](http://localhost:3001/login)
@@ -77,8 +77,8 @@ Use the **Demo accounts** buttons on the login page for Manager, Admin, Staff, a
 
 **Login:** `manager@branchbrew.dev`
 
-1. **Dashboard** (`/`) — Today's sales vs yesterday, gross margin & food-cost %, revenue chart (flip **7D/30D**, note the order-count overlay), top-5 sellers with revenue, inventory alerts. Widgets are draggable — the layout persists.
-2. **POS** (`/pos/terminal`) — Pick **Iced Latte**, add modifiers. Optional: lookup member `0811111111`, apply `WELCOME10`. At checkout enter cash received (quick buttons ฿100/฿500 or **Exact**) — **Pay stays disabled until the cash covers the total**, then shows change due.
+1. **Dashboard** (`/`) — Today's sales vs yesterday, gross margin & food-cost %, revenue chart (flip **7D/30D**, note the order-count overlay), top-5 sellers with revenue, inventory alerts. Widgets are draggable, and the layout persists.
+2. **POS** (`/pos/terminal`) — Pick **Iced Latte**, add modifiers. Optional: lookup member `0811111111`, apply `WELCOME10`. At checkout enter cash received (quick buttons ฿100/฿500 or **Exact**). Pay stays disabled until the cash covers the total, then shows change due.
 3. **KDS** (`/kds`) — Show pending/preparing tickets and the **All-day** per-item tally strip; complete one ticket.
 4. **Orders** (`/pos/orders`) — Refunded and promo orders from seed.
 
@@ -107,8 +107,9 @@ Use the **Demo accounts** buttons on the login page for Manager, Admin, Staff, a
 1. **Notifications** — Click the **bell** in the top bar: unread PO-approval and expiring-batch alerts; click one to jump to the page (it marks itself read).
 2. **HR / Attendance** (`/hr/attendance`) — Manager currently clocked in.
 3. **Payroll** (`/hr/payroll`) — Approved run (last month) + draft @ Riverside. Approving a run posts gross pay, withholdings, and net cash to the ledger (`PAYROLL-*`).
-4. **Finance overview** (`/finance/overview`) — **Accounts payable card**: ฿400 outstanding in the 31–60 day bucket (that's `PO-DEMO-005`) — pay it from Procurement and watch the card empty. **Output VAT (ภ.พ.30) card**: monthly sales ex-VAT vs output VAT. Below: pending shift settlement @ Downtown.
-5. **Ledger** (`/finance/ledger`) — Search **`PO-DEMO-003`** (espresso bean receive), the matching **`ORD-`** hero sale (revenue split into ex-VAT sales + output VAT), and **`PAY-PO-DEMO-003`** (the payment that settled AP).
+4. **Finance overview** (`/finance/overview`) — **Accounts payable card**: ฿400 outstanding in the 31–60 day bucket (`PO-DEMO-005`). Pay it from Procurement and watch the card empty. **Output VAT (ภ.พ.30) card**: monthly sales ex-VAT vs output VAT. Below: pending shift settlement @ Downtown.
+5. **Ledger** (`/finance/ledger`) — Search **`PO-DEMO-003`** (bean receive: inventory at the ฿0.50/g standard, AP at the ฿0.45/g invoice, ฿50 to purchase price variance), the matching **`ORD-`** hero sale (revenue split into ex-VAT sales + output VAT), and **`PAY-PO-DEMO-003`** (the payment that settled AP).
+6. **Trial balance** (`/finance/trial-balance`) — Every account with a balance; total debits equal total credits.
 
 **Story to tell:** Attendance → payroll → settlement → general ledger, and the AP account balance reconciles to the unpaid-PO list on the aging card.
 
@@ -143,4 +144,4 @@ Use the **Demo accounts** buttons on the login page for Manager, Admin, Staff, a
 
 To reset demo data, re-run `npm run db:seed` (see warning at top).
 
-Keep supporting modules (assets, equipment registry) as breadth; go deep on the flows above.
+Supporting modules (assets, equipment registry) are there for breadth. The flows above are where the design work is.

@@ -2,7 +2,8 @@ import {
   getQueueBusinessDateString,
   parseQueueBusinessDate,
 } from '../../../src/orders/helpers/queue-number.helper';
-import { dateAtDayOffset, dateMinutesAgo } from '../helpers';
+import { inclusiveTaxAmount } from '../../../src/common/vat.util';
+import { dateAtDayOffset, dateMinutesAgo, SEED_VAT_RATE_PERCENT } from '../helpers';
 import type { SeedContext } from '../types';
 import type { PaymentMethod } from '@prisma/client';
 
@@ -91,7 +92,7 @@ export async function seedDashboardDemo(ctx: SeedContext): Promise<void> {
         totalAmount: net,
         netAmount: net,
         discountAmount: 0,
-        taxAmount: (net * 0.07) / 1.07,
+        taxAmount: inclusiveTaxAmount(net, SEED_VAT_RATE_PERCENT),
         totalCogs: estimateCogs(spec.lines),
         pointsEarned: Math.floor(net / 100),
         queueNumber: queueCounter++,

@@ -18,4 +18,8 @@ export class PurchaseOrderReceivedEvent {
   get totalAmount(): number {
     return this.payload.totalAmount;
   }
+
+  get standardAmount(): number {
+    return this.payload.standardAmount ?? this.payload.totalAmount;
+  }
 }

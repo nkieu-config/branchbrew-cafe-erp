@@ -12,6 +12,13 @@ export const ACCOUNTING_ENDPOINTS = {
     if (branchId && branchId !== 'ALL') return `/accounting/vat-report?branchId=${branchId}`;
     return '/accounting/vat-report';
   },
+  trialBalance: (branchId?: number | string, asOf?: string) => {
+    const params = new URLSearchParams();
+    if (branchId && branchId !== 'ALL') params.set('branchId', String(branchId));
+    if (asOf) params.set('asOf', asOf);
+    const query = params.toString();
+    return query ? `/accounting/trial-balance?${query}` : '/accounting/trial-balance';
+  },
   seed: '/accounting/seed',
 } as const;
 

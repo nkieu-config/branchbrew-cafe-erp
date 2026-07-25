@@ -1,9 +1,9 @@
 import { REPORT_ENDPOINTS } from "@/lib/endpoints/reports";
-import { ORDER_ENDPOINTS } from "@/lib/endpoints/orders";
 import { AUDIT_ENDPOINTS } from "@/lib/endpoints/accounting";
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { fetchAPI } from '@/lib/api';
-import { analyticsKeys, orderKeys } from '@/lib/query-keys';
+import type { FoodCostActual } from '@/types/api';
+import { analyticsKeys } from '@/lib/query-keys';
 
 // ==========================================
 // 📊 ANALYTICS & REPORTS HOOKS
@@ -61,10 +61,10 @@ export const useProfitLossSuspense = (branchId?: string) => {
   });
 };
 
-export const useOrders = () => {
-  return useQuery({
-    queryKey: orderKeys.root,
-    queryFn: () => fetchAPI(ORDER_ENDPOINTS.list()),
+export const useFoodCostActual = (branchId?: number) => {
+  return useQuery<FoodCostActual>({
+    queryKey: ['foodCostActual', branchId ?? 'ALL'],
+    queryFn: () => fetchAPI(REPORT_ENDPOINTS.foodCostActual(branchId)),
   });
 };
 

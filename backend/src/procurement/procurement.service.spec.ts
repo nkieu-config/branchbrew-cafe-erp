@@ -200,6 +200,9 @@ describe('ProcurementService', () => {
       prisma.$transaction.mockImplementation(async (cb: Function) =>
         cb(prisma),
       );
+      prisma.ingredient.findMany.mockResolvedValue([
+        { id: 4, costPerUnit: 50 },
+      ] as any);
     });
 
     it('claims the APPROVED status before crediting any inventory', async () => {
@@ -231,6 +234,51 @@ describe('ProcurementService', () => {
 
       expect(prisma.inventoryBatch.create).not.toHaveBeenCalled();
       expect(prisma.branchInventory.upsert).not.toHaveBeenCalled();
+    });
+
+    it('captures the standard-cost value of the receipt in the event', async () => {
+      prisma.purchaseOrder.findUnique.mockResolvedValue(approvedPO as any);
+      prisma.purchaseOrder.updateMany.mockResolvedValue({ count: 1 });
+      prisma.purchaseOrder.findUniqueOrThrow.mockResolvedValue({
+        ...approvedPO,
+        status: 'RECEIVED',
+      } as any);
+      prisma.inventoryBatch.create.mockResolvedValue({ id: 1 } as any);
+      prisma.branchInventory.upsert.mockResolvedValue({ id: 1 } as any);
+
+      await service.receivePO(6);
+
+      const outbox = (service as any).outboxService as { enqueue: jest.Mock };
+      const [, eventType, payload] = outbox.enqueue.mock.calls[0];
+      expect(eventType).toBe('purchase-order.received');
+      expect(payload.purchaseOrder).toMatchObject({
+        poNumber: 'PO-000006',
+        totalAmount: 450,
+        standardAmount: 500,
+      });
+    });
+
+    it('values a line at what was paid when its ingredient has no standard cost yet', async () => {
+      prisma.ingredient.findMany.mockResolvedValue([
+        { id: 4, costPerUnit: 0 },
+      ] as any);
+      prisma.purchaseOrder.findUnique.mockResolvedValue(approvedPO as any);
+      prisma.purchaseOrder.updateMany.mockResolvedValue({ count: 1 });
+      prisma.purchaseOrder.findUniqueOrThrow.mockResolvedValue({
+        ...approvedPO,
+        status: 'RECEIVED',
+      } as any);
+      prisma.inventoryBatch.create.mockResolvedValue({ id: 1 } as any);
+      prisma.branchInventory.upsert.mockResolvedValue({ id: 1 } as any);
+
+      await service.receivePO(6);
+
+      const outbox = (service as any).outboxService as { enqueue: jest.Mock };
+      const [, , payload] = outbox.enqueue.mock.calls[0];
+      expect(payload.purchaseOrder).toMatchObject({
+        totalAmount: 450,
+        standardAmount: 450,
+      });
     });
   });
 

@@ -12,4 +12,9 @@ export type ProfitLossMonth =
 export type VatReportMonth =
   components['schemas']['VatReportMonthResponseDto'];
 
+export type TrialBalanceAccount =
+  components['schemas']['TrialBalanceAccountResponseDto'];
+
+export type TrialBalance = components['schemas']['TrialBalanceResponseDto'];
+
 export type AppNotification = components['schemas']['NotificationResponseDto'];

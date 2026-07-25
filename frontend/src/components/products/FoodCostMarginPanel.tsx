@@ -2,30 +2,30 @@
 
 import Link from "next/link";
 import { formatCurrency } from "@/lib/money";
-import { compareFoodCostMargins } from "@/lib/food-cost-margin";
+import { foodCostVariance } from "@/lib/food-cost-margin";
 import { inlineLinkClassName } from "@/lib/theme/hub-primitives";
 import { foodCostStatusClassName } from "@/lib/theme/hub-products";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
-import type { Order } from "@/types/api";
+import type { FoodCostActual } from "@/types/api";
 import { foodCostStatus } from "@/lib/food-cost";
 
 type FoodCostMarginPanelProps = {
-  orders: Order[];
+  actual?: FoodCostActual;
   theoreticalAvgPercent: number;
-  ordersLoading?: boolean;
+  isLoading?: boolean;
 };
 
 export function FoodCostMarginPanel({
-  orders,
+  actual,
   theoreticalAvgPercent,
-  ordersLoading = false,
+  isLoading = false,
 }: FoodCostMarginPanelProps) {
-  if (ordersLoading || orders.length === 0 || theoreticalAvgPercent <= 0) {
+  if (isLoading || !actual || actual.orderCount === 0 || theoreticalAvgPercent <= 0) {
     return null;
   }
 
-  const margin = compareFoodCostMargins(orders, theoreticalAvgPercent);
+  const margin = foodCostVariance(actual, theoreticalAvgPercent);
   const actualStatus = foodCostStatus(margin.actualFoodCostPercent);
   const theoreticalStatus = foodCostStatus(theoreticalAvgPercent);
   const varianceUp = margin.variancePercent > 0;

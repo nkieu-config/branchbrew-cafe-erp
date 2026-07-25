@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 export const AUDIT_ACTIONS = {
@@ -16,6 +17,7 @@ export const AUDIT_ACTIONS = {
   CREATE_STOCK_COUNT: 'CREATE_STOCK_COUNT',
   APPROVE_STOCK_COUNT: 'APPROVE_STOCK_COUNT',
   MANUAL_ADJUSTMENT: 'MANUAL_ADJUSTMENT',
+  ANONYMIZE_CUSTOMER: 'ANONYMIZE_CUSTOMER',
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];
@@ -27,6 +29,7 @@ export const AUDIT_TARGETS = {
   SYSTEM_SETTING: 'SystemSetting',
   STOCK_COUNT: 'StockCount',
   STOCK_ADJUSTMENT: 'StockAdjustment',
+  CUSTOMER: 'Customer',
 } as const;
 
 type JsonLike =
@@ -52,6 +55,7 @@ export type AuditTargetByAction = {
   [AUDIT_ACTIONS.CREATE_STOCK_COUNT]: typeof AUDIT_TARGETS.STOCK_COUNT;
   [AUDIT_ACTIONS.APPROVE_STOCK_COUNT]: typeof AUDIT_TARGETS.STOCK_COUNT;
   [AUDIT_ACTIONS.MANUAL_ADJUSTMENT]: typeof AUDIT_TARGETS.STOCK_ADJUSTMENT;
+  [AUDIT_ACTIONS.ANONYMIZE_CUSTOMER]: typeof AUDIT_TARGETS.CUSTOMER;
 };
 
 export type AuditDetailsByAction = {
@@ -117,6 +121,10 @@ export type AuditDetailsByAction = {
     quantityDelta: number;
     reason: string;
   };
+  [AUDIT_ACTIONS.ANONYMIZE_CUSTOMER]: {
+    tier: string;
+    orderCount: number;
+  };
 };
 
 @Injectable()
@@ -129,6 +137,7 @@ export class AuditService {
     targetType: AuditTargetByAction[TAction],
     targetId?: number,
     details?: AuditDetailsByAction[TAction] | JsonLike,
+    tx?: Prisma.TransactionClient,
   ) {
     const detailsString =
       details == null
@@ -137,7 +146,7 @@ export class AuditService {
           ? JSON.stringify(details)
           : String(details);
 
-    return this.prisma.auditLog.create({
+    return (tx ?? this.prisma).auditLog.create({
       data: {
         userId,
         action,

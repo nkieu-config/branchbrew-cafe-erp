@@ -141,6 +141,12 @@ const outboxPayloadValidators: OutboxEventValidatorMap = {
       `${eventType}.purchaseOrder.totalAmount`,
     );
     assertString(purchaseOrder.poNumber, `${eventType}.purchaseOrder.poNumber`);
+    if (purchaseOrder.standardAmount != null) {
+      assertNumber(
+        purchaseOrder.standardAmount,
+        `${eventType}.purchaseOrder.standardAmount`,
+      );
+    }
     return data as OutboxEventPayload<typeof eventType>;
   },
   [OUTBOX_EVENT_TYPES.PURCHASE_ORDER_PAID]: (payload) => {

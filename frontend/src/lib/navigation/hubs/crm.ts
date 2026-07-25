@@ -14,7 +14,7 @@ export const crmHub: HubConfig = {
       label: "Customers & Loyalty",
       path: "/crm/customers",
       icon: Users,
-      roles: ["SUPER_ADMIN", "MANAGER", "STAFF"],
+      roles: ["SUPER_ADMIN", "MANAGER"],
     },
     {
       id: "promotions",

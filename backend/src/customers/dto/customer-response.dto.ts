@@ -24,6 +24,17 @@ export class CustomerResponseDto {
   updatedAt: Date;
 }
 
+export class OrderCustomerSummaryDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 'Jane Customer' })
+  name: string;
+
+  @ApiProperty({ enum: Tier, example: Tier.REGULAR })
+  tier: Tier;
+}
+
 export class Customer360FavoriteDrinkDto {
   @ApiProperty({ example: 'Latte' })
   name: string;

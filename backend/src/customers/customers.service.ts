@@ -1,15 +1,31 @@
-import { Injectable, BadRequestException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Tier } from '@prisma/client';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrderCreatedEvent } from '../orders/events/order-created.event';
 import { toNum } from '../common/decimal.util';
+import {
+  AuditService,
+  AUDIT_ACTIONS,
+  AUDIT_TARGETS,
+} from '../audit/audit.service';
+
+const ANONYMIZED_PHONE_PREFIX = 'deleted-';
+const ANONYMIZED_NAME = 'Deleted customer';
 
 @Injectable()
 export class CustomersService {
   private readonly logger = new Logger(CustomersService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private auditService: AuditService,
+  ) {}
 
   @OnEvent('order.created', { async: true })
   async handleOrderCreated(event: OrderCreatedEvent) {
@@ -68,6 +84,40 @@ export class CustomersService {
 
   async update(id: number, data: Partial<{ name: string; phone: string }>) {
     return this.prisma.customer.update({ where: { id }, data });
+  }
+
+  async anonymize(id: number, actorUserId: number) {
+    return this.prisma.$transaction(async (tx) => {
+      const customer = await tx.customer.findUnique({
+        where: { id },
+        include: { _count: { select: { orders: true } } },
+      });
+      if (!customer) throw new NotFoundException('Customer not found');
+      if (customer.anonymizedAt) {
+        throw new BadRequestException('Customer is already anonymized');
+      }
+
+      const anonymized = await tx.customer.update({
+        where: { id },
+        data: {
+          phone: `${ANONYMIZED_PHONE_PREFIX}${id}`,
+          name: ANONYMIZED_NAME,
+          points: 0,
+          anonymizedAt: new Date(),
+        },
+      });
+
+      await this.auditService.logAction(
+        actorUserId,
+        AUDIT_ACTIONS.ANONYMIZE_CUSTOMER,
+        AUDIT_TARGETS.CUSTOMER,
+        id,
+        { tier: customer.tier, orderCount: customer._count.orders },
+        tx,
+      );
+
+      return anonymized;
+    });
   }
 
   async findByPhone(phone: string) {

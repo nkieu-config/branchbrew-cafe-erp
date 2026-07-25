@@ -2,10 +2,12 @@ import {
   getQueueBusinessDateString,
   parseQueueBusinessDate,
 } from '../../../src/orders/helpers/queue-number.helper';
+import { inclusiveTaxAmount } from '../../../src/common/vat.util';
 import {
   dateAtDayOffset,
   dateDaysAgo,
   dateMinutesAgo,
+  SEED_VAT_RATE_PERCENT,
   settlementDifference,
   shiftWindow,
 } from '../helpers';
@@ -287,7 +289,7 @@ export async function seedExpansionDemo(ctx: SeedContext): Promise<void> {
         totalAmount: net,
         netAmount: net,
         discountAmount: 0,
-        taxAmount: (net * 0.07) / 1.07,
+        taxAmount: inclusiveTaxAmount(net, SEED_VAT_RATE_PERCENT),
         totalCogs: kdsCogsByProduct.get(spec.productId) ?? 20,
         queueNumber: spec.queueNumber,
         queueDate: todayQueueDate,
@@ -328,7 +330,7 @@ export async function seedExpansionDemo(ctx: SeedContext): Promise<void> {
       totalAmount: 130,
       netAmount: 117,
       discountAmount: 13,
-      taxAmount: (117 * 0.07) / 1.07,
+      taxAmount: inclusiveTaxAmount(117, SEED_VAT_RATE_PERCENT),
       totalCogs: 52,
       pointsEarned: 1,
       queueNumber: 88,
@@ -349,7 +351,7 @@ export async function seedExpansionDemo(ctx: SeedContext): Promise<void> {
       totalAmount: 85,
       netAmount: 85,
       discountAmount: 0,
-      taxAmount: (85 * 0.07) / 1.07,
+      taxAmount: inclusiveTaxAmount(85, SEED_VAT_RATE_PERCENT),
       totalCogs: 12,
       refundReason: 'Wrong drink prepared — customer refund',
       refundedAt: dateDaysAgo(1),
@@ -371,7 +373,7 @@ export async function seedExpansionDemo(ctx: SeedContext): Promise<void> {
       totalAmount: 60,
       netAmount: 60,
       discountAmount: 0,
-      taxAmount: (60 * 0.07) / 1.07,
+      taxAmount: inclusiveTaxAmount(60, SEED_VAT_RATE_PERCENT),
       totalCogs: 0,
       queueNumber: 66,
       queueDate: dateDaysAgo(0),

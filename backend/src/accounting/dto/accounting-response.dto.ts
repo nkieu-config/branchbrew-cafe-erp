@@ -111,6 +111,74 @@ export class VatReportMonthResponseDto {
   orderCount: number;
 }
 
+export class TrialBalanceAccountResponseDto {
+  @ApiProperty({ example: 3 })
+  accountId: number;
+
+  @ApiProperty({ example: '1030' })
+  code: string;
+
+  @ApiProperty({ example: 'Inventory' })
+  name: string;
+
+  @ApiProperty({ enum: AccountType, example: AccountType.ASSET })
+  type: AccountType;
+
+  @ApiProperty({
+    enum: ['DEBIT', 'CREDIT'],
+    example: 'DEBIT',
+    description: 'Side the account balance normally sits on',
+  })
+  normalBalance: 'DEBIT' | 'CREDIT';
+
+  @ApiProperty({ example: 48250.75, description: 'Sum of all debit lines' })
+  debit: number;
+
+  @ApiProperty({ example: 12100.5, description: 'Sum of all credit lines' })
+  credit: number;
+
+  @ApiProperty({
+    example: 36150.25,
+    description: "Net balance on the account's normal side",
+  })
+  balance: number;
+}
+
+export class TrialBalanceResponseDto {
+  @ApiProperty({
+    enum: ['CHAIN', 'BRANCH'],
+    example: 'CHAIN',
+    description: 'BRANCH excludes chain-level entries, so it is a partial view',
+  })
+  scope: 'CHAIN' | 'BRANCH';
+
+  @ApiProperty({ type: Number, example: 1, nullable: true })
+  branchId: number | null;
+
+  @ApiProperty({
+    type: String,
+    example: '2026-07-25',
+    nullable: true,
+    description: 'Inclusive cut-off date; null means every posted entry',
+  })
+  asOf: string | null;
+
+  @ApiProperty({ type: TrialBalanceAccountResponseDto, isArray: true })
+  accounts: TrialBalanceAccountResponseDto[];
+
+  @ApiProperty({ example: 412500.25 })
+  totalDebit: number;
+
+  @ApiProperty({ example: 412500.25 })
+  totalCredit: number;
+
+  @ApiProperty({
+    example: true,
+    description: 'True when total debits equal total credits',
+  })
+  isBalanced: boolean;
+}
+
 export class SeedAccountsResponseDto {
   @ApiProperty({ example: true })
   success: boolean;

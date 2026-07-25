@@ -9,6 +9,7 @@ import type { Order, PurchaseOrder } from '@prisma/client';
 const HERO_PO_NUMBER = 'PO-DEMO-003';
 const HERO_PO_QTY = 1000;
 const HERO_PO_UNIT_PRICE = 0.45;
+const HERO_BEAN_STANDARD_COST = 0.5;
 const HERO_ORDER_QTY = 2;
 const HERO_ORDER_UNIT_PRICE = 85;
 
@@ -45,6 +46,7 @@ export async function seedHeroNarrative(ctx: SeedContext): Promise<HeroNarrative
   );
 
   const poTotal = HERO_PO_QTY * HERO_PO_UNIT_PRICE;
+  const poStandardTotal = HERO_PO_QTY * HERO_BEAN_STANDARD_COST;
   const heroPurchaseOrder = await prisma.purchaseOrder.create({
     data: {
       poNumber: HERO_PO_NUMBER,
@@ -65,7 +67,6 @@ export async function seedHeroNarrative(ctx: SeedContext): Promise<HeroNarrative
 
   const orderNet = HERO_ORDER_UNIT_PRICE * HERO_ORDER_QTY;
   const orderTax = Math.round(((orderNet * 0.07) / 1.07) * 100) / 100;
-  const orderSalesExVat = Math.round((orderNet - orderTax) * 100) / 100;
   const orderCogs = heroOrderCogsPerUnit() * HERO_ORDER_QTY;
   const orderCreatedAt = dateDaysAgo(3);
   orderCreatedAt.setHours(10, 15, 0, 0);
@@ -109,9 +110,15 @@ export async function seedHeroNarrative(ctx: SeedContext): Promise<HeroNarrative
         create: [
           {
             accountId: accountIds['1030'],
-            debit: poTotal,
+            debit: poStandardTotal,
             credit: 0,
-            description: 'Inventory received — Espresso Beans',
+            description: 'Inventory received (standard cost)',
+          },
+          {
+            accountId: accountIds['5035'],
+            debit: 0,
+            credit: poStandardTotal - poTotal,
+            description: 'Purchase price variance (favorable)',
           },
           {
             accountId: accountIds['2010'],
@@ -124,49 +131,6 @@ export async function seedHeroNarrative(ctx: SeedContext): Promise<HeroNarrative
     },
   });
 
-  await prisma.journalEntry.create({
-    data: {
-      branchId: mainBranch.id,
-      date: orderCreatedAt,
-      reference: `ORD-${heroOrder.id}`,
-      description: `Sales Revenue and COGS for Order ${heroOrder.id}`,
-      status: 'POSTED',
-      lines: {
-        create: [
-          {
-            accountId: accountIds['1010'],
-            debit: orderNet,
-            credit: 0,
-            description: 'Cash from POS sale',
-          },
-          {
-            accountId: accountIds['4010'],
-            debit: 0,
-            credit: orderSalesExVat,
-            description: 'Sales Revenue (ex VAT)',
-          },
-          {
-            accountId: accountIds['2020'],
-            debit: 0,
-            credit: orderTax,
-            description: 'Output VAT payable',
-          },
-          {
-            accountId: accountIds['5010'],
-            debit: orderCogs,
-            credit: 0,
-            description: 'Cost of Goods Sold',
-          },
-          {
-            accountId: accountIds['1030'],
-            debit: 0,
-            credit: orderCogs,
-            description: 'Inventory reduction',
-          },
-        ],
-      },
-    },
-  });
 
   await prisma.auditLog.createMany({
     data: [

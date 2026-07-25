@@ -1,15 +1,18 @@
 import {
   Controller,
+  Delete,
   Get,
   Post,
   Body,
   Patch,
   Param,
   ParseIntPipe,
+  Request,
   UseGuards,
   Query,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
+import type { RequestWithUser } from '../auth/interfaces/request-with-user.interface';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -29,6 +32,7 @@ export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Post()
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'Create customer' })
   @ApiOkResponse({ type: CustomerResponseDto, description: 'Customer created' })
   create(@Body() dto: CreateCustomerDto) {
@@ -36,7 +40,10 @@ export class CustomersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List customers' })
+  @Roles('SUPER_ADMIN', 'MANAGER')
+  @ApiOperation({
+    summary: 'List customers — the member directory, not a till lookup',
+  })
   @ApiOkResponse({
     type: CustomerResponseDto,
     isArray: true,
@@ -47,7 +54,9 @@ export class CustomersController {
   }
 
   @Get('phone/:phone')
-  @ApiOperation({ summary: 'Get customer by phone' })
+  @ApiOperation({
+    summary: 'Look up one member by exact phone — the POS till path',
+  })
   @ApiOkResponse({
     type: CustomerResponseDto,
     description: 'Customer retrieved',
@@ -57,6 +66,7 @@ export class CustomersController {
   }
 
   @Get(':id/360')
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'Get customer 360 view' })
   @ApiOkResponse({
     type: Customer360ResponseDto,
@@ -67,6 +77,7 @@ export class CustomersController {
   }
 
   @Get(':id')
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'Get customer by id' })
   @ApiOkResponse({
     type: CustomerResponseDto,
@@ -85,5 +96,23 @@ export class CustomersController {
     @Body() dto: UpdateCustomerDto,
   ) {
     return this.customersService.update(id, dto);
+  }
+
+  @Roles('SUPER_ADMIN')
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Erase a member on PDPA request by anonymizing the record',
+    description:
+      'Clears the phone, name and points and stamps anonymizedAt. The row itself stays so orders, revenue and the ledger are unchanged, and tax-invoice details on those orders are retained under the Revenue Code.',
+  })
+  @ApiOkResponse({
+    type: CustomerResponseDto,
+    description: 'Customer anonymized',
+  })
+  anonymize(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.customersService.anonymize(id, req.user.userId);
   }
 }

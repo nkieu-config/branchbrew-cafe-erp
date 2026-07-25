@@ -48,19 +48,29 @@ export class OrderLifecycleService {
     private auditService: AuditService,
   ) {}
 
-  findAll() {
-    return this.prisma.order.findMany({
-      include: orderListInclude,
-      orderBy: { createdAt: 'desc' },
-    });
-  }
+  async findPage(options: {
+    branchId?: number;
+    since: Date;
+    take: number;
+    skip: number;
+  }) {
+    const where = {
+      ...(options.branchId ? { branchId: options.branchId } : {}),
+      createdAt: { gte: options.since },
+    };
 
-  findByBranch(branchId: number) {
-    return this.prisma.order.findMany({
-      where: { branchId },
-      include: orderListInclude,
-      orderBy: { createdAt: 'desc' },
-    });
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.order.findMany({
+        where,
+        include: orderListInclude,
+        orderBy: { createdAt: 'desc' },
+        take: options.take,
+        skip: options.skip,
+      }),
+      this.prisma.order.count({ where }),
+    ]);
+
+    return { items, total };
   }
 
   async findOne(id: number, user?: BranchScopedUser) {

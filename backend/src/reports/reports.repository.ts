@@ -133,6 +133,14 @@ export class ReportsRepository {
     });
   }
 
+  aggregateFoodCostActual(branchId?: number) {
+    return this.prisma.order.aggregate({
+      where: branchId ? { branchId } : {},
+      _sum: { netAmount: true, totalCogs: true },
+      _count: true,
+    });
+  }
+
   findExpiringBatches(warningDate: Date, branchId?: number, take = 5) {
     const whereBranch = branchId ? { branchId } : {};
     return this.prisma.inventoryBatch.findMany({

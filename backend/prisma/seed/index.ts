@@ -6,6 +6,7 @@ import { seedDashboardDemo } from './portfolio/dashboard';
 import { seedExpansionDemo } from './portfolio/expansion';
 import { seedFinanceDemo } from './portfolio/finance';
 import { seedHrAssetsDemo } from './portfolio/hr-assets';
+import { seedLedgerFromOperations } from './portfolio/ledger';
 import { seedPosMenu } from './portfolio/menu';
 import { seedOperationsDemo } from './portfolio/operations';
 import { seedPhaseFeaturesDemo } from './portfolio/phase-features';
@@ -25,6 +26,7 @@ export async function runSeed(): Promise<void> {
   await seedExpansionDemo(ctx);
   await seedDashboardDemo(ctx);
   await seedPhaseFeaturesDemo(ctx);
+  await seedLedgerFromOperations(ctx);
 
   logSeedSummary();
 }

@@ -27,8 +27,8 @@ export const LOGIN_HERO_BODY =
 
 export const LOGIN_HERO_STATS = [
   { value: "23", label: "Modules" },
-  { value: "130", label: "Endpoints" },
-  { value: "426", label: "Tests" },
+  { value: "131", label: "Endpoints" },
+  { value: "464", label: "Tests" },
 ] as const;
 
 type HeroModule = {

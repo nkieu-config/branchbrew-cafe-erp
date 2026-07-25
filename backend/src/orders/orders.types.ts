@@ -9,7 +9,7 @@ export const createOrderInclude = {
 export const orderListInclude = {
   items: true,
   branch: true,
-  customer: true,
+  customer: { select: { id: true, name: true, tier: true } },
   promotion: true,
 } satisfies Prisma.OrderInclude;
 

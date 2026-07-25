@@ -153,7 +153,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List orders */
+        /** List orders in a bounded, paginated window */
         get: operations["OrdersController_findAll"];
         put?: never;
         /** Create order */
@@ -412,7 +412,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List customers */
+        /** List customers — the member directory, not a till lookup */
         get: operations["CustomersController_findAll"];
         put?: never;
         /** Create customer */
@@ -430,7 +430,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get customer by phone */
+        /** Look up one member by exact phone — the POS till path */
         get: operations["CustomersController_findByPhone"];
         put?: never;
         post?: never;
@@ -468,7 +468,11 @@ export interface paths {
         get: operations["CustomersController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Erase a member on PDPA request by anonymizing the record
+         * @description Clears the phone, name and points and stamps anonymizedAt. The row itself stays so orders, revenue and the ledger are unchanged, and tax-invoice details on those orders are retained under the Revenue Code.
+         */
+        delete: operations["CustomersController_anonymize"];
         options?: never;
         head?: never;
         /** Update customer */
@@ -535,6 +539,23 @@ export interface paths {
         };
         /** Get accounting profit and loss */
         get: operations["AccountingController_getProfitLoss"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accounting/trial-balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trial balance — every account balance and the debit/credit totals */
+        get: operations["AccountingController_getTrialBalance"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1508,6 +1529,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/reports/food-cost-actual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Actual food cost and gross margin across recorded orders */
+        get: operations["ReportsController_getFoodCostActual"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/reports/executive-summary": {
         parameters: {
             query?: never;
@@ -1944,24 +1982,16 @@ export interface components {
             product?: components["schemas"]["OrderProductSummaryDto"];
             modifiers?: components["schemas"]["OrderItemModifierResponseDto"][];
         };
-        CustomerResponseDto: {
+        OrderCustomerSummaryDto: {
             /** @example 1 */
             id: number;
-            /** @example 0812345678 */
-            phone: string;
             /** @example Jane Customer */
             name: string;
-            /** @example 120 */
-            points: number;
             /**
              * @example REGULAR
              * @enum {string}
              */
             tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
         };
         BranchResponseDto: {
             /** @example 1 */
@@ -2035,9 +2065,23 @@ export interface components {
             /** Format: date-time */
             createdAt: string;
             items?: components["schemas"]["OrderItemResponseDto"][];
-            customer?: components["schemas"]["CustomerResponseDto"] | null;
+            customer?: components["schemas"]["OrderCustomerSummaryDto"] | null;
             branch?: components["schemas"]["BranchResponseDto"];
             promotion?: components["schemas"]["OrderPromotionSummaryDto"] | null;
+        };
+        PaginatedResponseDto: {
+            /**
+             * @description Rows matching the query
+             * @example 412
+             */
+            total: number;
+            /**
+             * @description Rows returned in this page
+             * @example 50
+             */
+            limit: number;
+            /** @example 0 */
+            offset: number;
         };
         UpdateOrderStatusDto: Record<string, never>;
         RefundOrderDto: Record<string, never>;
@@ -2129,6 +2173,25 @@ export interface components {
         ReceivePurchaseOrderDto: Record<string, never>;
         PayPurchaseOrderDto: Record<string, never>;
         CreateCustomerDto: Record<string, never>;
+        CustomerResponseDto: {
+            /** @example 1 */
+            id: number;
+            /** @example 0812345678 */
+            phone: string;
+            /** @example Jane Customer */
+            name: string;
+            /** @example 120 */
+            points: number;
+            /**
+             * @example REGULAR
+             * @enum {string}
+             */
+            tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
         Customer360FavoriteDrinkDto: {
             /** @example Latte */
             name: string;
@@ -2250,6 +2313,65 @@ export interface components {
             revenue: number;
             /** @example 92000 */
             expense: number;
+        };
+        TrialBalanceAccountResponseDto: {
+            /** @example 3 */
+            accountId: number;
+            /** @example 1030 */
+            code: string;
+            /** @example Inventory */
+            name: string;
+            /**
+             * @example ASSET
+             * @enum {string}
+             */
+            type: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE";
+            /**
+             * @description Side the account balance normally sits on
+             * @example DEBIT
+             * @enum {string}
+             */
+            normalBalance: "DEBIT" | "CREDIT";
+            /**
+             * @description Sum of all debit lines
+             * @example 48250.75
+             */
+            debit: number;
+            /**
+             * @description Sum of all credit lines
+             * @example 12100.5
+             */
+            credit: number;
+            /**
+             * @description Net balance on the account's normal side
+             * @example 36150.25
+             */
+            balance: number;
+        };
+        TrialBalanceResponseDto: {
+            /**
+             * @description BRANCH excludes chain-level entries, so it is a partial view
+             * @example CHAIN
+             * @enum {string}
+             */
+            scope: "CHAIN" | "BRANCH";
+            /** @example 1 */
+            branchId: number | null;
+            /**
+             * @description Inclusive cut-off date; null means every posted entry
+             * @example 2026-07-25
+             */
+            asOf: string | null;
+            accounts: components["schemas"]["TrialBalanceAccountResponseDto"][];
+            /** @example 412500.25 */
+            totalDebit: number;
+            /** @example 412500.25 */
+            totalCredit: number;
+            /**
+             * @description True when total debits equal total credits
+             * @example true
+             */
+            isBalanced: boolean;
         };
         SeedAccountsResponseDto: {
             /** @example true */
@@ -2891,6 +3013,20 @@ export interface components {
             payroll: number;
             /** @example 70000 */
             netProfit: number;
+        };
+        FoodCostActualResponseDto: {
+            /** @example 412 */
+            orderCount: number;
+            /** @example 198500 */
+            totalRevenue: number;
+            /** @example 61535 */
+            totalCogs: number;
+            /** @example 136965 */
+            grossProfit: number;
+            /** @example 31 */
+            actualFoodCostPercent: number;
+            /** @example 69 */
+            grossMarginPercent: number;
         };
         ExecutiveSummaryTopBranchDto: {
             /** @example 1 */
@@ -4023,8 +4159,14 @@ export interface operations {
     };
     OrdersController_findAll: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                branchId?: number;
+                /** @description Oldest order date to include; defaults to 14 days back */
+                since?: string;
             };
             header?: never;
             path?: never;
@@ -4038,7 +4180,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OrderResponseDto"][];
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["OrderResponseDto"][];
+                    };
                 };
             };
             /** @description Bad request */
@@ -5651,6 +5795,73 @@ export interface operations {
             };
         };
     };
+    CustomersController_anonymize: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Customer anonymized */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
     CustomersController_update: {
         parameters: {
             query?: never;
@@ -5939,6 +6150,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProfitLossMonthResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AccountingController_getTrialBalance: {
+        parameters: {
+            query?: {
+                branchId?: number;
+                /** @description Inclusive cut-off date in YYYY-MM-DD form */
+                asOf?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Trial balance retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrialBalanceResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -10538,6 +10818,73 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ReportsProfitLossResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getFoodCostActual: {
+        parameters: {
+            query: {
+                branchId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Actual food cost retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodCostActualResponseDto"];
                 };
             };
             /** @description Bad request */

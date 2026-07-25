@@ -20,6 +20,11 @@ export const DEFAULT_CHART_OF_ACCOUNTS = [
     name: 'Production Cost Variance',
     type: 'EXPENSE' as const,
   },
+  {
+    code: '5035',
+    name: 'Purchase Price Variance',
+    type: 'EXPENSE' as const,
+  },
   { code: '5040', name: 'Inventory Shrinkage', type: 'EXPENSE' as const },
   { code: '5050', name: 'Operating Expenses', type: 'EXPENSE' as const },
 ];

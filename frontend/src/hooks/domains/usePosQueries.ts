@@ -3,7 +3,7 @@ import { PRODUCT_ENDPOINTS } from "@/lib/endpoints/products";
 import { PROMOTION_ENDPOINTS, CUSTOMER_ENDPOINTS } from "@/lib/endpoints/crm";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAPI } from '@/lib/api';
-import type { Order, OrderStatus } from '@/types/api';
+import type { Order, OrderPage, OrderStatus } from '@/types/api';
 import { KDS_STATUSES, mergeKdsOrders, normalizeKdsOrders } from '@/lib/kds-utils';
 import {
   invalidateNavCounts,
@@ -87,7 +87,8 @@ export const useCreateOrder = () => {
 export const useBranchOrders = (branchId?: number) => {
   return useQuery({
     queryKey: orderKeys.branch(branchId),
-    queryFn: () => fetchAPI(ORDER_ENDPOINTS.list(branchId)),
+    queryFn: (): Promise<OrderPage> =>
+      fetchAPI(ORDER_ENDPOINTS.list({ branchId })),
     enabled: !!branchId,
   });
 };

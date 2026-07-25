@@ -14,9 +14,9 @@ import { BranchEmptyState } from "@/components/shared/branch-empty-state";
 import { Receipt } from "lucide-react";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/errors";
+import { infoBannerClassName, infoBannerTextClassName } from "@/lib/theme/hub-banners";
 import {
   filterPosOrders,
-  filterRecentOrders,
   hasPosOrderFilters,
 } from "@/lib/filters/pos-order-filters";
 import { posSectionPanelClassName } from "@/lib/theme/immersive";
@@ -36,13 +36,15 @@ export default function OrdersPageClient() {
   const branchId = activeBranchId ? Number(activeBranchId) : undefined;
   const branchName = (branches as Branch[]).find((b) => b.id === branchId)?.name;
   const {
-    data: orders = [],
+    data: ordersPage,
     isLoading,
     isError,
     error,
     refetch,
     isFetching,
   } = useBranchOrders(branchId);
+  const orders = useMemo(() => ordersPage?.items ?? [], [ordersPage]);
+  const truncatedCount = (ordersPage?.total ?? 0) - orders.length;
   const voidMutation = useVoidOrder();
   const refundMutation = useRefundOrder();
 
@@ -55,15 +57,13 @@ export default function OrdersPageClient() {
 
   const canManage = user?.role === "SUPER_ADMIN" || user?.role === "MANAGER";
 
-  const recentOrders = useMemo(() => filterRecentOrders(orders), [orders]);
-
   const filteredOrders = useMemo(
     () =>
-      filterPosOrders(recentOrders, {
+      filterPosOrders(orders, {
         search: deferredSearch,
         statusFilter,
       }),
-    [recentOrders, deferredSearch, statusFilter],
+    [orders, deferredSearch, statusFilter],
   );
 
   const hasActiveFilters = hasPosOrderFilters({ search, statusFilter });
@@ -121,6 +121,16 @@ export default function OrdersPageClient() {
             loading={isFetching}
           />
 
+          {truncatedCount > 0 && (
+            <div className={infoBannerClassName("py-3")}>
+              <p className={infoBannerTextClassName()}>
+                Showing the {orders.length} most recent orders of{" "}
+                {ordersPage?.total} in this window. Search and filters apply to
+                the loaded page.
+              </p>
+            </div>
+          )}
+
           <HubListPage.Toolbar
             search={search}
             onSearchChange={setSearch}
@@ -146,7 +156,7 @@ export default function OrdersPageClient() {
             isFetching={isFetching}
             hasActiveFilters={hasActiveFilters}
             filteredCount={filteredOrders.length}
-            totalCount={recentOrders.length}
+            totalCount={orders.length}
             itemLabel="order"
             emptyLabel="No orders in the last 14 days"
           />

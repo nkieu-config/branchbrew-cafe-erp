@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { OrderStatus, PaymentMethod } from '@prisma/client';
 import { BranchResponseDto } from '../../branches/dto/branch-response.dto';
-import { CustomerResponseDto } from '../../customers/dto/customer-response.dto';
+import { OrderCustomerSummaryDto } from '../../customers/dto/customer-response.dto';
 
 export class OrderItemModifierResponseDto {
   @ApiProperty({ example: 1 })
@@ -158,8 +158,12 @@ export class OrderResponseDto {
   @ApiProperty({ type: OrderItemResponseDto, isArray: true, required: false })
   items?: OrderItemResponseDto[];
 
-  @ApiProperty({ type: CustomerResponseDto, required: false, nullable: true })
-  customer?: CustomerResponseDto | null;
+  @ApiProperty({
+    type: OrderCustomerSummaryDto,
+    required: false,
+    nullable: true,
+  })
+  customer?: OrderCustomerSummaryDto | null;
 
   @ApiProperty({ type: BranchResponseDto, required: false })
   branch?: BranchResponseDto;

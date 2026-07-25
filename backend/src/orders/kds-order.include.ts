@@ -6,5 +6,5 @@ export const kdsOrderInclude = {
       modifiers: true,
     },
   },
-  customer: true,
+  customer: { select: { id: true, name: true, tier: true } },
 } as const;

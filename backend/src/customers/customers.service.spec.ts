@@ -5,14 +5,22 @@ import {
   MockPrismaService,
   PrismaServiceMockProvider,
 } from '../prisma/prisma.service.mock';
+import { AuditService } from '../audit/audit.service';
 
 describe('CustomersService', () => {
   let service: CustomersService;
   let prisma: MockPrismaService;
+  let audit: { logAction: jest.Mock };
 
   beforeEach(async () => {
+    audit = { logAction: jest.fn() };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CustomersService, PrismaServiceMockProvider],
+      providers: [
+        CustomersService,
+        PrismaServiceMockProvider,
+        { provide: AuditService, useValue: audit },
+      ],
     }).compile();
 
     service = module.get(CustomersService);
@@ -109,6 +117,78 @@ describe('CustomersService', () => {
       await service.handleOrderCreated({ customerId: null } as any);
 
       expect(prisma.order.aggregate).not.toHaveBeenCalled();
+    });
+  });
+  describe('anonymize', () => {
+    beforeEach(() => {
+      prisma.$transaction.mockImplementation(async (cb: Function) =>
+        cb(prisma),
+      );
+    });
+
+    it('clears the identifying fields and stamps the erasure', async () => {
+      prisma.customer.findUnique.mockResolvedValue({
+        id: 7,
+        tier: 'GOLD',
+        anonymizedAt: null,
+        _count: { orders: 12 },
+      } as any);
+      prisma.customer.update.mockResolvedValue({ id: 7 } as any);
+
+      await service.anonymize(7, 99);
+
+      expect(prisma.customer.update).toHaveBeenCalledWith({
+        where: { id: 7 },
+        data: {
+          phone: 'deleted-7',
+          name: 'Deleted customer',
+          points: 0,
+          anonymizedAt: expect.any(Date),
+        },
+      });
+    });
+
+    it('records who erased the record and what it held', async () => {
+      prisma.customer.findUnique.mockResolvedValue({
+        id: 7,
+        tier: 'GOLD',
+        anonymizedAt: null,
+        _count: { orders: 12 },
+      } as any);
+      prisma.customer.update.mockResolvedValue({ id: 7 } as any);
+
+      await service.anonymize(7, 99);
+
+      expect(audit.logAction).toHaveBeenCalledWith(
+        99,
+        'ANONYMIZE_CUSTOMER',
+        'Customer',
+        7,
+        { tier: 'GOLD', orderCount: 12 },
+        prisma,
+      );
+    });
+
+    it('refuses to erase the same record twice', async () => {
+      prisma.customer.findUnique.mockResolvedValue({
+        id: 7,
+        tier: 'GOLD',
+        anonymizedAt: new Date(),
+        _count: { orders: 0 },
+      } as any);
+
+      await expect(service.anonymize(7, 99)).rejects.toThrow(
+        'already anonymized',
+      );
+      expect(prisma.customer.update).not.toHaveBeenCalled();
+    });
+
+    it('rejects an unknown customer', async () => {
+      prisma.customer.findUnique.mockResolvedValue(null);
+
+      await expect(service.anonymize(404, 99)).rejects.toThrow(
+        'Customer not found',
+      );
     });
   });
 });

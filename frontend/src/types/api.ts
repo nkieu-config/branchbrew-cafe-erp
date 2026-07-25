@@ -33,6 +33,7 @@ export type {
   Order,
   OrderItem,
   OrderItemModifier,
+  OrderPage,
   OrderProductSummary,
   OrderPromotionSummary,
 } from './orders';
@@ -82,6 +83,7 @@ export type {
   ExecutiveSummaryExpiryAlert,
   ExecutiveSummaryLowStockAlert,
   ExecutiveSummaryTopBranch,
+  FoodCostActual,
   ReportsProfitLoss,
   SalesTrendPoint,
   TopProductReport,

@@ -18,5 +18,13 @@ test.describe("finance business flow", () => {
     await expect(locators.financeSettlements(page)).toBeVisible();
     await expect(locators.financeExportSales(page)).toBeVisible();
     await expect(locators.financeExpenseSearch(page)).toBeVisible();
+
+    await page.getByRole("link", { name: "Trial Balance" }).click();
+    await expect(page).toHaveURL(/\/finance\/trial-balance/);
+
+    // The seeded ledger must balance in the real UI, not only in unit tests.
+    await expect(locators.trialBalanceStatus(page)).toContainText(
+      "Debits equal credits",
+    );
   });
 });

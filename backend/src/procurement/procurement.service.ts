@@ -318,6 +318,7 @@ export class ProcurementService {
           AUDIT_TARGETS.PURCHASE_ORDER,
           poId,
           { poNumber: po.poNumber },
+          tx,
         );
       }
 
@@ -327,6 +328,28 @@ export class ProcurementService {
             sum.plus(dec(item.unitPrice).times(item.quantityRequested)),
           dec(0),
         ),
+      );
+
+      const standardCosts = await tx.ingredient.findMany({
+        where: { id: { in: po.items.map((item) => item.ingredientId) } },
+        select: { id: true, costPerUnit: true },
+      });
+      const standardCostByIngredient = new Map(
+        standardCosts.map((ingredient) => [
+          ingredient.id,
+          dec(ingredient.costPerUnit),
+        ]),
+      );
+
+      const standardAmount = roundMoney(
+        po.items.reduce((sum, item) => {
+          const standardCost =
+            standardCostByIngredient.get(item.ingredientId) ?? dec(0);
+          const unitCost = standardCost.isZero()
+            ? dec(item.unitPrice)
+            : standardCost;
+          return sum.plus(unitCost.times(item.quantityRequested));
+        }, dec(0)),
       );
 
       if (totalAmount > 0) {
@@ -339,6 +362,7 @@ export class ProcurementService {
               poNumber: po.poNumber,
               branchId: po.branchId,
               totalAmount,
+              standardAmount,
             }),
           },
         );

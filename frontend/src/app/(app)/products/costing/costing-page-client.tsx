@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useDeferredValue } from "react";
 import { useSearchParams } from "next/navigation";
-import { useOrders } from "@/hooks/domains/useReportsQueries";
+import { useFoodCostActual } from "@/hooks/domains/useReportsQueries";
 import { useProductsSummaryQueries } from "@/hooks/domains/useProductsSummaryQueries";
 import { FoodCostMarginPanel } from "@/components/products/FoodCostMarginPanel";
 import { FoodCostTable } from "@/components/products/FoodCostTable";
@@ -35,7 +35,7 @@ export default function CostingPageClient() {
     refetch,
     isFetching,
   } = useProductsSummaryQueries();
-  const { data: orders = [], isLoading: ordersLoading } = useOrders();
+  const { data: foodCostActual, isLoading: foodCostLoading } = useFoodCostActual();
 
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
@@ -97,9 +97,9 @@ export default function CostingPageClient() {
         {!isLoading && !isError && (
           <HubListPage.Banner>
             <FoodCostMarginPanel
-              orders={orders}
+              actual={foodCostActual}
               theoreticalAvgPercent={summary.foodCost.avgPercent}
-              ordersLoading={ordersLoading}
+              isLoading={foodCostLoading}
             />
           </HubListPage.Banner>
         )}
