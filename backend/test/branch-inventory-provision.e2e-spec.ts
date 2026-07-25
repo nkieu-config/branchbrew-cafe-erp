@@ -82,7 +82,7 @@ describeIfDatabase('Branch inventory auto-provision (e2e)', () => {
     expect(rows).toHaveLength(ingredientIds.length);
     expect(rows.every((r) => r.stock === 0)).toBe(true);
     expect(rows.every((r) => r.minStock === 100)).toBe(true);
-    expect(rows.map((r) => r.ingredientId).sort()).toEqual(
+    expect(rows.map((r) => r.ingredientId).sort((a, b) => a - b)).toEqual(
       [...ingredientIds].sort((a, b) => a - b),
     );
   });
