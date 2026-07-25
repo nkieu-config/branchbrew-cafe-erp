@@ -1,0 +1,27 @@
+# Suppressions are the exception, not the habit. Each entry states why the code
+# path is unreachable here and what has to happen before the line can be deleted.
+
+# fast-uri 3.1.2 — Unicode hostname canonicalisation bypass.
+#
+# Reached only as @prisma/client -> prisma -> @prisma/dev -> @prisma/streams-local
+# -> ajv -> fast-uri. That ajv instance validates Prisma's own internal config
+# schemas; no request data and no runtime code path in this service reaches it.
+# Patched releases exist (3.1.4, 4.1.1) but nothing in this repo can select them:
+# npm ignores the `overrides` block in this workspace, and pinning fast-uri
+# directly only adds a nested copy while the hoisted 3.1.2 that ajv resolves
+# stays put — verified by building the prod-deps image and reading both copies.
+#
+# Remove when a Prisma release pulls a patched fast-uri transitively.
+CVE-2026-13676
+CVE-2026-16221
+
+# sharp 0.34.5 — inherited libvips vulnerabilities.
+#
+# The advisory scopes the impact to "those processing untrusted input". This app
+# imports next/image zero times and configures no remotePatterns, so nothing is
+# ever handed to the optimiser: sharp is present only because Next installs it as
+# an optional dependency. It cannot be upgraded on its own either, since Next
+# 16.2.11 declares sharp ^0.34.5, which excludes the fixed 0.35.0.
+#
+# Remove when Next widens that range to a patched sharp.
+GHSA-f88m-g3jw-g9cj
