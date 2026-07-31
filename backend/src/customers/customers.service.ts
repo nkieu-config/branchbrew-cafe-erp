@@ -73,12 +73,6 @@ export class CustomersService {
   async findOne(id: number) {
     return this.prisma.customer.findUnique({
       where: { id },
-      include: {
-        orders: {
-          orderBy: { createdAt: 'desc' },
-          take: 10,
-        },
-      },
     });
   }
 
@@ -165,14 +159,19 @@ export class CustomersService {
         orders: {
           orderBy: { createdAt: 'desc' },
           take: 5,
-          include: {
-            items: { include: { product: true } },
+          select: {
+            id: true,
+            netAmount: true,
+            createdAt: true,
+            items: { select: { id: true, productId: true, quantity: true } },
           },
         },
       },
     });
 
     if (!customer) throw new BadRequestException('Customer not found');
+
+    const { orders: recentOrders, ...customerProfile } = customer;
 
     // Calculate Lifetime Spend via Aggregation
     const agg = await this.prisma.order.aggregate({
@@ -237,8 +236,8 @@ export class CustomersService {
     // Churn Risk
     let churnRisk = 'LOW';
     let daysSinceLastOrder = 0;
-    if (customer.orders.length > 0) {
-      const lastOrderDate = customer.orders[0].createdAt;
+    if (recentOrders.length > 0) {
+      const lastOrderDate = recentOrders[0].createdAt;
       const msDiff = new Date().getTime() - lastOrderDate.getTime();
       daysSinceLastOrder = Math.floor(msDiff / (1000 * 3600 * 24));
 
@@ -249,7 +248,7 @@ export class CustomersService {
     }
 
     return {
-      customer,
+      customer: customerProfile,
       lifetimeSpend,
       nextTier,
       amountToNextTier,
@@ -257,7 +256,7 @@ export class CustomersService {
       favoriteDrinks,
       churnRisk,
       daysSinceLastOrder,
-      recentOrders: customer.orders,
+      recentOrders,
     };
   }
 }

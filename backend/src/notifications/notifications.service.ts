@@ -12,7 +12,7 @@ const ROLE_RANK: Record<Role, number> = {
   SUPER_ADMIN: 2,
 };
 
-function visibleMinRoles(role: Role): Role[] {
+export function visibleMinRoles(role: Role): Role[] {
   return (Object.keys(ROLE_RANK) as Role[]).filter(
     (minRole) => ROLE_RANK[minRole] <= ROLE_RANK[role],
   );

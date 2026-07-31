@@ -78,4 +78,17 @@ describeIfDatabase('Auth cookies (e2e)', () => {
     await agent.post('/auth/logout').expect(204);
     await agent.get('/auth/me').expect(401);
   });
+
+  it('refuses form-encoded bodies, so a cross-site form POST cannot drive a state change', async () => {
+    const agent = request.agent(app.getHttpServer());
+
+    await agent
+      .post('/auth/login')
+      .type('form')
+      .send({ email: testEmail, password: testPassword })
+      .expect(400);
+
+    const cookieHeader = await agent.get('/auth/me').expect(401);
+    expect(cookieHeader.body.statusCode).toBe(401);
+  });
 });

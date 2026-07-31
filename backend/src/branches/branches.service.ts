@@ -4,6 +4,7 @@ import {
   assertBranchAccess,
   BranchScopedUser,
 } from '../auth/branch-scope.util';
+import { SAFE_USER_SELECT } from '../common/user-select';
 import { provisionBranchInventoryForBranch } from '../common/helpers/branch-inventory-provision.helper';
 import { WasteDisposalHelper } from '../inventory/helpers/waste-disposal.helper';
 
@@ -108,18 +109,7 @@ export class BranchesService {
         fromBranch: true,
         toBranch: true,
         ingredient: true,
-        requestedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            role: true,
-            branchId: true,
-            employmentType: true,
-            hourlyRate: true,
-            baseSalary: true,
-          },
-        },
+        requestedBy: { select: SAFE_USER_SELECT },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -134,18 +124,7 @@ export class BranchesService {
         fromBranch: true,
         toBranch: true,
         ingredient: true,
-        requestedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            role: true,
-            branchId: true,
-            employmentType: true,
-            hourlyRate: true,
-            baseSalary: true,
-          },
-        },
+        requestedBy: { select: SAFE_USER_SELECT },
       },
       orderBy: { createdAt: 'desc' },
     });

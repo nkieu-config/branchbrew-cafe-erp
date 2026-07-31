@@ -10,12 +10,20 @@ import { JwtService } from '@nestjs/jwt';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrderCreatedEvent } from '../orders/events/order-created.event';
 import { OrderStatusUpdatedEvent } from '../orders/events/order-status-updated.event';
-import { NOTIFICATION_CREATED_EVENT } from '../notifications/notifications.service';
+import {
+  NOTIFICATION_CREATED_EVENT,
+  visibleMinRoles,
+} from '../notifications/notifications.service';
 import type { Notification } from '@prisma/client';
 import { JwtPayload } from '../auth/interfaces/request-with-user.interface';
 import { Role } from '@prisma/client';
 import { parseAuthCookie } from '../auth/auth-cookie.util';
+import { PrismaService } from '../prisma/prisma.service';
 import { getCorsOrigins } from '../config/runtime-config';
+
+function notificationRoom(branchId: number, minRole: Role): string {
+  return `branch:${branchId}:notify:${minRole}`;
+}
 
 @WebSocketGateway({
   cors: {
@@ -33,9 +41,21 @@ export class RealtimeGateway
 
   private logger: Logger = new Logger('RealtimeGateway');
 
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly prisma: PrismaService,
+  ) {}
 
-  handleConnection(client: Socket) {
+  private async isTokenCurrent(payload: JwtPayload): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.sub },
+      select: { tokenVersion: true },
+    });
+
+    return !!user && (payload.tokenVersion ?? 0) === user.tokenVersion;
+  }
+
+  async handleConnection(client: Socket) {
     const token = this.extractSocketToken(client);
     if (!token) {
       this.logger.warn(`WS rejected: missing token (${client.id})`);
@@ -45,9 +65,17 @@ export class RealtimeGateway
 
     let user: JwtPayload;
     try {
-      user = this.jwtService.verify<JwtPayload>(token);
+      user = this.jwtService.verify<JwtPayload>(token, {
+        algorithms: ['HS256'],
+      });
     } catch {
       this.logger.warn(`WS rejected: invalid token (${client.id})`);
+      client.disconnect(true);
+      return;
+    }
+
+    if (!(await this.isTokenCurrent(user))) {
+      this.logger.warn(`WS rejected: revoked token (${client.id})`);
       client.disconnect(true);
       return;
     }
@@ -76,8 +104,12 @@ export class RealtimeGateway
     }
 
     (client.data as { user?: JwtPayload }).user = user;
+    void client.join(`user:${user.sub}`);
     if (branchId != null) {
       void client.join(`branch:${branchId}`);
+      for (const minRole of visibleMinRoles(user.role)) {
+        void client.join(notificationRoom(branchId, minRole));
+      }
     }
 
     this.logger.log(
@@ -99,17 +131,22 @@ export class RealtimeGateway
 
   @OnEvent(NOTIFICATION_CREATED_EVENT, { async: true })
   handleNotificationCreated(notification: Notification) {
-    if (notification.branchId == null) return;
-    this.server
-      .to(`branch:${notification.branchId}`)
-      .emit('notificationCreated', {
-        id: notification.id,
-        type: notification.type,
-        title: notification.title,
-        link: notification.link,
-        userId: notification.userId,
-        minRole: notification.minRole,
-      });
+    const room =
+      notification.userId != null
+        ? `user:${notification.userId}`
+        : notification.branchId != null
+          ? notificationRoom(notification.branchId, notification.minRole)
+          : null;
+    if (room == null) return;
+
+    this.server.to(room).emit('notificationCreated', {
+      id: notification.id,
+      type: notification.type,
+      title: notification.title,
+      link: notification.link,
+      userId: notification.userId,
+      minRole: notification.minRole,
+    });
   }
 
   @OnEvent('order.status.updated', { async: true })

@@ -191,4 +191,71 @@ describe('CustomersService', () => {
       );
     });
   });
+
+  describe('getCustomer360', () => {
+    const customerRow = {
+      id: 1,
+      phone: '0812345678',
+      name: 'Jane',
+      points: 10,
+      tier: 'REGULAR',
+      orders: [
+        {
+          id: 9,
+          netAmount: 150,
+          createdAt: new Date('2026-07-01T00:00:00Z'),
+          items: [{ id: 3, productId: 7, quantity: 2 }],
+        },
+      ],
+    };
+
+    beforeEach(() => {
+      prisma.customer.findUnique.mockResolvedValue(customerRow as any);
+      prisma.order.aggregate.mockResolvedValue({
+        _sum: { netAmount: 150 },
+      } as any);
+      prisma.orderItem.groupBy.mockResolvedValue([]);
+    });
+
+    it('asks the database only for the fields the 360 contract declares', async () => {
+      await service.getCustomer360(1);
+
+      expect(prisma.customer.findUnique).toHaveBeenCalledWith({
+        where: { id: 1 },
+        include: {
+          orders: {
+            orderBy: { createdAt: 'desc' },
+            take: 5,
+            select: {
+              id: true,
+              netAmount: true,
+              createdAt: true,
+              items: {
+                select: { id: true, productId: true, quantity: true },
+              },
+            },
+          },
+        },
+      });
+    });
+
+    it('does not repeat the order history inside the customer profile', async () => {
+      const result = await service.getCustomer360(1);
+
+      expect(result.customer).not.toHaveProperty('orders');
+      expect(result.recentOrders).toHaveLength(1);
+    });
+  });
+
+  describe('findOne', () => {
+    it('does not pull order history for the customer detail read', async () => {
+      prisma.customer.findUnique.mockResolvedValue({ id: 1 } as any);
+
+      await service.findOne(1);
+
+      expect(prisma.customer.findUnique).toHaveBeenCalledWith({
+        where: { id: 1 },
+      });
+    });
+  });
 });

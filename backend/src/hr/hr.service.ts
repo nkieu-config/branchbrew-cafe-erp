@@ -1,6 +1,7 @@
 import {
   Injectable,
   BadRequestException,
+  ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
@@ -10,6 +11,7 @@ import {
   assertBranchAccess,
   BranchScopedUser,
 } from '../auth/branch-scope.util';
+import { SAFE_USER_SELECT } from '../common/user-select';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { dec, toNum, roundMoney, sumMoney } from '../common/decimal.util';
@@ -109,7 +111,7 @@ export class HrService {
   async getShiftsByBranch(branchId: number) {
     return this.prisma.shift.findMany({
       where: { branchId },
-      include: { user: true },
+      include: { user: { select: SAFE_USER_SELECT } },
       orderBy: { startTime: 'asc' },
     });
   }
@@ -170,7 +172,13 @@ export class HrService {
       include: { user: { select: { branchId: true } } },
     });
     if (!leave) throw new NotFoundException('Leave request not found');
-    if (leave.user.branchId != null) {
+    if (leave.user.branchId == null) {
+      if (user.role !== 'SUPER_ADMIN') {
+        throw new ForbiddenException(
+          'You do not have access to this leave request.',
+        );
+      }
+    } else {
       assertBranchAccess(user, leave.user.branchId);
     }
 
@@ -382,7 +390,13 @@ export class HrService {
         include: { payslips: true },
       });
       if (!run) throw new NotFoundException('Payroll run not found');
-      if (run.branchId != null) {
+      if (run.branchId == null) {
+        if (user.role !== 'SUPER_ADMIN') {
+          throw new ForbiddenException(
+            'You do not have access to this payroll run.',
+          );
+        }
+      } else {
         assertBranchAccess(user, run.branchId);
       }
       if (run.status !== 'DRAFT') {

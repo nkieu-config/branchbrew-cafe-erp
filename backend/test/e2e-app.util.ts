@@ -1,4 +1,5 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import cookieParser from 'cookie-parser';
 import { App } from 'supertest/types';
@@ -28,7 +29,10 @@ export async function createE2eApp(): Promise<INestApplication<App>> {
     .useValue({ markExpiredBatches: jest.fn() })
     .compile();
 
-  const app = moduleFixture.createNestApplication();
+  const app = moduleFixture.createNestApplication<NestExpressApplication>({
+    bodyParser: false,
+  });
+  app.useBodyParser('json', { limit: '100kb' });
   app.use(requestContextMiddleware);
   app.use(cookieParser());
   app.useGlobalPipes(

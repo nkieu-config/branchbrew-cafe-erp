@@ -148,6 +148,7 @@ export class FinanceController {
   }
 
   @Get('export/sales')
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'Export sales report as CSV' })
   @ApiOkResponse({ description: 'CSV export returned' })
   async exportSales(

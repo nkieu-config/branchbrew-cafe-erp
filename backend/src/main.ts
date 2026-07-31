@@ -61,7 +61,6 @@ async function bootstrap() {
   });
 
   app.useBodyParser('json', { limit: '100kb' });
-  app.useBodyParser('urlencoded', { extended: true, limit: '100kb' });
 
   app.set('trust proxy', 1);
 

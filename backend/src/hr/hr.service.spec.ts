@@ -5,7 +5,7 @@ import {
   MockPrismaService,
   PrismaServiceMockProvider,
 } from '../prisma/prisma.service.mock';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { AuditService } from '../audit/audit.service';
 import { OutboxService } from '../outbox/outbox.service';
@@ -216,6 +216,69 @@ describe('HrService', () => {
           baseSalary: true,
         },
       });
+    });
+  });
+
+  describe('getShiftsByBranch', () => {
+    it('never exposes compensation fields to branch peers', async () => {
+      prisma.shift.findMany.mockResolvedValue([]);
+
+      await service.getShiftsByBranch(1);
+
+      expect(prisma.shift.findMany).toHaveBeenCalledWith({
+        where: { branchId: 1 },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              role: true,
+              branchId: true,
+            },
+          },
+        },
+        orderBy: { startTime: 'asc' },
+      });
+    });
+  });
+
+  describe('processLeaveRequest', () => {
+    const branchlessLeave = {
+      id: 1,
+      userId: 5,
+      type: 'SICK',
+      user: { branchId: null },
+    };
+
+    it('denies a manager acting on a branchless user rather than skipping the check', async () => {
+      prisma.leaveRequest.findUnique.mockResolvedValue(branchlessLeave as any);
+
+      await expect(
+        service.processLeaveRequest(1, 'APPROVED', {
+          userId: 9,
+          role: 'MANAGER',
+          branchId: 1,
+        }),
+      ).rejects.toThrow(ForbiddenException);
+
+      expect(prisma.leaveRequest.update).not.toHaveBeenCalled();
+    });
+
+    it('still lets a super admin act on a branchless user', async () => {
+      prisma.leaveRequest.findUnique.mockResolvedValue(branchlessLeave as any);
+      prisma.leaveRequest.update.mockResolvedValue({
+        id: 1,
+        status: 'APPROVED',
+      } as any);
+
+      await service.processLeaveRequest(1, 'APPROVED', {
+        userId: 1,
+        role: 'SUPER_ADMIN',
+        branchId: null,
+      });
+
+      expect(prisma.leaveRequest.update).toHaveBeenCalled();
     });
   });
 });

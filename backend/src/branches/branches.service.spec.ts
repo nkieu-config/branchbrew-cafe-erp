@@ -68,4 +68,44 @@ describe('BranchesService', () => {
       expect(prisma.auditLog.create).not.toHaveBeenCalled();
     });
   });
+
+  describe('transfer listings', () => {
+    const expectedInclude = {
+      fromBranch: true,
+      toBranch: true,
+      ingredient: true,
+      requestedBy: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          branchId: true,
+        },
+      },
+    } as const;
+
+    it('never exposes the requester compensation in the branch listing', async () => {
+      prisma.stockTransfer.findMany.mockResolvedValue([]);
+
+      await service.getTransfers(1);
+
+      expect(prisma.stockTransfer.findMany).toHaveBeenCalledWith({
+        where: { OR: [{ fromBranchId: 1 }, { toBranchId: 1 }] },
+        include: expectedInclude,
+        orderBy: { createdAt: 'desc' },
+      });
+    });
+
+    it('never exposes the requester compensation in the chain-wide listing', async () => {
+      prisma.stockTransfer.findMany.mockResolvedValue([]);
+
+      await service.getAllTransfers();
+
+      expect(prisma.stockTransfer.findMany).toHaveBeenCalledWith({
+        include: expectedInclude,
+        orderBy: { createdAt: 'desc' },
+      });
+    });
+  });
 });

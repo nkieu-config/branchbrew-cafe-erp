@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { toNum, roundMoney } from '../common/decimal.util';
+import { escapeCsvRow } from '../common/csv.util';
 import { Parser } from '@json2csv/plainjs';
 import { Prisma } from '@prisma/client';
 import {
@@ -227,6 +228,6 @@ export class FinanceService {
     }));
 
     const json2csvParser = new Parser();
-    return json2csvParser.parse(flatOrders);
+    return json2csvParser.parse(flatOrders.map(escapeCsvRow));
   }
 }
