@@ -34,6 +34,7 @@ const PosOrderSuccessDialog = dynamic(
 import { filterActive } from "@/lib/form";
 import { pointsToDiscountAmount } from "@/lib/loyalty";
 import { toNumber } from "@/lib/money";
+import { toReceiptOrder } from "@/lib/pos-receipt";
 import type { PosCartItem } from "@/lib/pos-cart";
 import {
   getModifierExtra,
@@ -116,6 +117,7 @@ export default function PosTerminalPageClient() {
   const [taxInvoiceAddress, setTaxInvoiceAddress] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<ReceiptOrder | null>(null);
+  const [clientRequestId, setClientRequestId] = useState(() => crypto.randomUUID());
   const receiptRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
@@ -294,20 +296,13 @@ export default function PosTerminalPageClient() {
         taxInvoiceName: isTaxInvoiceRequested ? taxInvoiceName : undefined,
         taxInvoiceTaxId: isTaxInvoiceRequested ? taxInvoiceTaxId : undefined,
         taxInvoiceAddress: isTaxInvoiceRequested ? taxInvoiceAddress : undefined,
+        clientRequestId,
       });
 
       toast.success("Order completed successfully!");
-      setCompletedOrder({
-        id: orderData.id,
-        queueNumber: orderData.queueNumber,
-        cashier: user?.name ?? undefined,
-        customerName: customer?.name,
-        items: cart,
-        subtotal,
-        discount: totalDiscount,
-        netTotal,
-      });
+      setCompletedOrder(toReceiptOrder(orderData, user?.name ?? undefined));
       setShowSuccess(true);
+      setClientRequestId(crypto.randomUUID());
       setCart([]);
       handleClearCRM();
       setAppliedPromo(null);

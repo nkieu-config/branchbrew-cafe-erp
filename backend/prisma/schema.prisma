@@ -392,6 +392,7 @@ model Order {
   queueDate             DateTime?     @db.Date
   refundReason          String?
   refundedAt            DateTime?
+  clientRequestId       String?       @unique
   items                 OrderItem[]
   createdAt             DateTime      @default(now())
 

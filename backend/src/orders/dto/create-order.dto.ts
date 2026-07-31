@@ -9,6 +9,7 @@ import {
   IsNotEmpty,
   Matches,
   MaxLength,
+  IsUUID,
   Min,
   IsEnum,
   ValidateIf,
@@ -87,4 +88,8 @@ export class CreateOrderDto {
   @IsString()
   @MaxLength(500)
   taxInvoiceAddress?: string;
+
+  @IsOptional()
+  @IsUUID()
+  clientRequestId?: string;
 }

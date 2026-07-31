@@ -175,6 +175,7 @@ export interface CreateOrderPayload {
   taxInvoiceName?: string;
   taxInvoiceTaxId?: string;
   taxInvoiceAddress?: string;
+  clientRequestId?: string;
 }
 
 export interface CreatePurchaseOrderPayload {
@@ -237,6 +238,12 @@ export interface ReceiptCartItem {
   product: Product;
   quantity: number;
   notes?: string;
+}
+
+export interface CreatedOrderItem {
+  product: Product;
+  quantity: number;
+  notes?: string | null;
 }
 
 export interface ReceiptOrder {

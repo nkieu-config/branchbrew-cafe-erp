@@ -30,6 +30,7 @@ export type CreateOrderInput = {
   taxInvoiceName?: string;
   taxInvoiceTaxId?: string;
   taxInvoiceAddress?: string;
+  clientRequestId?: string;
 };
 
 export type CreatedOrder = Prisma.OrderGetPayload<{

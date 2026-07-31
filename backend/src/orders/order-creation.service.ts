@@ -304,6 +304,7 @@ export class OrderCreationService {
 
         const order = await tx.order.create({
           data: {
+            clientRequestId: data.clientRequestId,
             userId: data.userId,
             branchId: data.branchId,
             status: orderStatus,
@@ -354,6 +355,13 @@ export class OrderCreationService {
         return order;
       });
     } catch (err) {
+      if (data.clientRequestId && this.isClientRequestIdConflict(err)) {
+        const existing = await this.prisma.order.findUnique({
+          where: { clientRequestId: data.clientRequestId },
+          include: createOrderInclude,
+        });
+        if (existing) return existing;
+      }
       if (
         this.isQueueNumberConflict(err) &&
         attempt < MAX_QUEUE_NUMBER_RETRIES
@@ -364,7 +372,11 @@ export class OrderCreationService {
     }
   }
 
-  private isQueueNumberConflict(err: unknown): boolean {
+  private isClientRequestIdConflict(err: unknown): boolean {
+    return this.isUniqueConflictOn(err, 'clientRequestId');
+  }
+
+  private isUniqueConflictOn(err: unknown, column: string): boolean {
     if (
       !(err instanceof Prisma.PrismaClientKnownRequestError) ||
       err.code !== 'P2002'
@@ -373,6 +385,10 @@ export class OrderCreationService {
     }
 
     const target = err.meta?.target;
-    return Array.isArray(target) && target.includes('queueNumber');
+    return Array.isArray(target) && target.includes(column);
+  }
+
+  private isQueueNumberConflict(err: unknown): boolean {
+    return this.isUniqueConflictOn(err, 'queueNumber');
   }
 }
