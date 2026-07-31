@@ -11,6 +11,7 @@ import {
   STALE_PROCESSING_MS,
 } from './outbox.constants';
 import { dispatchOutboxEvent } from './outbox-event.registry';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class OutboxProcessor {
@@ -20,6 +21,7 @@ export class OutboxProcessor {
   constructor(
     private readonly prisma: PrismaService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly notifications: NotificationsService,
   ) {}
 
   @Cron(CronExpression.EVERY_SECOND)
@@ -75,7 +77,12 @@ export class OutboxProcessor {
       const isStaleClaim = event.status === 'PROCESSING';
 
       if (isStaleClaim && event.attempts >= MAX_OUTBOX_ATTEMPTS) {
-        await this.abandonStaleClaim(event.id, event.attempts, staleBefore);
+        await this.abandonStaleClaim(
+          event.id,
+          event.eventType,
+          event.attempts,
+          staleBefore,
+        );
         continue;
       }
 
@@ -136,6 +143,14 @@ export class OutboxProcessor {
             lastError: message,
           },
         });
+
+        if (!willRetry) {
+          await this.announcePermanentFailure(
+            event.id,
+            event.eventType,
+            message,
+          );
+        }
       }
     }
 
@@ -144,9 +159,12 @@ export class OutboxProcessor {
 
   private async abandonStaleClaim(
     id: number,
+    eventType: string,
     attempts: number,
     staleBefore: Date,
   ) {
+    const reason = `Abandoned after a stale PROCESSING claim at attempt ${attempts}/${MAX_OUTBOX_ATTEMPTS}`;
+
     const abandoned = await this.prisma.outboxEvent.updateMany({
       where: {
         id,
@@ -156,13 +174,41 @@ export class OutboxProcessor {
       },
       data: {
         status: 'FAILED',
-        lastError: `Abandoned after a stale PROCESSING claim at attempt ${attempts}/${MAX_OUTBOX_ATTEMPTS}`,
+        lastError: reason,
       },
     });
 
     if (abandoned.count > 0) {
       this.logger.error(
         `Outbox event ${id} abandoned: stale PROCESSING claim exhausted its ${MAX_OUTBOX_ATTEMPTS} attempts`,
+      );
+      await this.announcePermanentFailure(id, eventType, reason);
+    }
+  }
+
+  private async announcePermanentFailure(
+    eventId: number,
+    eventType: string,
+    reason: string,
+  ) {
+    try {
+      const admins = await this.prisma.user.findMany({
+        where: { role: 'SUPER_ADMIN' },
+        select: { id: true },
+      });
+
+      for (const admin of admins) {
+        await this.notifications.notifyUser({
+          userId: admin.id,
+          type: 'OUTBOX_FAILED',
+          title: `Outbox event ${eventId} (${eventType}) failed permanently`,
+          body: reason.slice(0, 500),
+          link: '/settings/audit',
+        });
+      }
+    } catch (err) {
+      this.logger.error(
+        `Could not announce outbox failure for event ${eventId}: ${err instanceof Error ? err.message : String(err)}`,
       );
     }
   }

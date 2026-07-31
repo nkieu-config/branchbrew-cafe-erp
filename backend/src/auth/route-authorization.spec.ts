@@ -18,6 +18,7 @@ import { ModifiersController } from '../modifiers/modifiers.controller';
 import { NavigationController } from '../navigation/navigation.controller';
 import { NotificationsController } from '../notifications/notifications.controller';
 import { OrdersController } from '../orders/orders.controller';
+import { OutboxController } from '../outbox/outbox.controller';
 import { PurchaseOrdersController } from '../procurement/purchase-orders.controller';
 import { SuppliersController } from '../procurement/suppliers.controller';
 import { ProductionController } from '../production/production.controller';
@@ -43,6 +44,7 @@ const CONTROLLERS = [
   NavigationController,
   NotificationsController,
   OrdersController,
+  OutboxController,
   PurchaseOrdersController,
   SuppliersController,
   ProductionController,

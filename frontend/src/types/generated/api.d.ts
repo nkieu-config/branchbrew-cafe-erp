@@ -405,6 +405,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/outbox/failed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List outbox events that exhausted their retries */
+        get: operations["OutboxController_listFailed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outbox/{id}/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Requeue a failed outbox event */
+        post: operations["OutboxController_replay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/customers": {
         parameters: {
             query?: never;
@@ -2172,6 +2206,26 @@ export interface components {
         CreatePurchaseOrderDto: Record<string, never>;
         ReceivePurchaseOrderDto: Record<string, never>;
         PayPurchaseOrderDto: Record<string, never>;
+        OutboxEventResponseDto: {
+            /** @example 7 */
+            id: number;
+            /** @example order.created */
+            eventType: string;
+            /**
+             * @example FAILED
+             * @enum {string}
+             */
+            status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
+            /** @example 5 */
+            attempts: number;
+            lastError: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            claimedAt: string | null;
+            /** Format: date-time */
+            processedAt: string | null;
+        };
         CreateCustomerDto: Record<string, never>;
         CustomerResponseDto: {
             /** @example 1 */
@@ -3221,7 +3275,7 @@ export interface components {
              * @example LOW_STOCK
              * @enum {string}
              */
-            type: "LOW_STOCK" | "BATCH_EXPIRING" | "MAINTENANCE_DUE" | "LEAVE_DECIDED" | "PO_PENDING_APPROVAL" | "STOCK_COUNT_PENDING";
+            type: "LOW_STOCK" | "BATCH_EXPIRING" | "MAINTENANCE_DUE" | "LEAVE_DECIDED" | "PO_PENDING_APPROVAL" | "STOCK_COUNT_PENDING" | "OUTBOX_FAILED";
             /** @example Espresso Beans is running low */
             title: string;
             body?: string | null;
@@ -5409,6 +5463,143 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OutboxController_listFailed: {
+        parameters: {
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Failed outbox events retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxEventResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OutboxController_replay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Outbox event requeued */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxEventResponseDto"];
                 };
             };
             /** @description Bad request */

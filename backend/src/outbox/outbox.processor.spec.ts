@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import { OutboxProcessor } from './outbox.processor';
 import { PrismaService } from '../prisma/prisma.service';
 import { MAX_OUTBOX_ATTEMPTS } from './outbox.constants';
+import { NotificationsService } from '../notifications/notifications.service';
 
 describe('OutboxProcessor', () => {
   let processor: OutboxProcessor;
@@ -15,8 +16,10 @@ describe('OutboxProcessor', () => {
       updateMany: jest.Mock;
       findUnique: jest.Mock;
     };
+    user: { findMany: jest.Mock };
   };
   let eventEmitter: { emitAsync: jest.Mock };
+  let notifications: { notifyUser: jest.Mock };
 
   beforeEach(async () => {
     loggerErrorSpy = jest
@@ -30,14 +33,17 @@ describe('OutboxProcessor', () => {
         updateMany: jest.fn().mockResolvedValue({ count: 1 }),
         findUnique: jest.fn(),
       },
+      user: { findMany: jest.fn().mockResolvedValue([]) },
     };
     eventEmitter = { emitAsync: jest.fn().mockResolvedValue([]) };
+    notifications = { notifyUser: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OutboxProcessor,
         { provide: PrismaService, useValue: prisma },
         { provide: EventEmitter2, useValue: eventEmitter },
+        { provide: NotificationsService, useValue: notifications },
       ],
     }).compile();
 
@@ -235,5 +241,91 @@ describe('OutboxProcessor', () => {
         data: expect.objectContaining({ status: 'FAILED' }),
       }),
     );
+  });
+
+  describe('permanent-failure announcements', () => {
+    beforeEach(() => {
+      prisma.user.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }]);
+    });
+
+    it('tells every super admin when retries run out', async () => {
+      prisma.outboxEvent.findMany.mockResolvedValue([
+        {
+          id: 3,
+          eventType: 'order.created',
+          status: 'FAILED',
+          attempts: MAX_OUTBOX_ATTEMPTS - 1,
+          payload: {
+            order: { id: 1 },
+            ingredientRequirements: [],
+            branchId: 1,
+            customerId: null,
+          },
+        },
+      ]);
+      prisma.outboxEvent.findUnique.mockResolvedValue({
+        attempts: MAX_OUTBOX_ATTEMPTS,
+      });
+      eventEmitter.emitAsync.mockRejectedValue(new Error('still failing'));
+
+      await processor.handleCron();
+
+      expect(notifications.notifyUser).toHaveBeenCalledTimes(2);
+      expect(notifications.notifyUser).toHaveBeenCalledWith(
+        expect.objectContaining({ userId: 1, type: 'OUTBOX_FAILED' }),
+      );
+    });
+
+    it('also tells them when a claim is abandoned after a worker died', async () => {
+      prisma.outboxEvent.findMany.mockResolvedValue([
+        {
+          id: 8,
+          eventType: 'order.created',
+          status: 'PROCESSING',
+          attempts: MAX_OUTBOX_ATTEMPTS,
+          claimedAt: new Date(Date.now() - 10 * 60 * 1000),
+          payload: {
+            order: { id: 1 },
+            ingredientRequirements: [],
+            branchId: 1,
+            customerId: null,
+          },
+        },
+      ]);
+
+      await processor.handleCron();
+
+      expect(notifications.notifyUser).toHaveBeenCalledTimes(2);
+      expect(notifications.notifyUser).toHaveBeenCalledWith(
+        expect.objectContaining({
+          userId: 1,
+          type: 'OUTBOX_FAILED',
+          title: expect.stringContaining('8'),
+        }),
+      );
+    });
+
+    it('does not announce an event that still has retries left', async () => {
+      prisma.outboxEvent.findMany.mockResolvedValue([
+        {
+          id: 4,
+          eventType: 'order.created',
+          status: 'PENDING',
+          attempts: 0,
+          payload: {
+            order: { id: 1 },
+            ingredientRequirements: [],
+            branchId: 1,
+            customerId: null,
+          },
+        },
+      ]);
+      prisma.outboxEvent.findUnique.mockResolvedValue({ attempts: 1 });
+      eventEmitter.emitAsync.mockRejectedValue(new Error('transient'));
+
+      await processor.handleCron();
+
+      expect(notifications.notifyUser).not.toHaveBeenCalled();
+    });
   });
 });

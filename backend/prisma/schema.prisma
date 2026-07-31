@@ -273,6 +273,7 @@ enum NotificationType {
   LEAVE_DECIDED
   PO_PENDING_APPROVAL
   STOCK_COUNT_PENDING
+  OUTBOX_FAILED
 }
 
 model AuditLog {
