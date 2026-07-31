@@ -18,6 +18,8 @@ export const AUDIT_ACTIONS = {
   APPROVE_STOCK_COUNT: 'APPROVE_STOCK_COUNT',
   MANUAL_ADJUSTMENT: 'MANUAL_ADJUSTMENT',
   ANONYMIZE_CUSTOMER: 'ANONYMIZE_CUSTOMER',
+  DECIDE_LEAVE: 'DECIDE_LEAVE',
+  APPROVE_SETTLEMENT: 'APPROVE_SETTLEMENT',
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];
@@ -30,6 +32,8 @@ export const AUDIT_TARGETS = {
   STOCK_COUNT: 'StockCount',
   STOCK_ADJUSTMENT: 'StockAdjustment',
   CUSTOMER: 'Customer',
+  LEAVE_REQUEST: 'LeaveRequest',
+  SHIFT_SETTLEMENT: 'ShiftSettlement',
 } as const;
 
 type JsonLike =
@@ -45,6 +49,8 @@ export type AuditTargetByAction = {
   [AUDIT_ACTIONS.REFUND_ORDER]: typeof AUDIT_TARGETS.ORDER;
   [AUDIT_ACTIONS.GENERATE_PAYROLL]: typeof AUDIT_TARGETS.PAYROLL_RUN;
   [AUDIT_ACTIONS.APPROVE_PAYROLL]: typeof AUDIT_TARGETS.PAYROLL_RUN;
+  [AUDIT_ACTIONS.DECIDE_LEAVE]: typeof AUDIT_TARGETS.LEAVE_REQUEST;
+  [AUDIT_ACTIONS.APPROVE_SETTLEMENT]: typeof AUDIT_TARGETS.SHIFT_SETTLEMENT;
   [AUDIT_ACTIONS.CREATE_PO]: typeof AUDIT_TARGETS.PURCHASE_ORDER;
   [AUDIT_ACTIONS.SUBMIT_PO]: typeof AUDIT_TARGETS.PURCHASE_ORDER;
   [AUDIT_ACTIONS.APPROVE_PO]: typeof AUDIT_TARGETS.PURCHASE_ORDER;
@@ -80,6 +86,15 @@ export type AuditDetailsByAction = {
     branchId: number | null;
     month: number;
     year: number;
+  };
+  [AUDIT_ACTIONS.DECIDE_LEAVE]: {
+    status: 'APPROVED' | 'REJECTED';
+    requesterId: number;
+    branchId: number | null;
+  };
+  [AUDIT_ACTIONS.APPROVE_SETTLEMENT]: {
+    branchId: number;
+    difference: number;
   };
   [AUDIT_ACTIONS.CREATE_PO]: {
     poNumber: string;

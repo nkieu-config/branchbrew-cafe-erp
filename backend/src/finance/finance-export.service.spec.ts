@@ -4,6 +4,7 @@ import { FinanceRepository } from './finance.repository';
 import { PrismaService } from '../prisma/prisma.service';
 import { PrismaServiceMockProvider } from '../prisma/prisma.service.mock';
 import { OutboxService } from '../outbox/outbox.service';
+import { AuditService } from '../audit/audit.service';
 
 describe('FinanceService.exportSales', () => {
   let service: FinanceService;
@@ -33,6 +34,7 @@ describe('FinanceService.exportSales', () => {
         PrismaServiceMockProvider,
         { provide: FinanceRepository, useValue: repository },
         { provide: OutboxService, useValue: { enqueue: jest.fn() } },
+        { provide: AuditService, useValue: { logAction: jest.fn() } },
       ],
     }).compile();
 

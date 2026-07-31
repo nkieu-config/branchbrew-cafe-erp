@@ -5,7 +5,11 @@ import {
   MockPrismaService,
   PrismaServiceMockProvider,
 } from '../prisma/prisma.service.mock';
-import { BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { AuditService } from '../audit/audit.service';
 import { OutboxService } from '../outbox/outbox.service';
@@ -14,18 +18,20 @@ import { NotificationsService } from '../notifications/notifications.service';
 describe('HrService', () => {
   let service: HrService;
   let prisma: MockPrismaService;
+  let audit: { logAction: jest.Mock };
+  let notifications: { notifyBranch: jest.Mock; notifyUser: jest.Mock };
 
   beforeEach(async () => {
+    audit = { logAction: jest.fn() };
+    notifications = { notifyBranch: jest.fn(), notifyUser: jest.fn() };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         HrService,
         PrismaServiceMockProvider,
-        { provide: AuditService, useValue: { logAction: jest.fn() } },
+        { provide: AuditService, useValue: audit },
         { provide: OutboxService, useValue: { enqueue: jest.fn() } },
-        {
-          provide: NotificationsService,
-          useValue: { notifyBranch: jest.fn(), notifyUser: jest.fn() },
-        },
+        { provide: NotificationsService, useValue: notifications },
       ],
     }).compile();
 
@@ -262,12 +268,14 @@ describe('HrService', () => {
         }),
       ).rejects.toThrow(ForbiddenException);
 
-      expect(prisma.leaveRequest.update).not.toHaveBeenCalled();
+      expect(prisma.leaveRequest.updateMany).not.toHaveBeenCalled();
     });
 
     it('still lets a super admin act on a branchless user', async () => {
+      prisma.$transaction.mockImplementation(async (cb: any) => cb(prisma));
       prisma.leaveRequest.findUnique.mockResolvedValue(branchlessLeave as any);
-      prisma.leaveRequest.update.mockResolvedValue({
+      prisma.leaveRequest.updateMany.mockResolvedValue({ count: 1 });
+      prisma.leaveRequest.findUniqueOrThrow.mockResolvedValue({
         id: 1,
         status: 'APPROVED',
       } as any);
@@ -278,7 +286,65 @@ describe('HrService', () => {
         branchId: null,
       });
 
-      expect(prisma.leaveRequest.update).toHaveBeenCalled();
+      expect(prisma.leaveRequest.updateMany).toHaveBeenCalled();
+    });
+
+    it('claims only a PENDING request and stamps who decided it', async () => {
+      prisma.$transaction.mockImplementation(async (cb: any) => cb(prisma));
+      prisma.leaveRequest.findUnique.mockResolvedValue({
+        id: 5,
+        userId: 2,
+        type: 'SICK',
+        user: { branchId: 1 },
+      } as any);
+      prisma.leaveRequest.updateMany.mockResolvedValue({ count: 1 });
+      prisma.leaveRequest.findUniqueOrThrow.mockResolvedValue({
+        id: 5,
+        status: 'APPROVED',
+        decidedById: 9,
+      } as any);
+
+      const manager = { userId: 9, role: 'MANAGER' as const, branchId: 1 };
+      const result = await service.processLeaveRequest(5, 'APPROVED', manager);
+
+      expect(prisma.leaveRequest.updateMany).toHaveBeenCalledWith({
+        where: { id: 5, status: 'PENDING' },
+        data: expect.objectContaining({
+          status: 'APPROVED',
+          decidedById: 9,
+          decidedAt: expect.any(Date),
+        }),
+      });
+      expect(audit.logAction).toHaveBeenCalledWith(
+        9,
+        'DECIDE_LEAVE',
+        'LeaveRequest',
+        5,
+        expect.objectContaining({ status: 'APPROVED', requesterId: 2 }),
+        prisma,
+      );
+      expect(result.decidedById).toBe(9);
+    });
+
+    it('refuses to decide a request that was already decided', async () => {
+      prisma.$transaction.mockImplementation(async (cb: any) => cb(prisma));
+      prisma.leaveRequest.findUnique.mockResolvedValue({
+        id: 5,
+        userId: 2,
+        type: 'SICK',
+        user: { branchId: 1 },
+      } as any);
+      prisma.leaveRequest.updateMany.mockResolvedValue({ count: 0 });
+
+      await expect(
+        service.processLeaveRequest(5, 'APPROVED', {
+          userId: 9,
+          role: 'MANAGER',
+          branchId: 1,
+        }),
+      ).rejects.toThrow(ConflictException);
+
+      expect(notifications.notifyUser).not.toHaveBeenCalled();
     });
   });
 });

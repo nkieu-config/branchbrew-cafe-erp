@@ -1,11 +1,12 @@
 import {
   Injectable,
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { LeaveType, LeaveStatus, EmploymentType, Prisma } from '@prisma/client';
+import { LeaveType, EmploymentType, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import {
   assertBranchAccess,
@@ -14,6 +15,7 @@ import {
 import { SAFE_USER_SELECT } from '../common/user-select';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LeaveDecision } from './dto/process-leave.dto';
 import { dec, toNum, roundMoney, sumMoney } from '../common/decimal.util';
 import {
   AuditService,
@@ -164,7 +166,7 @@ export class HrService {
 
   async processLeaveRequest(
     id: number,
-    status: LeaveStatus,
+    status: LeaveDecision,
     user: BranchScopedUser,
   ) {
     const leave = await this.prisma.leaveRequest.findUnique({
@@ -182,20 +184,39 @@ export class HrService {
       assertBranchAccess(user, leave.user.branchId);
     }
 
-    const updated = await this.prisma.leaveRequest.update({
-      where: { id },
-      data: { status },
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const claimed = await tx.leaveRequest.updateMany({
+        where: { id, status: 'PENDING' },
+        data: {
+          status,
+          decidedById: user.userId,
+          decidedAt: new Date(),
+        },
+      });
+
+      if (claimed.count === 0) {
+        throw new ConflictException('Leave request has already been decided.');
+      }
+
+      await this.auditService.logAction(
+        user.userId,
+        AUDIT_ACTIONS.DECIDE_LEAVE,
+        AUDIT_TARGETS.LEAVE_REQUEST,
+        id,
+        { status, requesterId: leave.userId, branchId: leave.user.branchId },
+        tx,
+      );
+
+      return tx.leaveRequest.findUniqueOrThrow({ where: { id } });
     });
 
-    if (status === 'APPROVED' || status === 'REJECTED') {
-      await this.notifications.notifyUser({
-        userId: leave.userId,
-        branchId: leave.user.branchId,
-        type: 'LEAVE_DECIDED',
-        title: `Your ${leave.type.toLowerCase()} leave was ${status.toLowerCase()}`,
-        link: '/hr/leave',
-      });
-    }
+    await this.notifications.notifyUser({
+      userId: leave.userId,
+      branchId: leave.user.branchId,
+      type: 'LEAVE_DECIDED',
+      title: `Your ${leave.type.toLowerCase()} leave was ${status.toLowerCase()}`,
+      link: '/hr/leave',
+    });
 
     return updated;
   }
@@ -407,7 +428,11 @@ export class HrService {
 
       const claimed = await tx.payrollRun.updateMany({
         where: { id: runId, status: 'DRAFT' },
-        data: { status: 'APPROVED' },
+        data: {
+          status: 'APPROVED',
+          approvedById: user.userId,
+          approvedAt: new Date(),
+        },
       });
       if (claimed.count === 0) {
         throw new BadRequestException(

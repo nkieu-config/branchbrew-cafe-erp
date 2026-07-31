@@ -217,7 +217,11 @@ export class ProcurementService {
 
     const updatedPo = await this.prisma.purchaseOrder.update({
       where: { id: poId },
-      data: { status: 'APPROVED' },
+      data: {
+        status: 'APPROVED',
+        approvedById: userId,
+        approvedAt: new Date(),
+      },
     });
 
     await this.auditService.logAction(

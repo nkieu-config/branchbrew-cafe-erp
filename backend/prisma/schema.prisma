@@ -7,35 +7,39 @@ datasource db {
 }
 
 model User {
-  id                  Int                @id @default(autoincrement())
-  email               String             @unique
-  name                String?
-  password            String
-  role                Role               @default(STAFF)
-  employmentType      EmploymentType     @default(PART_TIME)
-  branchId            Int?
-  branch              Branch?            @relation(fields: [branchId], references: [id])
-  hourlyRate          Decimal            @default(0) @db.Decimal(19, 4)
-  baseSalary          Decimal            @default(0) @db.Decimal(19, 4)
-  tokenVersion        Int                @default(0)
-  orders              Order[]
-  transfersRequested  StockTransfer[]    @relation("TransferRequestedBy")
-  transfersApproved   StockTransfer[]    @relation("TransferApprovedBy")
-  auditLogs           AuditLog[]
-  shifts              Shift[]
-  attendanceRecords   AttendanceRecord[]
-  leaveRequests       LeaveRequest[]
-  wasteLogs           WasteLog[]
-  expenses            Expense[]
-  shiftSettlements    ShiftSettlement[]
-  payslips            Payslip[]
-  stockCountsCreated  StockCount[]       @relation("StockCountCreatedBy")
-  stockCountsApproved StockCount[]       @relation("StockCountApprovedBy")
-  stockAdjustments    StockAdjustment[]
-  supplierPayments    SupplierPayment[]
-  notifications       Notification[]
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
+  id                     Int                @id @default(autoincrement())
+  email                  String             @unique
+  name                   String?
+  password               String
+  role                   Role               @default(STAFF)
+  employmentType         EmploymentType     @default(PART_TIME)
+  branchId               Int?
+  branch                 Branch?            @relation(fields: [branchId], references: [id])
+  hourlyRate             Decimal            @default(0) @db.Decimal(19, 4)
+  baseSalary             Decimal            @default(0) @db.Decimal(19, 4)
+  tokenVersion           Int                @default(0)
+  orders                 Order[]
+  transfersRequested     StockTransfer[]    @relation("TransferRequestedBy")
+  transfersApproved      StockTransfer[]    @relation("TransferApprovedBy")
+  auditLogs              AuditLog[]
+  shifts                 Shift[]
+  attendanceRecords      AttendanceRecord[]
+  leaveRequests          LeaveRequest[]     @relation("LeaveRequester")
+  leaveDecisions         LeaveRequest[]     @relation("LeaveDecider")
+  wasteLogs              WasteLog[]
+  expenses               Expense[]
+  shiftSettlements       ShiftSettlement[]  @relation("SettlementSubmitter")
+  settlementsApproved    ShiftSettlement[]  @relation("SettlementApprover")
+  payrollRunsApproved    PayrollRun[]
+  purchaseOrdersApproved PurchaseOrder[]
+  payslips               Payslip[]
+  stockCountsCreated     StockCount[]       @relation("StockCountCreatedBy")
+  stockCountsApproved    StockCount[]       @relation("StockCountApprovedBy")
+  stockAdjustments       StockAdjustment[]
+  supplierPayments       SupplierPayment[]
+  notifications          Notification[]
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
 
   @@index([branchId])
 }
@@ -481,6 +485,9 @@ model PurchaseOrder {
   supplierId       Int
   supplier         Supplier            @relation(fields: [supplierId], references: [id])
   status           POStatus            @default(PENDING)
+  approvedById     Int?
+  approvedBy       User?               @relation(fields: [approvedById], references: [id])
+  approvedAt       DateTime?
   paymentStatus    POPaymentStatus     @default(UNPAID)
   paidAt           DateTime?
   payment          SupplierPayment?
@@ -567,16 +574,19 @@ enum ShiftStatus {
 }
 
 model LeaveRequest {
-  id        Int         @id @default(autoincrement())
-  userId    Int
-  user      User        @relation(fields: [userId], references: [id])
-  type      LeaveType
-  startDate DateTime    @db.Date
-  endDate   DateTime    @db.Date
-  reason    String?
-  status    LeaveStatus @default(PENDING)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation("LeaveRequester", fields: [userId], references: [id])
+  decidedById Int?
+  decidedBy   User?       @relation("LeaveDecider", fields: [decidedById], references: [id])
+  decidedAt   DateTime?
+  type        LeaveType
+  startDate   DateTime    @db.Date
+  endDate     DateTime    @db.Date
+  reason      String?
+  status      LeaveStatus @default(PENDING)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@index([userId])
 }
@@ -657,7 +667,10 @@ model ShiftSettlement {
   difference         Decimal          @default(0) @db.Decimal(19, 4)
   status             SettlementStatus @default(PENDING)
   submittedById      Int
-  submittedBy        User             @relation(fields: [submittedById], references: [id])
+  submittedBy        User             @relation("SettlementSubmitter", fields: [submittedById], references: [id])
+  approvedById       Int?
+  approvedBy         User?            @relation("SettlementApprover", fields: [approvedById], references: [id])
+  approvedAt         DateTime?
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 
@@ -672,15 +685,18 @@ enum SettlementStatus {
 }
 
 model PayrollRun {
-  id        Int           @id @default(autoincrement())
-  month     Int
-  year      Int
-  status    PayrollStatus @default(DRAFT)
-  branchId  Int?
-  branch    Branch?       @relation(fields: [branchId], references: [id])
-  payslips  Payslip[]
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id           Int           @id @default(autoincrement())
+  month        Int
+  year         Int
+  status       PayrollStatus @default(DRAFT)
+  approvedById Int?
+  approvedBy   User?         @relation(fields: [approvedById], references: [id])
+  approvedAt   DateTime?
+  branchId     Int?
+  branch       Branch?       @relation(fields: [branchId], references: [id])
+  payslips     Payslip[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@unique([branchId, month, year])
   @@index([branchId])

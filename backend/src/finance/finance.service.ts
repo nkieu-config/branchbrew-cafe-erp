@@ -14,6 +14,11 @@ import { appBadRequest, appNotFound } from '../common/errors/app.exception';
 import { OutboxService } from '../outbox/outbox.service';
 import { OUTBOX_EVENT_TYPES } from '../outbox/outbox-event.types';
 import { toExpenseCreatedSnapshot } from './domain/expense-created.snapshot';
+import {
+  AuditService,
+  AUDIT_ACTIONS,
+  AUDIT_TARGETS,
+} from '../audit/audit.service';
 
 @Injectable()
 export class FinanceService {
@@ -21,6 +26,7 @@ export class FinanceService {
     private prisma: PrismaService,
     private financeRepository: FinanceRepository,
     private outboxService: OutboxService,
+    private auditService: AuditService,
   ) {}
 
   async createExpense(data: {
@@ -186,9 +192,36 @@ export class FinanceService {
     }
     assertBranchAccess(user, settlement.branchId);
 
-    return this.prisma.shiftSettlement.update({
-      where: { id },
-      data: { status: 'APPROVED' },
+    return this.prisma.$transaction(async (tx) => {
+      const claimed = await tx.shiftSettlement.updateMany({
+        where: { id, status: 'PENDING' },
+        data: {
+          status: 'APPROVED',
+          approvedById: user.userId,
+          approvedAt: new Date(),
+        },
+      });
+
+      if (claimed.count === 0) {
+        throw appBadRequest(
+          ApiErrorCode.SETTLEMENT_ALREADY_APPROVED,
+          'Settlement has already been approved.',
+        );
+      }
+
+      await this.auditService.logAction(
+        user.userId,
+        AUDIT_ACTIONS.APPROVE_SETTLEMENT,
+        AUDIT_TARGETS.SHIFT_SETTLEMENT,
+        id,
+        {
+          branchId: settlement.branchId,
+          difference: toNum(settlement.difference),
+        },
+        tx,
+      );
+
+      return tx.shiftSettlement.findUniqueOrThrow({ where: { id } });
     });
   }
 
