@@ -13,7 +13,7 @@ export type StockCountStatus = 'DRAFT' | 'SUBMITTED' | 'APPROVED' | 'CANCELLED';
 
 export type StockAdjustmentReason = 'COUNT_VARIANCE' | 'DAMAGE' | 'CORRECTION';
 
-export type NotificationType = 'LOW_STOCK' | 'BATCH_EXPIRING' | 'MAINTENANCE_DUE' | 'LEAVE_DECIDED' | 'PO_PENDING_APPROVAL' | 'STOCK_COUNT_PENDING';
+export type NotificationType = 'LOW_STOCK' | 'BATCH_EXPIRING' | 'MAINTENANCE_DUE' | 'LEAVE_DECIDED' | 'PO_PENDING_APPROVAL' | 'STOCK_COUNT_PENDING' | 'OUTBOX_FAILED';
 
 export type Tier = 'REGULAR' | 'SILVER' | 'GOLD' | 'PLATINUM';
 
