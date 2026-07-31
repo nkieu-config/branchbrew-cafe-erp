@@ -102,8 +102,6 @@ const ANY_AUTHENTICATED_ROUTES = new Set<string>([
   'GET /production/boms',
   'GET /production/orders',
 
-  'GET /finance/expenses',
-  'GET /finance/settlements',
   'GET /finance/settlements/expected',
   'GET /purchase-orders',
   'GET /suppliers',

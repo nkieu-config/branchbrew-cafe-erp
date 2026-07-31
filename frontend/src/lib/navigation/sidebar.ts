@@ -57,7 +57,7 @@ export const SIDEBAR_GROUPS: SidebarGroup[] = [
         label: "CRM",
         href: "/crm",
         icon: Gift,
-        roles: ["SUPER_ADMIN", "MANAGER", "STAFF"],
+        roles: ["SUPER_ADMIN", "MANAGER"],
       },
     ],
   },

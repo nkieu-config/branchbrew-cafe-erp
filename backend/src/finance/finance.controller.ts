@@ -56,6 +56,7 @@ export class FinanceController {
   }
 
   @Get('expenses')
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'List expenses' })
   @ApiOkResponse({
     type: ExpenseResponseDto,
@@ -116,6 +117,7 @@ export class FinanceController {
   }
 
   @Get('settlements')
+  @Roles('SUPER_ADMIN', 'MANAGER')
   @ApiOperation({ summary: 'List settlements' })
   @ApiOkResponse({
     type: SettlementResponseDto,
