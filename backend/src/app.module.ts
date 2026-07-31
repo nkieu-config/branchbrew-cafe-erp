@@ -29,6 +29,7 @@ import { ModifiersModule } from './modifiers/modifiers.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { ObservabilityModule } from './observability/observability.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     ModifiersModule,
     NavigationModule,
     NotificationsModule,
+    ObservabilityModule,
   ],
   controllers: [AppController],
   providers: [

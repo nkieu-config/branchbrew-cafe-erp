@@ -85,4 +85,11 @@ export function assertRuntimeConfig(): void {
       `CORS_ORIGIN cannot include local origin "${localOrigin}" in production.`,
     );
   }
+
+  const metricsToken = process.env.METRICS_TOKEN;
+  if (metricsToken && metricsToken.length < 32) {
+    throw new Error(
+      'METRICS_TOKEN must be at least 32 characters in production.',
+    );
+  }
 }

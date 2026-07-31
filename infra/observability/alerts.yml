@@ -1,0 +1,41 @@
+groups:
+  - name: branchbrew-ledger
+    rules:
+      - alert: OutboxEventsFailed
+        expr: outbox_events{status="FAILED"} > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: An outbox event exhausted its retries
+          description: >-
+            {{ $value }} outbox event(s) are FAILED. Each one is a sale whose
+            journal entry never posted, so the ledger is behind operations
+            until it is replayed via POST /outbox/{id}/replay.
+
+      - alert: OutboxClaimsStale
+        expr: outbox_stale_claims > 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Outbox events stuck in PROCESSING
+          description: >-
+            {{ $value }} event(s) have held a PROCESSING claim past the stale
+            window, which normally means a worker died mid-dispatch. The
+            sweeper reclaims them; a value that does not fall means it cannot.
+
+      - alert: OrderCheckoutLatencyHigh
+        expr: >-
+          histogram_quantile(0.95, sum by (le) (rate(
+            http_request_duration_seconds_bucket{route="/orders",method="POST"}[5m]
+          ))) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: POS checkout p95 above 500ms
+          description: >-
+            Measured p95 for POST /orders is {{ $value }}s. The committed load
+            test holds 42ms at 150 orders/sec, so this is roughly ten times the
+            known-good figure and the till will feel it.

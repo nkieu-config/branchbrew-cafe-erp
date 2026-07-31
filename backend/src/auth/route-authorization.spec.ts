@@ -5,6 +5,7 @@ import { IS_PUBLIC_KEY } from './public.decorator';
 import { AccountingController } from '../accounting/accounting.controller';
 import { AppController } from '../app.controller';
 import { AuditController } from '../audit/audit.controller';
+import { MetricsController } from '../observability/metrics.controller';
 import { AuthController } from './auth.controller';
 import { BranchesController } from '../branches/branches.controller';
 import { CustomersController } from '../customers/customers.controller';
@@ -30,6 +31,7 @@ const CONTROLLERS = [
   AppController,
   AuditController,
   AuthController,
+  MetricsController,
   BranchesController,
   CustomersController,
   EquipmentController,
