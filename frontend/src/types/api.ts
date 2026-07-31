@@ -1,5 +1,6 @@
 // API response / domain types — decoupled from Prisma database models.
 
+import type { components } from './generated/api';
 import type {
   AccountType,
   BatchStatus,
@@ -163,20 +164,7 @@ export interface CreateProductPayload {
   recipeItems?: { ingredientId: number; quantity: number }[];
 }
 
-export interface CreateOrderPayload {
-  userId: number;
-  branchId: number;
-  items: { productId: number; quantity: number; notes?: string }[];
-  customerPhone?: string;
-  promotionCode?: string;
-  pointsToRedeem?: number;
-  paymentMethod?: string;
-  isTaxInvoiceRequested?: boolean;
-  taxInvoiceName?: string;
-  taxInvoiceTaxId?: string;
-  taxInvoiceAddress?: string;
-  clientRequestId?: string;
-}
+export type CreateOrderPayload = components['schemas']['CreateOrderDto'];
 
 export interface CreatePurchaseOrderPayload {
   branchId: number;

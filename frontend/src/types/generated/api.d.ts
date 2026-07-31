@@ -1859,7 +1859,18 @@ export interface components {
             /** @example /orders/1/void */
             path: string;
         };
-        CreateProductDto: Record<string, never>;
+        RecipeItemDto: {
+            ingredientId: number;
+            quantity: number;
+        };
+        CreateProductDto: {
+            name: string;
+            description?: string;
+            price: number;
+            category: string;
+            isActive?: boolean;
+            recipeItems?: components["schemas"]["RecipeItemDto"][];
+        };
         IngredientSummaryDto: {
             /** @example 1 */
             id: number;
@@ -1898,7 +1909,14 @@ export interface components {
             updatedAt: string;
             recipeItems?: components["schemas"]["RecipeItemResponseDto"][];
         };
-        UpdateProductDto: Record<string, never>;
+        UpdateProductDto: {
+            name?: string;
+            description?: string;
+            price?: number;
+            category?: string;
+            isActive?: boolean;
+            recipeItems?: components["schemas"]["RecipeItemDto"][];
+        };
         SupplierResponseDto: {
             /** @example 1 */
             id: number;
@@ -1969,15 +1987,47 @@ export interface components {
             ingredient?: components["schemas"]["IngredientSummaryDto"];
             recordedBy?: components["schemas"]["WasteLogRecordedByDto"];
         };
-        CreateIngredientDto: Record<string, never>;
+        CreateIngredientDto: {
+            name: string;
+            unit: string;
+            costPerUnit?: number;
+            primarySupplierId?: number;
+            isActive?: boolean;
+        };
         SyncIngredientInventoryResponseDto: {
             /** @example 3 */
             ingredientId: number;
             /** @example 4 */
             rowsCreated: number;
         };
-        UpdateIngredientDto: Record<string, never>;
-        CreateOrderDto: Record<string, never>;
+        UpdateIngredientDto: {
+            name?: string;
+            unit?: string;
+            costPerUnit?: number;
+            primarySupplierId?: number;
+            isActive?: boolean;
+        };
+        OrderItemDto: {
+            productId: number;
+            quantity: number;
+            notes?: string;
+            modifierOptionIds?: number[];
+        };
+        CreateOrderDto: {
+            branchId?: number;
+            items: components["schemas"]["OrderItemDto"][];
+            customerPhone?: string;
+            promotionCode?: string;
+            pointsToRedeem?: number;
+            /** @enum {string} */
+            paymentMethod?: "CASH" | "CREDIT_CARD" | "QR_PROMPTPAY";
+            isTaxInvoiceRequested?: boolean;
+            taxInvoiceName?: string;
+            taxInvoiceTaxId?: string;
+            taxInvoiceAddress?: string;
+            /** Format: uuid */
+            clientRequestId?: string;
+        };
         OrderProductSummaryDto: {
             /** @example 1 */
             id: number;
@@ -2117,10 +2167,25 @@ export interface components {
             /** @example 0 */
             offset: number;
         };
-        UpdateOrderStatusDto: Record<string, never>;
-        RefundOrderDto: Record<string, never>;
-        CreateSupplierDto: Record<string, never>;
-        UpdateSupplierDto: Record<string, never>;
+        UpdateOrderStatusDto: {
+            /** @enum {string} */
+            status: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
+        };
+        RefundOrderDto: {
+            reason?: string;
+        };
+        CreateSupplierDto: {
+            name: string;
+            /** Format: email */
+            contactEmail?: string;
+            phone?: string;
+        };
+        UpdateSupplierDto: {
+            name?: string;
+            /** Format: email */
+            contactEmail?: string;
+            phone?: string;
+        };
         PurchaseOrderItemResponseDto: {
             /** @example 1 */
             id: number;
@@ -2203,9 +2268,29 @@ export interface components {
             poCount: number;
             buckets: components["schemas"]["ApAgingBucketDto"][];
         };
-        CreatePurchaseOrderDto: Record<string, never>;
-        ReceivePurchaseOrderDto: Record<string, never>;
-        PayPurchaseOrderDto: Record<string, never>;
+        PurchaseOrderItemDto: {
+            ingredientId: number;
+            quantity: number;
+            unitPrice: number;
+        };
+        CreatePurchaseOrderDto: {
+            branchId: number;
+            supplierId: number;
+            expectedDate?: string;
+            items: components["schemas"]["PurchaseOrderItemDto"][];
+        };
+        ReceivePOItemDto: {
+            ingredientId: number;
+            expiryDate?: string;
+        };
+        ReceivePurchaseOrderDto: {
+            items?: components["schemas"]["ReceivePOItemDto"][];
+        };
+        PayPurchaseOrderDto: {
+            /** @enum {string} */
+            method: "CASH" | "BANK_TRANSFER";
+            notes?: string;
+        };
         OutboxEventResponseDto: {
             /** @example 7 */
             id: number;
@@ -2226,7 +2311,10 @@ export interface components {
             /** Format: date-time */
             processedAt: string | null;
         };
-        CreateCustomerDto: Record<string, never>;
+        CreateCustomerDto: {
+            name: string;
+            phone: string;
+        };
         CustomerResponseDto: {
             /** @example 1 */
             id: number;
@@ -2289,7 +2377,10 @@ export interface components {
             daysSinceLastOrder: number;
             recentOrders: components["schemas"]["Customer360OrderDto"][];
         };
-        UpdateCustomerDto: Record<string, never>;
+        UpdateCustomerDto: {
+            name?: string;
+            phone?: string;
+        };
         AccountResponseDto: {
             /** @example 1 */
             id: number;
@@ -2475,7 +2566,11 @@ export interface components {
             /** @example Thank you for visiting BranchBrew */
             receiptFooter?: string;
         };
-        LoginDto: Record<string, never>;
+        LoginDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
         AuthUserResponseDto: {
             /** @example 1 */
             id: number;
@@ -2496,7 +2591,11 @@ export interface components {
         AuthLoginResponseDto: {
             user: components["schemas"]["AuthUserResponseDto"];
         };
-        CreateBranchDto: Record<string, never>;
+        CreateBranchDto: {
+            name: string;
+            location?: string;
+            isCentralKitchen?: boolean;
+        };
         HrUserSummaryDto: {
             /** @example 1 */
             id: number;
@@ -2547,17 +2646,44 @@ export interface components {
             ingredient?: components["schemas"]["IngredientResponseDto"];
             requestedBy?: components["schemas"]["HrUserSummaryDto"];
         };
-        CreateTransferDto: Record<string, never>;
-        UpdateBranchDto: Record<string, never>;
+        CreateTransferDto: {
+            fromBranchId: number;
+            toBranchId: number;
+            ingredientId: number;
+            quantity: number;
+        };
+        UpdateBranchDto: {
+            name?: string;
+            location?: string;
+            isCentralKitchen?: boolean;
+        };
         SyncBranchInventoryResponseDto: {
             /** @example 1 */
             branchId: number;
             /** @example 12 */
             rowsCreated: number;
         };
-        AddInventoryBatchDto: Record<string, never>;
-        ReportWasteDto: Record<string, never>;
-        CreatePromotionDto: Record<string, never>;
+        AddInventoryBatchDto: {
+            ingredientId: number;
+            quantity: number;
+            expiryDate?: string;
+        };
+        ReportWasteDto: {
+            batchId?: number;
+            ingredientId: number;
+            quantity: number;
+            reason: string;
+        };
+        CreatePromotionDto: {
+            code: string;
+            description: string;
+            /** @enum {string} */
+            discountType: "PERCENTAGE" | "FIXED_AMOUNT";
+            discountValue: number;
+            minPurchase?: number;
+            startDate?: string;
+            endDate?: string;
+        };
         PromotionResponseDto: {
             /** @example 1 */
             id: number;
@@ -2585,9 +2711,22 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
-        UpdatePromotionDto: Record<string, never>;
-        TogglePromotionDto: Record<string, never>;
-        ValidatePromotionDto: Record<string, never>;
+        UpdatePromotionDto: {
+            description?: string;
+            /** @enum {string} */
+            discountType?: "PERCENTAGE" | "FIXED_AMOUNT";
+            discountValue?: number;
+            minPurchase?: number;
+            startDate?: string | null;
+            endDate?: string | null;
+        };
+        TogglePromotionDto: {
+            isActive: boolean;
+        };
+        ValidatePromotionDto: {
+            code: string;
+            subtotal: number;
+        };
         ValidatePromotionResponseDto: {
             /** @example 1 */
             id: number;
@@ -2603,7 +2742,9 @@ export interface components {
             /** @example 10 */
             value: number;
         };
-        ClockInDto: Record<string, never>;
+        ClockInDto: {
+            branchId: number;
+        };
         HrBranchSummaryDto: {
             /** @example 1 */
             id: number;
@@ -2629,7 +2770,12 @@ export interface components {
             updatedAt: string;
             branch?: components["schemas"]["HrBranchSummaryDto"];
         };
-        CreateShiftDto: Record<string, never>;
+        CreateShiftDto: {
+            userId: number;
+            branchId: number;
+            startTime: string;
+            endTime: string;
+        };
         ShiftResponseDto: {
             /** @example 1 */
             id: number;
@@ -2653,7 +2799,13 @@ export interface components {
             user?: components["schemas"]["HrUserSummaryDto"];
             branch?: components["schemas"]["BranchResponseDto"];
         };
-        RequestLeaveDto: Record<string, never>;
+        RequestLeaveDto: {
+            /** @enum {string} */
+            type: "SICK" | "ANNUAL" | "UNPAID";
+            startDate: string;
+            endDate: string;
+            reason?: string;
+        };
         LeaveRequestUserSummaryDto: {
             /** @example Jane Staff */
             name: string | null;
@@ -2689,8 +2841,15 @@ export interface components {
             updatedAt: string;
             user?: components["schemas"]["LeaveRequestUserSummaryDto"];
         };
-        ProcessLeaveDto: Record<string, never>;
-        GeneratePayrollDto: Record<string, never>;
+        ProcessLeaveDto: {
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+        };
+        GeneratePayrollDto: {
+            branchId: number;
+            month: number;
+            year: number;
+        };
         PayslipResponseDto: {
             /** @example 1 */
             id: number;
@@ -2745,7 +2904,9 @@ export interface components {
             payslips?: components["schemas"]["PayslipResponseDto"][];
             branch?: components["schemas"]["BranchResponseDto"];
         };
-        UpdateHourlyRateDto: Record<string, never>;
+        UpdateHourlyRateDto: {
+            hourlyRate: number;
+        };
         HrUserResponseDto: {
             /** @example 1 */
             id: number;
@@ -2767,9 +2928,38 @@ export interface components {
             /** @example 25000 */
             baseSalary?: number;
         };
-        CreateUserDto: Record<string, never>;
-        UpdateUserDto: Record<string, never>;
-        CreateExpenseDto: Record<string, never>;
+        CreateUserDto: {
+            name: string;
+            /** Format: email */
+            email: string;
+            password: string;
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+            branchId?: number;
+            hourlyRate?: number;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            baseSalary?: number;
+        };
+        UpdateUserDto: {
+            name?: string;
+            /** Format: email */
+            email?: string;
+            password?: string;
+            /** @enum {string} */
+            role?: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+            branchId?: number;
+            hourlyRate?: number;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            baseSalary?: number;
+        };
+        CreateExpenseDto: {
+            branchId?: number;
+            amount: number;
+            category: string;
+            description?: string;
+        };
         ExpenseRecordedByDto: {
             /** @example Branch Manager */
             name: string | null;
@@ -2803,7 +2993,12 @@ export interface components {
             /** @example 450 */
             expenses: number;
         };
-        SubmitSettlementDto: Record<string, never>;
+        SubmitSettlementDto: {
+            branchId?: number;
+            actualCash: number;
+            actualCreditCard?: number;
+            actualQR?: number;
+        };
         SettlementBranchSummaryDto: {
             /** @example Downtown */
             name: string;
@@ -2862,7 +3057,14 @@ export interface components {
             updatedAt?: string;
             ingredient?: components["schemas"]["IngredientSummaryDto"];
         };
-        StockInDto: Record<string, never>;
+        StockInItemDto: {
+            ingredientId: number;
+            quantity: number;
+            expiryDate?: string;
+        };
+        StockInDto: {
+            items: components["schemas"]["StockInItemDto"][];
+        };
         InventoryBatchResponseDto: {
             /** @example 1 */
             id: number;
@@ -2889,8 +3091,18 @@ export interface components {
             batch: components["schemas"]["InventoryBatchResponseDto"];
             inventory: components["schemas"]["BranchInventoryResponseDto"];
         };
-        RecordWasteDto: Record<string, never>;
-        CreateStockCountDto: Record<string, never>;
+        WasteItemDto: {
+            ingredientId: number;
+            quantity: number;
+            reason: string;
+        };
+        RecordWasteDto: {
+            items: components["schemas"]["WasteItemDto"][];
+        };
+        CreateStockCountDto: {
+            isBlind?: boolean;
+            notes?: string;
+        };
         StockCountUserDto: {
             /** @example Branch Manager */
             name: string | null;
@@ -2929,8 +3141,20 @@ export interface components {
             approvedBy?: components["schemas"]["StockCountUserDto"] | null;
             lines?: components["schemas"]["StockCountLineResponseDto"][];
         };
-        UpdateStockCountLinesDto: Record<string, never>;
-        ManualAdjustmentDto: Record<string, never>;
+        StockCountLineInputDto: {
+            ingredientId: number;
+            countedQty: number;
+        };
+        UpdateStockCountLinesDto: {
+            lines: components["schemas"]["StockCountLineInputDto"][];
+        };
+        ManualAdjustmentDto: {
+            ingredientId: number;
+            quantityDelta: number;
+            /** @enum {string} */
+            reason: "DAMAGE" | "CORRECTION";
+            notes?: string;
+        };
         StockAdjustmentResponseDto: {
             /** @example 1 */
             id: number;
@@ -3033,9 +3257,36 @@ export interface components {
             branch?: components["schemas"]["BranchResponseDto"];
             maintenanceLogs?: components["schemas"]["MaintenanceLogResponseDto"][];
         };
-        CreateEquipmentDto: Record<string, never>;
-        UpdateEquipmentDto: Record<string, never>;
-        LogMaintenanceDto: Record<string, never>;
+        CreateEquipmentDto: {
+            branchId?: number;
+            name: string;
+            /** @enum {string} */
+            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
+            serialNumber?: string;
+            purchaseDate?: string;
+            warrantyExpiry?: string;
+            nextMaintenanceDate?: string;
+        };
+        UpdateEquipmentDto: {
+            name?: string;
+            /** @enum {string} */
+            type?: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
+            serialNumber?: string;
+            /** @enum {string} */
+            status?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+            purchaseDate?: string;
+            warrantyExpiry?: string;
+            nextMaintenanceDate?: string;
+        };
+        LogMaintenanceDto: {
+            description: string;
+            cost: number;
+            performedBy?: string;
+            date?: string;
+            nextMaintenanceDate?: string;
+            /** @enum {string} */
+            newStatus?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+        };
         SalesTrendPointResponseDto: {
             /** @example 2026-07-01 */
             date: string;
@@ -3191,9 +3442,21 @@ export interface components {
             targetIngredient?: components["schemas"]["IngredientResponseDto"];
             rawIngredient?: components["schemas"]["IngredientResponseDto"];
         };
-        CreateProductionOrderDto: Record<string, never>;
-        UpdateProductionStatusDto: Record<string, never>;
-        CreateBomDto: Record<string, never>;
+        CreateProductionOrderDto: {
+            branchId: number;
+            targetIngredientId: number;
+            quantityToProduce: number;
+            plannedStartDate?: string;
+        };
+        UpdateProductionStatusDto: {
+            /** @enum {string} */
+            status: "COMPLETED" | "CANCELLED" | "DRAFT" | "PLANNED" | "IN_PROGRESS";
+        };
+        CreateBomDto: {
+            targetIngredientId: number;
+            rawIngredientId: number;
+            quantityNeeded: number;
+        };
         ModifierGroupRefDto: {
             /** @example 1 */
             id: number;
@@ -3236,19 +3499,50 @@ export interface components {
             swapIngredient?: components["schemas"]["IngredientSummaryDto"];
             options: components["schemas"]["ModifierOptionResponseDto"][];
         };
-        CreateModifierGroupDto: Record<string, never>;
-        UpdateModifierGroupDto: Record<string, never>;
+        CreateModifierOptionDto: {
+            name: string;
+            priceDelta?: number;
+            isDefault?: boolean;
+            sortOrder?: number;
+            swapToIngredientId?: number;
+        };
+        CreateModifierGroupDto: {
+            name: string;
+            category?: string;
+            sortOrder?: number;
+            swapIngredientId?: number;
+            options?: components["schemas"]["CreateModifierOptionDto"][];
+        };
+        UpdateModifierGroupDto: {
+            name?: string;
+            category?: string | null;
+            sortOrder?: number;
+            swapIngredientId?: number | null;
+        };
         ModifierDeleteResponseDto: {
             /** @example 1 */
             id: number;
             /** @example true */
             deleted: boolean;
         };
-        CreateModifierOptionForGroupDto: Record<string, never>;
-        UpdateModifierOptionDto: Record<string, never>;
+        CreateModifierOptionForGroupDto: {
+            name: string;
+            priceDelta?: number;
+            isDefault?: boolean;
+            sortOrder?: number;
+            swapToIngredientId?: number;
+            groupId: number;
+        };
+        UpdateModifierOptionDto: {
+            name?: string;
+            priceDelta?: number;
+            isDefault?: boolean;
+            sortOrder?: number;
+            swapToIngredientId?: number | null;
+        };
         NavCountsResponseDto: {
             /** @example 1 */
-            branchId: Record<string, never> | null;
+            branchId: number | null;
             /** @example 4 */
             lowStock: number;
             /** @example 2 */
@@ -3673,8 +3967,8 @@ export interface operations {
     };
     IngredientsController_getBranchInventory: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -3740,8 +4034,8 @@ export interface operations {
     };
     IngredientsController_getWasteLogs: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -5651,8 +5945,8 @@ export interface operations {
     };
     CustomersController_findAll: {
         parameters: {
-            query: {
-                search: string;
+            query?: {
+                search?: string;
             };
             header?: never;
             path?: never;
@@ -6191,8 +6485,8 @@ export interface operations {
     };
     AccountingController_getJournalEntries: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -6258,8 +6552,8 @@ export interface operations {
     };
     AccountingController_getVatReport: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -6325,8 +6619,8 @@ export interface operations {
     };
     AccountingController_getProfitLoss: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -6526,9 +6820,9 @@ export interface operations {
     };
     AuditController_getLogs: {
         parameters: {
-            query: {
-                limit: string;
-                offset: string;
+            query?: {
+                limit?: string;
+                offset?: string;
             };
             header?: never;
             path?: never;
@@ -8462,8 +8756,8 @@ export interface operations {
     };
     HrController_getLeaveRequests: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -9008,8 +9302,8 @@ export interface operations {
     };
     HrController_getAllUsers: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -9215,9 +9509,9 @@ export interface operations {
     };
     FinanceController_getExpenses: {
         parameters: {
-            query: {
-                date: string;
-                branchId: string;
+            query?: {
+                date?: string;
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -9352,8 +9646,8 @@ export interface operations {
     };
     FinanceController_getExpectedCash: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -9419,8 +9713,8 @@ export interface operations {
     };
     FinanceController_getSettlements: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -9622,10 +9916,10 @@ export interface operations {
     };
     FinanceController_exportSales: {
         parameters: {
-            query: {
-                startDate: string;
-                endDate: string;
-                branchId: string;
+            query?: {
+                startDate?: string;
+                endDate?: string;
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -10513,8 +10807,8 @@ export interface operations {
     };
     EquipmentController_findAll: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -10858,9 +11152,9 @@ export interface operations {
     };
     ReportsController_getSalesTrends: {
         parameters: {
-            query: {
-                branchId: string;
-                days: string;
+            query?: {
+                branchId?: string;
+                days?: string;
             };
             header?: never;
             path?: never;
@@ -10926,8 +11220,8 @@ export interface operations {
     };
     ReportsController_getTopProducts: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -10993,8 +11287,8 @@ export interface operations {
     };
     ReportsController_getProfitLoss: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -11060,8 +11354,8 @@ export interface operations {
     };
     ReportsController_getFoodCostActual: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -11127,8 +11421,8 @@ export interface operations {
     };
     ReportsController_getExecutiveSummary: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -11600,8 +11894,8 @@ export interface operations {
     };
     ModifiersController_findAll: {
         parameters: {
-            query: {
-                category: string;
+            query?: {
+                category?: string;
             };
             header?: never;
             path?: never;
@@ -12081,8 +12375,8 @@ export interface operations {
     };
     NavigationController_getNavCounts: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -12148,8 +12442,8 @@ export interface operations {
     };
     NotificationsController_list: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -12282,8 +12576,8 @@ export interface operations {
     };
     NotificationsController_markAllRead: {
         parameters: {
-            query: {
-                branchId: string;
+            query?: {
+                branchId?: string;
             };
             header?: never;
             path?: never;

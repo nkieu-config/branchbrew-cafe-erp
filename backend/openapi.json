@@ -443,7 +443,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -527,7 +527,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -2969,7 +2969,7 @@
         "parameters": [
           {
             "name": "search",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -3540,7 +3540,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -3624,7 +3624,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -3708,7 +3708,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -3955,7 +3955,7 @@
         "parameters": [
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -3963,7 +3963,7 @@
           },
           {
             "name": "offset",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -6334,7 +6334,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -6922,7 +6922,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7257,7 +7257,7 @@
         "parameters": [
           {
             "name": "date",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7265,7 +7265,7 @@
           },
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7349,7 +7349,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7510,7 +7510,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7675,7 +7675,7 @@
         "parameters": [
           {
             "name": "startDate",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7683,7 +7683,7 @@
           },
           {
             "name": "endDate",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -7691,7 +7691,7 @@
           },
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -8798,7 +8798,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9223,7 +9223,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9231,7 +9231,7 @@
           },
           {
             "name": "days",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9315,7 +9315,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9399,7 +9399,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9480,7 +9480,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -9561,7 +9561,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -10124,7 +10124,7 @@
         "parameters": [
           {
             "name": "category",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -10712,7 +10712,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -10793,7 +10793,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -10958,7 +10958,7 @@
         "parameters": [
           {
             "name": "branchId",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": {
               "type": "string"
@@ -11088,7 +11088,6 @@
             "example": 400
           },
           "code": {
-            "type": "string",
             "enum": [
               "INTERNAL_ERROR",
               "VALIDATION_ERROR",
@@ -11119,6 +11118,7 @@
               "SETTLEMENT_NOT_FOUND",
               "SETTLEMENT_ALREADY_APPROVED"
             ],
+            "type": "string",
             "example": "VALIDATION_ERROR"
           },
           "message": {
@@ -11152,9 +11152,56 @@
           "path"
         ]
       },
+      "RecipeItemDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity"
+        ]
+      },
       "CreateProductDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "recipeItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeItemDto"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "price",
+          "category"
+        ]
       },
       "IngredientSummaryDto": {
         "type": "object",
@@ -11262,7 +11309,32 @@
       },
       "UpdateProductDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "minimum": 0
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "recipeItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeItemDto"
+            }
+          }
+        }
       },
       "SupplierResponseDto": {
         "type": "object",
@@ -11277,13 +11349,13 @@
           },
           "contactEmail": {
             "type": "string",
-            "example": "orders@freshfarms.dev",
-            "nullable": true
+            "nullable": true,
+            "example": "orders@freshfarms.dev"
           },
           "phone": {
             "type": "string",
-            "example": "+66 2 123 4567",
-            "nullable": true
+            "nullable": true,
+            "example": "+66 2 123 4567"
           },
           "createdAt": {
             "type": "string",
@@ -11324,8 +11396,8 @@
           },
           "primarySupplierId": {
             "type": "number",
-            "example": 2,
-            "nullable": true
+            "nullable": true,
+            "example": 2
           },
           "isActive": {
             "type": "boolean",
@@ -11398,8 +11470,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Branch Manager",
-            "nullable": true
+            "nullable": true,
+            "example": "Branch Manager"
           }
         },
         "required": [
@@ -11456,7 +11528,31 @@
       },
       "CreateIngredientDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "costPerUnit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "primarySupplierId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "unit"
+        ]
       },
       "SyncIngredientInventoryResponseDto": {
         "type": "object",
@@ -11477,11 +11573,111 @@
       },
       "UpdateIngredientDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "costPerUnit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "primarySupplierId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrderItemDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "modifierOptionIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "productId",
+          "quantity"
+        ]
       },
       "CreateOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemDto"
+            }
+          },
+          "customerPhone": {
+            "type": "string",
+            "pattern": "^\\d{8,15}$"
+          },
+          "promotionCode": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "pointsToRedeem": {
+            "type": "number",
+            "minimum": 0
+          },
+          "paymentMethod": {
+            "type": "string",
+            "enum": [
+              "CASH",
+              "CREDIT_CARD",
+              "QR_PROMPTPAY"
+            ]
+          },
+          "isTaxInvoiceRequested": {
+            "type": "boolean"
+          },
+          "taxInvoiceName": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "taxInvoiceTaxId": {
+            "type": "string",
+            "pattern": "^\\d{13}$"
+          },
+          "taxInvoiceAddress": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "clientRequestId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items"
+        ]
       },
       "OrderProductSummaryDto": {
         "type": "object",
@@ -11567,8 +11763,8 @@
           },
           "notes": {
             "type": "string",
-            "example": "Less ice",
-            "nullable": true
+            "nullable": true,
+            "example": "Less ice"
           },
           "product": {
             "$ref": "#/components/schemas/OrderProductSummaryDto"
@@ -11601,13 +11797,13 @@
             "example": "Jane Customer"
           },
           "tier": {
-            "type": "string",
             "enum": [
               "REGULAR",
               "SILVER",
               "GOLD",
               "PLATINUM"
             ],
+            "type": "string",
             "example": "REGULAR"
           }
         },
@@ -11630,8 +11826,8 @@
           },
           "location": {
             "type": "string",
-            "example": "Bangkok",
-            "nullable": true
+            "nullable": true,
+            "example": "Bangkok"
           },
           "isCentralKitchen": {
             "type": "boolean",
@@ -11713,7 +11909,6 @@
             "example": 0
           },
           "status": {
-            "type": "string",
             "enum": [
               "PENDING",
               "PREPARING",
@@ -11721,15 +11916,16 @@
               "CANCELLED",
               "REFUNDED"
             ],
+            "type": "string",
             "example": "PENDING"
           },
           "paymentMethod": {
-            "type": "string",
             "enum": [
               "CASH",
               "CREDIT_CARD",
               "QR_PROMPTPAY"
             ],
+            "type": "string",
             "example": "CASH"
           },
           "isTaxInvoiceRequested": {
@@ -11758,23 +11954,23 @@
           },
           "customerId": {
             "type": "number",
-            "example": 5,
-            "nullable": true
+            "nullable": true,
+            "example": 5
           },
           "promotionId": {
             "type": "number",
-            "example": 2,
-            "nullable": true
+            "nullable": true,
+            "example": 2
           },
           "queueNumber": {
             "type": "number",
-            "example": 42,
-            "nullable": true
+            "nullable": true,
+            "example": 42
           },
           "queueDate": {
             "type": "string",
-            "format": "date",
-            "nullable": true
+            "nullable": true,
+            "format": "date"
           },
           "refundReason": {
             "type": "string",
@@ -11782,8 +11978,8 @@
           },
           "refundedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -11859,19 +12055,65 @@
       },
       "UpdateOrderStatusDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "PREPARING",
+              "COMPLETED",
+              "CANCELLED",
+              "REFUNDED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
       },
       "RefundOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "reason": {
+            "type": "string",
+            "maxLength": 500
+          }
+        }
       },
       "CreateSupplierDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "contactEmail": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
       "UpdateSupplierDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "contactEmail": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
       },
       "PurchaseOrderItemResponseDto": {
         "type": "object",
@@ -11932,11 +12174,11 @@
             "example": 450
           },
           "method": {
-            "type": "string",
             "enum": [
               "CASH",
               "BANK_TRANSFER"
             ],
+            "type": "string",
             "example": "BANK_TRANSFER"
           },
           "notes": {
@@ -11983,27 +12225,27 @@
             "example": 2
           },
           "status": {
-            "type": "string",
             "enum": [
               "DRAFT",
               "PENDING",
               "APPROVED",
               "RECEIVED"
             ],
+            "type": "string",
             "example": "DRAFT"
           },
           "paymentStatus": {
-            "type": "string",
             "enum": [
               "UNPAID",
               "PAID"
             ],
+            "type": "string",
             "example": "UNPAID"
           },
           "paidAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "isAutoGenerated": {
             "type": "boolean",
@@ -12097,17 +12339,98 @@
           "buckets"
         ]
       },
+      "PurchaseOrderItemDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "unitPrice": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity",
+          "unitPrice"
+        ]
+      },
       "CreatePurchaseOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "supplierId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "expectedDate": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PurchaseOrderItemDto"
+            }
+          }
+        },
+        "required": [
+          "branchId",
+          "supplierId",
+          "items"
+        ]
+      },
+      "ReceivePOItemDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number"
+          },
+          "expiryDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ingredientId"
+        ]
       },
       "ReceivePurchaseOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReceivePOItemDto"
+            }
+          }
+        }
       },
       "PayPurchaseOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "CASH",
+              "BANK_TRANSFER"
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "method"
+        ]
       },
       "OutboxEventResponseDto": {
         "type": "object",
@@ -12121,13 +12444,13 @@
             "example": "order.created"
           },
           "status": {
-            "type": "string",
             "enum": [
               "PENDING",
               "PROCESSING",
               "COMPLETED",
               "FAILED"
             ],
+            "type": "string",
             "example": "FAILED"
           },
           "attempts": {
@@ -12144,13 +12467,13 @@
           },
           "claimedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "processedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           }
         },
         "required": [
@@ -12166,7 +12489,20 @@
       },
       "CreateCustomerDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "name",
+          "phone"
+        ]
       },
       "CustomerResponseDto": {
         "type": "object",
@@ -12188,13 +12524,13 @@
             "example": 120
           },
           "tier": {
-            "type": "string",
             "enum": [
               "REGULAR",
               "SILVER",
               "GOLD",
               "PLATINUM"
             ],
+            "type": "string",
             "example": "REGULAR"
           },
           "createdAt": {
@@ -12295,8 +12631,8 @@
           },
           "nextTier": {
             "type": "string",
-            "example": "GOLD",
-            "nullable": true
+            "nullable": true,
+            "example": "GOLD"
           },
           "amountToNextTier": {
             "type": "number",
@@ -12346,7 +12682,16 @@
       },
       "UpdateCustomerDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "AccountResponseDto": {
         "type": "object",
@@ -12364,7 +12709,6 @@
             "example": "Cash"
           },
           "type": {
-            "type": "string",
             "enum": [
               "ASSET",
               "LIABILITY",
@@ -12372,12 +12716,13 @@
               "REVENUE",
               "EXPENSE"
             ],
+            "type": "string",
             "example": "ASSET"
           },
           "description": {
             "type": "string",
-            "example": "Petty cash and register float",
-            "nullable": true
+            "nullable": true,
+            "example": "Petty cash and register float"
           },
           "isActive": {
             "type": "boolean",
@@ -12428,8 +12773,8 @@
           },
           "description": {
             "type": "string",
-            "example": "Cash payment",
-            "nullable": true
+            "nullable": true,
+            "example": "Cash payment"
           },
           "account": {
             "$ref": "#/components/schemas/AccountResponseDto"
@@ -12453,8 +12798,8 @@
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "date": {
             "type": "string",
@@ -12462,20 +12807,20 @@
           },
           "reference": {
             "type": "string",
-            "example": "ORD-100",
-            "nullable": true
+            "nullable": true,
+            "example": "ORD-100"
           },
           "description": {
             "type": "string",
             "example": "Sales revenue for order 100"
           },
           "status": {
-            "type": "string",
             "enum": [
               "DRAFT",
               "POSTED",
               "VOIDED"
             ],
+            "type": "string",
             "example": "POSTED"
           },
           "createdAt": {
@@ -12574,7 +12919,6 @@
             "example": "Inventory"
           },
           "type": {
-            "type": "string",
             "enum": [
               "ASSET",
               "LIABILITY",
@@ -12582,14 +12926,15 @@
               "REVENUE",
               "EXPENSE"
             ],
+            "type": "string",
             "example": "ASSET"
           },
           "normalBalance": {
-            "type": "string",
             "enum": [
               "DEBIT",
               "CREDIT"
             ],
+            "type": "string",
             "example": "DEBIT",
             "description": "Side the account balance normally sits on"
           },
@@ -12624,23 +12969,23 @@
         "type": "object",
         "properties": {
           "scope": {
-            "type": "string",
             "enum": [
               "CHAIN",
               "BRANCH"
             ],
+            "type": "string",
             "example": "CHAIN",
             "description": "BRANCH excludes chain-level entries, so it is a partial view"
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "asOf": {
             "type": "string",
-            "example": "2026-07-25",
             "nullable": true,
+            "example": "2026-07-25",
             "description": "Inclusive cut-off date; null means every posted entry"
           },
           "accounts": {
@@ -12699,20 +13044,20 @@
           },
           "name": {
             "type": "string",
-            "example": "Jane Staff",
-            "nullable": true
+            "nullable": true,
+            "example": "Jane Staff"
           },
           "email": {
             "type": "string",
             "example": "manager@branchbrew.dev"
           },
           "role": {
-            "type": "string",
             "enum": [
               "SUPER_ADMIN",
               "MANAGER",
               "STAFF"
             ],
+            "type": "string",
             "example": "MANAGER"
           }
         },
@@ -12744,13 +13089,13 @@
           },
           "targetId": {
             "type": "number",
-            "example": 10,
-            "nullable": true
+            "nullable": true,
+            "example": 10
           },
           "details": {
             "type": "string",
-            "example": "{\"poNumber\":\"PO-2026-0001\"}",
-            "nullable": true
+            "nullable": true,
+            "example": "{\"poNumber\":\"PO-2026-0001\"}"
           },
           "createdAt": {
             "type": "string",
@@ -12797,7 +13142,20 @@
       },
       "LoginDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       },
       "AuthUserResponseDto": {
         "type": "object",
@@ -12812,27 +13170,27 @@
           },
           "name": {
             "type": "string",
-            "example": "Branch Manager",
-            "nullable": true
+            "nullable": true,
+            "example": "Branch Manager"
           },
           "role": {
-            "type": "string",
             "enum": [
               "SUPER_ADMIN",
               "MANAGER",
               "STAFF"
             ],
+            "type": "string",
             "example": "MANAGER"
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "branch": {
             "type": "string",
-            "example": "Downtown",
-            "nullable": true
+            "nullable": true,
+            "example": "Downtown"
           }
         },
         "required": [
@@ -12857,7 +13215,21 @@
       },
       "CreateBranchDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string"
+          },
+          "isCentralKitchen": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
       "HrUserSummaryDto": {
         "type": "object",
@@ -12868,33 +13240,33 @@
           },
           "name": {
             "type": "string",
-            "example": "Jane Staff",
-            "nullable": true
+            "nullable": true,
+            "example": "Jane Staff"
           },
           "email": {
             "type": "string",
             "example": "staff@branchbrew.dev"
           },
           "role": {
-            "type": "string",
             "enum": [
               "SUPER_ADMIN",
               "MANAGER",
               "STAFF"
             ],
+            "type": "string",
             "example": "STAFF"
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "employmentType": {
-            "type": "string",
             "enum": [
               "FULL_TIME",
               "PART_TIME"
-            ]
+            ],
+            "type": "string"
           },
           "hourlyRate": {
             "type": "number",
@@ -12937,13 +13309,13 @@
             "example": 12
           },
           "status": {
-            "type": "string",
             "enum": [
               "PENDING",
               "SHIPPED",
               "COMPLETED",
               "CANCELLED"
             ],
+            "type": "string",
             "example": "PENDING"
           },
           "requestedById": {
@@ -12952,8 +13324,8 @@
           },
           "approvedById": {
             "type": "number",
-            "example": 5,
-            "nullable": true
+            "nullable": true,
+            "example": 5
           },
           "createdAt": {
             "type": "string",
@@ -12991,11 +13363,45 @@
       },
       "CreateTransferDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "fromBranchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "toBranchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "fromBranchId",
+          "toBranchId",
+          "ingredientId",
+          "quantity"
+        ]
       },
       "UpdateBranchDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string"
+          },
+          "isCentralKitchen": {
+            "type": "boolean"
+          }
+        }
       },
       "SyncBranchInventoryResponseDto": {
         "type": "object",
@@ -13016,15 +13422,89 @@
       },
       "AddInventoryBatchDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "expiryDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity"
+        ]
       },
       "ReportWasteDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "batchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity",
+          "reason"
+        ]
       },
       "CreatePromotionDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "discountType": {
+            "type": "string",
+            "enum": [
+              "PERCENTAGE",
+              "FIXED_AMOUNT"
+            ]
+          },
+          "discountValue": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minPurchase": {
+            "type": "number",
+            "minimum": 0
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "description",
+          "discountType",
+          "discountValue"
+        ]
       },
       "PromotionResponseDto": {
         "type": "object",
@@ -13042,11 +13522,11 @@
             "example": "10% off summer drinks"
           },
           "discountType": {
-            "type": "string",
             "enum": [
               "PERCENTAGE",
               "FIXED_AMOUNT"
             ],
+            "type": "string",
             "example": "PERCENTAGE"
           },
           "discountValue": {
@@ -13055,8 +13535,8 @@
           },
           "minPurchase": {
             "type": "number",
-            "example": 500,
-            "nullable": true
+            "nullable": true,
+            "example": 500
           },
           "isActive": {
             "type": "boolean",
@@ -13064,13 +13544,13 @@
           },
           "startDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "endDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -13097,15 +13577,63 @@
       },
       "UpdatePromotionDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "discountType": {
+            "type": "string",
+            "enum": [
+              "PERCENTAGE",
+              "FIXED_AMOUNT"
+            ]
+          },
+          "discountValue": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minPurchase": {
+            "type": "number",
+            "minimum": 0
+          },
+          "startDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "nullable": true
+          }
+        }
       },
       "TogglePromotionDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "isActive"
+        ]
       },
       "ValidatePromotionDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subtotal": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "code",
+          "subtotal"
+        ]
       },
       "ValidatePromotionResponseDto": {
         "type": "object",
@@ -13123,11 +13651,11 @@
             "example": 85
           },
           "type": {
-            "type": "string",
             "enum": [
               "PERCENTAGE",
               "FIXED_AMOUNT"
             ],
+            "type": "string",
             "example": "PERCENTAGE"
           },
           "value": {
@@ -13145,7 +13673,15 @@
       },
       "ClockInDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "branchId"
+        ]
       },
       "HrBranchSummaryDto": {
         "type": "object",
@@ -13185,13 +13721,13 @@
           },
           "clockOut": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "totalHours": {
             "type": "number",
-            "example": 7.5,
-            "nullable": true
+            "nullable": true,
+            "example": 7.5
           },
           "createdAt": {
             "type": "string",
@@ -13218,7 +13754,28 @@
       },
       "CreateShiftDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "userId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "branchId",
+          "startTime",
+          "endTime"
+        ]
       },
       "ShiftResponseDto": {
         "type": "object",
@@ -13244,13 +13801,13 @@
             "format": "date-time"
           },
           "status": {
-            "type": "string",
             "enum": [
               "SCHEDULED",
               "COMPLETED",
               "ABSENT",
               "CANCELLED"
             ],
+            "type": "string",
             "example": "SCHEDULED"
           },
           "createdAt": {
@@ -13281,15 +13838,38 @@
       },
       "RequestLeaveDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "SICK",
+              "ANNUAL",
+              "UNPAID"
+            ]
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "startDate",
+          "endDate"
+        ]
       },
       "LeaveRequestUserSummaryDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "example": "Jane Staff",
-            "nullable": true
+            "nullable": true,
+            "example": "Jane Staff"
           },
           "email": {
             "type": "string",
@@ -13297,8 +13877,8 @@
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           }
         },
         "required": [
@@ -13319,12 +13899,12 @@
             "example": 4
           },
           "type": {
-            "type": "string",
             "enum": [
               "SICK",
               "ANNUAL",
               "UNPAID"
             ],
+            "type": "string",
             "example": "ANNUAL"
           },
           "startDate": {
@@ -13337,16 +13917,16 @@
           },
           "reason": {
             "type": "string",
-            "example": "Family trip",
-            "nullable": true
+            "nullable": true,
+            "example": "Family trip"
           },
           "status": {
-            "type": "string",
             "enum": [
               "PENDING",
               "APPROVED",
               "REJECTED"
             ],
+            "type": "string",
             "example": "PENDING"
           },
           "createdAt": {
@@ -13375,11 +13955,42 @@
       },
       "ProcessLeaveDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "APPROVED",
+              "REJECTED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
       },
       "GeneratePayrollDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "month": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "year": {
+            "type": "number",
+            "minimum": 2000,
+            "maximum": 2100
+          }
+        },
+        "required": [
+          "branchId",
+          "month",
+          "year"
+        ]
       },
       "PayslipResponseDto": {
         "type": "object",
@@ -13482,18 +14093,18 @@
             "example": 2026
           },
           "status": {
-            "type": "string",
             "enum": [
               "DRAFT",
               "APPROVED",
               "PAID"
             ],
+            "type": "string",
             "example": "DRAFT"
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "createdAt": {
             "type": "string",
@@ -13525,7 +14136,15 @@
       },
       "UpdateHourlyRateDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "hourlyRate": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "hourlyRate"
+        ]
       },
       "HrUserResponseDto": {
         "type": "object",
@@ -13536,33 +14155,33 @@
           },
           "name": {
             "type": "string",
-            "example": "Jane Staff",
-            "nullable": true
+            "nullable": true,
+            "example": "Jane Staff"
           },
           "email": {
             "type": "string",
             "example": "staff@branchbrew.dev"
           },
           "role": {
-            "type": "string",
             "enum": [
               "SUPER_ADMIN",
               "MANAGER",
               "STAFF"
             ],
+            "type": "string",
             "example": "STAFF"
           },
           "branchId": {
             "type": "number",
-            "example": 1,
-            "nullable": true
+            "nullable": true,
+            "example": 1
           },
           "employmentType": {
-            "type": "string",
             "enum": [
               "FULL_TIME",
               "PART_TIME"
-            ]
+            ],
+            "type": "string"
           },
           "hourlyRate": {
             "type": "number",
@@ -13583,23 +14202,129 @@
       },
       "CreateUserDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "SUPER_ADMIN",
+              "MANAGER",
+              "STAFF"
+            ]
+          },
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "hourlyRate": {
+            "type": "number",
+            "minimum": 0
+          },
+          "employmentType": {
+            "type": "string",
+            "enum": [
+              "FULL_TIME",
+              "PART_TIME"
+            ]
+          },
+          "baseSalary": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "role"
+        ]
       },
       "UpdateUserDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "SUPER_ADMIN",
+              "MANAGER",
+              "STAFF"
+            ]
+          },
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "hourlyRate": {
+            "type": "number",
+            "minimum": 0
+          },
+          "employmentType": {
+            "type": "string",
+            "enum": [
+              "FULL_TIME",
+              "PART_TIME"
+            ]
+          },
+          "baseSalary": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
       },
       "CreateExpenseDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "category"
+        ]
       },
       "ExpenseRecordedByDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "example": "Branch Manager",
-            "nullable": true
+            "nullable": true,
+            "example": "Branch Manager"
           }
         },
         "required": [
@@ -13627,8 +14352,8 @@
           },
           "description": {
             "type": "string",
-            "example": "Cleaning supplies",
-            "nullable": true
+            "nullable": true,
+            "example": "Cleaning supplies"
           },
           "recordedById": {
             "type": "number",
@@ -13686,7 +14411,27 @@
       },
       "SubmitSettlementDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "actualCash": {
+            "type": "number",
+            "minimum": 0
+          },
+          "actualCreditCard": {
+            "type": "number",
+            "minimum": 0
+          },
+          "actualQR": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "actualCash"
+        ]
       },
       "SettlementBranchSummaryDto": {
         "type": "object",
@@ -13705,8 +14450,8 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Jane Staff",
-            "nullable": true
+            "nullable": true,
+            "example": "Jane Staff"
           }
         },
         "required": [
@@ -13757,12 +14502,12 @@
             "example": -20
           },
           "status": {
-            "type": "string",
             "enum": [
               "PENDING",
               "APPROVED",
               "REJECTED"
             ],
+            "type": "string",
             "example": "PENDING"
           },
           "submittedById": {
@@ -13840,9 +14585,39 @@
           "minStock"
         ]
       },
+      "StockInItemDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "expiryDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity"
+        ]
+      },
       "StockInDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockInItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
       },
       "InventoryBatchResponseDto": {
         "type": "object",
@@ -13865,20 +14640,20 @@
           },
           "expiryDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "poId": {
             "type": "number",
             "nullable": true
           },
           "status": {
-            "type": "string",
             "enum": [
               "ACTIVE",
               "DEPLETED",
               "EXPIRED"
             ],
+            "type": "string",
             "example": "ACTIVE"
           },
           "createdAt": {
@@ -13913,21 +14688,61 @@
           "inventory"
         ]
       },
+      "WasteItemDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantity",
+          "reason"
+        ]
+      },
       "RecordWasteDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WasteItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
       },
       "CreateStockCountDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "isBlind": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "StockCountUserDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "example": "Branch Manager",
-            "nullable": true
+            "nullable": true,
+            "example": "Branch Manager"
           }
         },
         "required": [
@@ -13979,13 +14794,13 @@
             "example": 1
           },
           "status": {
-            "type": "string",
             "enum": [
               "DRAFT",
               "SUBMITTED",
               "APPROVED",
               "CANCELLED"
             ],
+            "type": "string",
             "example": "DRAFT"
           },
           "isBlind": {
@@ -13998,13 +14813,13 @@
           },
           "submittedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "approvedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -14037,13 +14852,64 @@
           "createdAt"
         ]
       },
+      "StockCountLineInputDto": {
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "countedQty": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "ingredientId",
+          "countedQty"
+        ]
+      },
       "UpdateStockCountLinesDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockCountLineInputDto"
+            }
+          }
+        },
+        "required": [
+          "lines"
+        ]
       },
       "ManualAdjustmentDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "ingredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantityDelta": {
+            "type": "number"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "DAMAGE",
+              "CORRECTION"
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "ingredientId",
+          "quantityDelta",
+          "reason"
+        ]
       },
       "StockAdjustmentResponseDto": {
         "type": "object",
@@ -14065,12 +14931,12 @@
             "example": -2.5
           },
           "reason": {
-            "type": "string",
             "enum": [
               "COUNT_VARIANCE",
               "DAMAGE",
               "CORRECTION"
             ],
+            "type": "string",
             "example": "COUNT_VARIANCE"
           },
           "notes": {
@@ -14117,7 +14983,6 @@
             "example": "La Marzocco Linea"
           },
           "type": {
-            "type": "string",
             "enum": [
               "ESPRESSO_MACHINE",
               "GRINDER",
@@ -14126,37 +14991,38 @@
               "REFRIGERATOR",
               "OTHER"
             ],
+            "type": "string",
             "example": "ESPRESSO_MACHINE"
           },
           "serialNumber": {
             "type": "string",
-            "example": "LM-2024-001",
-            "nullable": true
+            "nullable": true,
+            "example": "LM-2024-001"
           },
           "status": {
-            "type": "string",
             "enum": [
               "ACTIVE",
               "MAINTENANCE",
               "BROKEN",
               "RETIRED"
             ],
+            "type": "string",
             "example": "ACTIVE"
           },
           "purchaseDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "warrantyExpiry": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "nextMaintenanceDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -14205,8 +15071,8 @@
           },
           "performedBy": {
             "type": "string",
-            "example": "TechServe Co.",
-            "nullable": true
+            "nullable": true,
+            "example": "TechServe Co."
           },
           "date": {
             "type": "string",
@@ -14248,7 +15114,6 @@
             "example": "La Marzocco Linea"
           },
           "type": {
-            "type": "string",
             "enum": [
               "ESPRESSO_MACHINE",
               "GRINDER",
@@ -14257,37 +15122,38 @@
               "REFRIGERATOR",
               "OTHER"
             ],
+            "type": "string",
             "example": "ESPRESSO_MACHINE"
           },
           "serialNumber": {
             "type": "string",
-            "example": "LM-2024-001",
-            "nullable": true
+            "nullable": true,
+            "example": "LM-2024-001"
           },
           "status": {
-            "type": "string",
             "enum": [
               "ACTIVE",
               "MAINTENANCE",
               "BROKEN",
               "RETIRED"
             ],
+            "type": "string",
             "example": "ACTIVE"
           },
           "purchaseDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "warrantyExpiry": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "nextMaintenanceDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",
@@ -14323,15 +15189,119 @@
       },
       "CreateEquipmentDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ESPRESSO_MACHINE",
+              "GRINDER",
+              "BLENDER",
+              "POS_SYSTEM",
+              "REFRIGERATOR",
+              "OTHER"
+            ]
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "purchaseDate": {
+            "type": "string"
+          },
+          "warrantyExpiry": {
+            "type": "string"
+          },
+          "nextMaintenanceDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
       },
       "UpdateEquipmentDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "ESPRESSO_MACHINE",
+              "GRINDER",
+              "BLENDER",
+              "POS_SYSTEM",
+              "REFRIGERATOR",
+              "OTHER"
+            ]
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "MAINTENANCE",
+              "BROKEN",
+              "RETIRED"
+            ]
+          },
+          "purchaseDate": {
+            "type": "string"
+          },
+          "warrantyExpiry": {
+            "type": "string"
+          },
+          "nextMaintenanceDate": {
+            "type": "string"
+          }
+        }
       },
       "LogMaintenanceDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cost": {
+            "type": "number",
+            "minimum": 0
+          },
+          "performedBy": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "nextMaintenanceDate": {
+            "type": "string"
+          },
+          "newStatus": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "MAINTENANCE",
+              "BROKEN",
+              "RETIRED"
+            ]
+          }
+        },
+        "required": [
+          "description",
+          "cost"
+        ]
       },
       "SalesTrendPointResponseDto": {
         "type": "object",
@@ -14534,12 +15504,12 @@
             "format": "date-time"
           },
           "status": {
-            "type": "string",
             "enum": [
               "ACTIVE",
               "DEPLETED",
               "EXPIRED"
             ],
+            "type": "string",
             "example": "ACTIVE"
           }
         },
@@ -14657,7 +15627,6 @@
             "example": 50
           },
           "status": {
-            "type": "string",
             "enum": [
               "DRAFT",
               "PLANNED",
@@ -14665,6 +15634,7 @@
               "COMPLETED",
               "CANCELLED"
             ],
+            "type": "string",
             "example": "PLANNED"
           },
           "actualCost": {
@@ -14673,18 +15643,18 @@
           },
           "plannedStartDate": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "completedAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdByUserId": {
             "type": "number",
-            "example": 4,
-            "nullable": true
+            "nullable": true,
+            "example": 4
           },
           "createdAt": {
             "type": "string",
@@ -14761,15 +15731,68 @@
       },
       "CreateProductionOrderDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "branchId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "targetIngredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantityToProduce": {
+            "type": "number",
+            "minimum": 1
+          },
+          "plannedStartDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "branchId",
+          "targetIngredientId",
+          "quantityToProduce"
+        ]
       },
       "UpdateProductionStatusDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "CANCELLED",
+              "DRAFT",
+              "PLANNED",
+              "IN_PROGRESS"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
       },
       "CreateBomDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "targetIngredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "rawIngredientId": {
+            "type": "number",
+            "minimum": 1
+          },
+          "quantityNeeded": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "targetIngredientId",
+          "rawIngredientId",
+          "quantityNeeded"
+        ]
       },
       "ModifierGroupRefDto": {
         "type": "object",
@@ -14817,8 +15840,8 @@
           },
           "swapToIngredientId": {
             "type": "number",
-            "example": 5,
-            "nullable": true
+            "nullable": true,
+            "example": 5
           },
           "swapToIngredient": {
             "$ref": "#/components/schemas/IngredientSummaryDto"
@@ -14850,8 +15873,8 @@
           },
           "category": {
             "type": "string",
-            "example": "Coffee",
-            "nullable": true
+            "nullable": true,
+            "example": "Coffee"
           },
           "sortOrder": {
             "type": "number",
@@ -14859,8 +15882,8 @@
           },
           "swapIngredientId": {
             "type": "number",
-            "example": 3,
-            "nullable": true
+            "nullable": true,
+            "example": 3
           },
           "createdAt": {
             "type": "string",
@@ -14891,13 +15914,80 @@
           "options"
         ]
       },
+      "CreateModifierOptionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priceDelta": {
+            "type": "number",
+            "minimum": 0
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "swapToIngredientId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
       "CreateModifierGroupDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string"
+          },
+          "sortOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "swapIngredientId": {
+            "type": "number"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateModifierOptionDto"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
       "UpdateModifierGroupDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "swapIngredientId": {
+            "type": "number",
+            "nullable": true
+          }
+        }
       },
       "ModifierDeleteResponseDto": {
         "type": "object",
@@ -14918,19 +16008,65 @@
       },
       "CreateModifierOptionForGroupDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priceDelta": {
+            "type": "number",
+            "minimum": 0
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "swapToIngredientId": {
+            "type": "number"
+          },
+          "groupId": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "groupId"
+        ]
       },
       "UpdateModifierOptionDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priceDelta": {
+            "type": "number",
+            "minimum": 0
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "sortOrder": {
+            "type": "number",
+            "minimum": 0
+          },
+          "swapToIngredientId": {
+            "type": "number",
+            "nullable": true
+          }
+        }
       },
       "NavCountsResponseDto": {
         "type": "object",
         "properties": {
           "branchId": {
-            "type": "object",
-            "example": 1,
-            "nullable": true
+            "type": "number",
+            "nullable": true,
+            "example": 1
           },
           "lowStock": {
             "type": "number",
@@ -14990,7 +16126,6 @@
             "example": 1
           },
           "type": {
-            "type": "string",
             "enum": [
               "LOW_STOCK",
               "BATCH_EXPIRING",
@@ -15000,6 +16135,7 @@
               "STOCK_COUNT_PENDING",
               "OUTBOX_FAILED"
             ],
+            "type": "string",
             "example": "LOW_STOCK"
           },
           "title": {
@@ -15019,12 +16155,12 @@
             "nullable": true
           },
           "minRole": {
-            "type": "string",
             "enum": [
               "SUPER_ADMIN",
               "MANAGER",
               "STAFF"
             ],
+            "type": "string",
             "example": "MANAGER"
           },
           "userId": {
@@ -15033,8 +16169,8 @@
           },
           "readAt": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "nullable": true,
+            "format": "date-time"
           },
           "createdAt": {
             "type": "string",

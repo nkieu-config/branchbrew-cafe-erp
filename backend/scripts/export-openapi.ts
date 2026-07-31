@@ -20,7 +20,7 @@ async function exportOpenApi(): Promise<void> {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  const outputPath = join(__dirname, '..', 'openapi.json');
+  const outputPath = join(process.cwd(), 'openapi.json');
   writeFileSync(outputPath, JSON.stringify(document, null, 2));
 
   await app.close();

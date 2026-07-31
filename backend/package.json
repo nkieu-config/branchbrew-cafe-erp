@@ -26,7 +26,7 @@
     "test:e2e": "TZ=UTC NODE_OPTIONS=--no-deprecation jest --config ./test/jest-e2e.json --runInBand --detectOpenHandles",
     "ci:check": "npm run type-check && npm run lint && npm run test:cov && npm run build",
     "ci:check:push": "prisma generate && npm run type-check && npm run lint && npm run test",
-    "openapi:export": "ts-node scripts/export-openapi.ts"
+    "openapi:export": "nest build && node dist/scripts/export-openapi.js"
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.7",
