@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { toNum, roundMoney } from '../common/decimal.util';
-import { Parser } from 'json2csv';
+import { Parser } from '@json2csv/plainjs';
 import { Prisma } from '@prisma/client';
 import {
   assertBranchAccess,
