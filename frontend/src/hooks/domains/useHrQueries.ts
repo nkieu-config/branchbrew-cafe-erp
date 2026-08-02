@@ -142,6 +142,27 @@ export const useUpdateLeaveStatus = () => {
   });
 };
 
+export type BulkLeaveResult = {
+  requested: number;
+  succeeded: number[];
+  failed: { id: number; reason: string }[];
+};
+
+export const useBulkUpdateLeaveStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ ids, status }: { ids: number[]; status: string }): Promise<BulkLeaveResult> =>
+      fetchAPI(HR_ENDPOINTS.bulkUpdateLeaveStatus, {
+        method: 'PATCH',
+        body: JSON.stringify({ ids, status }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['leaveRequests'] });
+      queryClient.invalidateQueries({ queryKey: [NAV_COUNTS_QUERY_KEY] });
+    },
+  });
+};
+
 export const usePayrollRuns = (branchId?: number) => {
   return useQuery({
     queryKey: ['payrollRuns', branchId],

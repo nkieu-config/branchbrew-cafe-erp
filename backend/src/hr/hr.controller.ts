@@ -24,6 +24,7 @@ import { ClockInDto } from './dto/clock-in.dto';
 import { CreateShiftDto } from './dto/create-shift.dto';
 import { RequestLeaveDto } from './dto/request-leave.dto';
 import { ProcessLeaveDto } from './dto/process-leave.dto';
+import { BulkProcessLeaveDto } from './dto/bulk-process-leave.dto';
 import { GeneratePayrollDto } from './dto/generate-payroll.dto';
 import { UpdateHourlyRateDto } from './dto/update-hourly-rate.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -34,6 +35,7 @@ import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators
 import {
   AttendanceRecordResponseDto,
   HrUserResponseDto,
+  BulkLeaveResultDto,
   LeaveRequestResponseDto,
   PayrollRunResponseDto,
   ShiftResponseDto,
@@ -161,6 +163,28 @@ export class HrController {
   })
   getMyLeaveRequests(@Request() req: RequestWithUser) {
     return this.hrService.getMyLeaveRequests(req.user.userId);
+  }
+
+  @Roles('SUPER_ADMIN', 'MANAGER')
+  @Patch('leave/bulk-status')
+  @ApiOperation({
+    summary: 'Decide several leave requests at once',
+    description:
+      'Each request is decided independently: one failure does not undo the rest. The response reports which ids succeeded and why the others did not.',
+  })
+  @ApiOkResponse({
+    type: BulkLeaveResultDto,
+    description: 'Bulk decision applied',
+  })
+  processLeaveRequestsBulk(
+    @Request() req: RequestWithUser,
+    @Body() dto: BulkProcessLeaveDto,
+  ) {
+    return this.hrService.processLeaveRequestsBulk(
+      dto.ids,
+      dto.status,
+      req.user,
+    );
   }
 
   @Roles('SUPER_ADMIN', 'MANAGER')

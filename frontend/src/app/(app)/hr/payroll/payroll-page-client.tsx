@@ -29,6 +29,8 @@ import {
   payrollRunTotalNet,
   summarizePayrollRuns,
 } from "@/lib/filters/payroll-filters";
+import { ExportCsvButton } from "@/components/shared/export-csv-button";
+import { PAYSLIP_CSV_COLUMNS, toPayslipExportRows } from "@/lib/export/hr-columns";
 import { infoBannerClassName, infoBannerTextClassName } from "@/lib/theme/hub-banners";
 import { hubCtaClassName, inlineLinkClassName } from "@/lib/theme/hub-primitives";
 import { hrSectionPanelClassName } from "@/lib/theme/hub-hr";
@@ -57,6 +59,7 @@ export default function PayrollPageClient() {
     error,
     refetch,
     isFetching,
+    dataUpdatedAt,
   } = usePayrollRuns(branchIdNum);
 
   const generatePayrollMutation = useGeneratePayrollRun();
@@ -196,6 +199,15 @@ export default function PayrollPageClient() {
             setStatusFilter("ALL");
             clearEmployeeFilter();
           }}
+          freshness={{ dataUpdatedAt, isFetching, onRefresh: () => void refetch() }}
+          actions={
+            <ExportCsvButton
+              filenameBase="payslips"
+              label="Export payslips"
+              rows={toPayslipExportRows(filteredPayrollRuns)}
+              columns={PAYSLIP_CSV_COLUMNS}
+            />
+          }
           filters={
             <ListFilterSelect
               value={statusFilter}

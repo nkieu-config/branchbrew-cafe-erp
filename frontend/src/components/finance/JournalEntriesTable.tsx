@@ -5,14 +5,17 @@ import type { ColumnsType } from "antd/es/table";
 import { DataTable } from "@/components/shared/data-table";
 import {
   ListMobileCard,
-  PaginatedMobileList,
+  MobileListPagination,
   ResponsiveDataTableLayout,
 } from "@/components/shared/responsive-data-table";
+import {
+  useServerTablePagination,
+  type ServerPagination,
+} from "@/hooks/useServerTablePagination";
 import { StatusBadge, journalStatusTone } from "@/components/shared/status-badge";
 import { JournalLinesPanel } from "@/components/finance/JournalLinesPanel";
 import { formatDate } from "@/lib/intl-date";
 import { journalStatusLabel } from "@/lib/filters/ledger-filters";
-import { useHubListPagination } from "@/hooks/useHubListPagination";
 import { COL_WIDTH } from "@/lib/theme/data-table";
 import { financeMutedMetaClassName } from "@/lib/theme/finance";
 import { text } from "@/lib/theme/surface";
@@ -24,6 +27,7 @@ type JournalEntriesTableProps = {
   isLoading: boolean;
   hasActiveFilters: boolean;
   showSeedAction: boolean;
+  serverPagination: ServerPagination;
 };
 
 export function JournalEntriesTable({
@@ -31,6 +35,7 @@ export function JournalEntriesTable({
   isLoading,
   hasActiveFilters,
   showSeedAction,
+  serverPagination,
 }: JournalEntriesTableProps) {
   const emptyDescription = hasActiveFilters
     ? "No journal entries match the current filters."
@@ -38,9 +43,10 @@ export function JournalEntriesTable({
       ? "Seed accounts to begin posting journal entries."
       : "No journal entries for this scope.";
 
-  const listPagination = useHubListPagination(
-    { pageSize: 20 },
-    `${entries.length}-${hasActiveFilters}`,
+  const { page } = serverPagination;
+  const { tablePagination, totalPages, goToPage } = useServerTablePagination(
+    serverPagination,
+    "entries",
   );
 
   const columns = useMemo(
@@ -94,14 +100,9 @@ export function JournalEntriesTable({
         ) : entries.length === 0 ? (
           <ResponsiveDataTableLayout.Empty message={emptyDescription} />
         ) : (
-          <PaginatedMobileList
-            items={entries}
-            pageSize={listPagination.pageSize}
-            page={listPagination.currentPage}
-            onPageChange={listPagination.setCurrentPage}
-          >
-            {(entry) => (
-              <ListMobileCard>
+          <>
+            {entries.map((entry) => (
+              <ListMobileCard key={entry.id}>
                 <div className="mb-2 flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className={cn("tabular-nums text-sm", text.muted)}>{formatDate(entry.date)}</p>
@@ -116,14 +117,22 @@ export function JournalEntriesTable({
                 </div>
                 {(entry.lines?.length ?? 0) > 0 ? <JournalLinesPanel entry={entry} /> : null}
               </ListMobileCard>
+            ))}
+            {totalPages > 1 && (
+              <MobileListPagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPrevious={() => goToPage(Math.max(1, page - 1))}
+                onNext={() => goToPage(Math.min(totalPages, page + 1))}
+              />
             )}
-          </PaginatedMobileList>
+          </>
         )
       }
       desktop={
         <DataTable
           hideBorders
-          pagination={listPagination.tablePagination}
+          pagination={tablePagination}
           columns={columns}
           dataSource={entries}
           rowKey="id"

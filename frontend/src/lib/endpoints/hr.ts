@@ -10,6 +10,7 @@ export const HR_ENDPOINTS = {
   leaveMe: '/hr/leave/me',
   createLeave: '/hr/leave',
   updateLeaveStatus: (id: number) => `/hr/leave/${id}/status`,
+  bulkUpdateLeaveStatus: '/hr/leave/bulk-status',
   payrollRuns: (branchId: number) => `/hr/payroll-runs?branchId=${branchId}`,
   generatePayroll: '/hr/payroll/generate',
   approvePayrollRun: (id: number) => `/hr/payroll-runs/${id}/approve`,

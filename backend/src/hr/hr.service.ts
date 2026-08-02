@@ -3,6 +3,7 @@ import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
+  HttpException,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
@@ -16,6 +17,14 @@ import { SAFE_USER_SELECT } from '../common/user-select';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LeaveDecision } from './dto/process-leave.dto';
+
+export type BulkLeaveFailure = { id: number; reason: string };
+
+export type BulkLeaveResult = {
+  requested: number;
+  succeeded: number[];
+  failed: BulkLeaveFailure[];
+};
 import { dec, toNum, roundMoney, sumMoney } from '../common/decimal.util';
 import {
   AuditService,
@@ -219,6 +228,33 @@ export class HrService {
     });
 
     return updated;
+  }
+
+  async processLeaveRequestsBulk(
+    ids: number[],
+    status: LeaveDecision,
+    user: BranchScopedUser,
+  ): Promise<BulkLeaveResult> {
+    const unique = [...new Set(ids)];
+    const succeeded: number[] = [];
+    const failed: BulkLeaveFailure[] = [];
+
+    for (const id of unique) {
+      try {
+        await this.processLeaveRequest(id, status, user);
+        succeeded.push(id);
+      } catch (error) {
+        failed.push({
+          id,
+          reason:
+            error instanceof HttpException
+              ? error.message
+              : 'Could not be processed',
+        });
+      }
+    }
+
+    return { succeeded, failed, requested: unique.length };
   }
 
   // ==================== PAYROLL ====================

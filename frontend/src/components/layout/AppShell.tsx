@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { SessionExpiredDialog } from "@/components/auth/session-expired-dialog";
+import { ConnectionStatusBanner } from "@/components/shared/connection-status-banner";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarRail } from "@/components/layout/SidebarRail";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -104,6 +105,7 @@ function AppShellInner({ children }: { children: React.ReactNode }) {
           <ScrollCompactProvider compact={scrollCompact}>
             <AppHeader />
           </ScrollCompactProvider>
+          <ConnectionStatusBanner />
           <div
             ref={scrollRef}
             onScroll={handleScroll}

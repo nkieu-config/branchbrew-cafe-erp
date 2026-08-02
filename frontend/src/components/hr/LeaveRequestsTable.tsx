@@ -38,6 +38,8 @@ type LeaveRequestsTableProps = {
   isLoading: boolean;
   hasActiveFilters: boolean;
   onConfirmAction: (action: LeaveConfirmAction) => void;
+  selectedIds?: number[];
+  onSelectionChange?: (ids: number[]) => void;
 };
 
 export function LeaveRequestsTable({
@@ -46,6 +48,8 @@ export function LeaveRequestsTable({
   isLoading,
   hasActiveFilters,
   onConfirmAction,
+  selectedIds,
+  onSelectionChange,
 }: LeaveRequestsTableProps) {
   const emptyDescription = hasActiveFilters
     ? "No leave requests match the current filters."
@@ -181,6 +185,18 @@ export function LeaveRequestsTable({
     [isManagerOrAdmin, renderLeaveActions],
   );
 
+  const rowSelection = useMemo(() => {
+    if (!onSelectionChange || !isManagerOrAdmin) return undefined;
+    return {
+      selectedRowKeys: selectedIds ?? [],
+      onChange: (keys: React.Key[]) => onSelectionChange(keys.map(Number)),
+      getCheckboxProps: (req: LeaveRequest) => ({
+        disabled: req.status !== "PENDING",
+        name: `leave-${req.id}`,
+      }),
+    };
+  }, [onSelectionChange, isManagerOrAdmin, selectedIds]);
+
   return (
     <ResponsiveDataTableLayout
       mobile={
@@ -244,6 +260,7 @@ export function LeaveRequestsTable({
         <DataTable
           hideBorders
           pagination={listPagination.tablePagination}
+          rowSelection={rowSelection}
           columns={columns}
           dataSource={leaveRequests}
           rowKey="id"

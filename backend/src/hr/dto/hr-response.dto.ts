@@ -251,3 +251,22 @@ export class PayrollRunResponseDto {
   @ApiProperty({ type: BranchResponseDto, required: false })
   branch?: BranchResponseDto;
 }
+
+export class BulkLeaveFailureDto {
+  @ApiProperty({ example: 12 })
+  id: number;
+
+  @ApiProperty({ example: 'Leave request has already been decided.' })
+  reason: string;
+}
+
+export class BulkLeaveResultDto {
+  @ApiProperty({ example: 20, description: 'Distinct ids submitted' })
+  requested: number;
+
+  @ApiProperty({ type: [Number], example: [11, 12, 13] })
+  succeeded: number[];
+
+  @ApiProperty({ type: [BulkLeaveFailureDto] })
+  failed: BulkLeaveFailureDto[];
+}

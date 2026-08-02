@@ -32,6 +32,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators';
+import {
+  ApiPaginatedResponse,
+  paginated,
+} from '../common/pagination/paginated-response.dto';
+import { resolvePageWindow } from '../common/pagination/pagination-query.dto';
+import {
+  JOURNAL_ENTRY_LIST_DEFAULT_LIMIT,
+  JournalEntryListQueryDto,
+} from './dto/journal-entry-list-query.dto';
 
 @ApiTags('accounting')
 @ApiCommonErrorResponses()
@@ -54,21 +63,24 @@ export class AccountingController {
 
   @Get('journal-entries')
   @Roles('SUPER_ADMIN', 'MANAGER')
-  @ApiOperation({ summary: 'List journal entries' })
-  @ApiOkResponse({
-    type: JournalEntryResponseDto,
-    isArray: true,
-    description: 'Journal entries retrieved',
+  @ApiOperation({
+    summary: 'List journal entries in a bounded, paginated window',
   })
+  @ApiPaginatedResponse(JournalEntryResponseDto, 'Journal entries retrieved')
   async getJournalEntries(
     @Request() req: RequestWithUser,
-    @Query('branchId') branchId?: string,
+    @Query() query: JournalEntryListQueryDto,
   ) {
-    const resolvedBranchId = resolveOptionalBranchId(
-      req.user,
-      parseOptionalPositiveInt(branchId, 'branchId'),
-    );
-    return this.accountingService.getJournalEntries(resolvedBranchId);
+    const resolvedBranchId = resolveOptionalBranchId(req.user, query.branchId);
+    const window = resolvePageWindow(query, JOURNAL_ENTRY_LIST_DEFAULT_LIMIT);
+    const { items, total } = await this.accountingService.getJournalEntryPage({
+      branchId: resolvedBranchId,
+      status: query.status,
+      search: query.search,
+      ...window,
+    });
+
+    return paginated(items, total, window);
   }
 
   @Get('vat-report')

@@ -1,14 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import type { ColumnsType } from "antd/es/table";
 import { Ban, RotateCcw } from "lucide-react";
 import { DataTable } from "@/components/shared/data-table";
 import {
   ListMobileCard,
-  PaginatedMobileList,
+  MobileListPagination,
   ResponsiveDataTableLayout,
 } from "@/components/shared/responsive-data-table";
+import {
+  useServerTablePagination,
+  type ServerPagination,
+} from "@/hooks/useServerTablePagination";
 import { StatusBadge, formatStatusLabel, orderStatusTone } from "@/components/shared/status-badge";
 import { TableActionButton } from "@/components/shared/table-action-button";
 import { formatCurrency } from "@/lib/money";
@@ -16,7 +20,6 @@ import { formatQueueNumber } from "@/lib/queue";
 import { isOrderToday, isTerminalOrderStatus } from "@/lib/filters/pos-order-filters";
 import { formatDateTime } from "@/lib/intl-date";
 import { tableRowDividerClassName } from "@/lib/theme/color-helpers";
-import { useHubListPagination } from "@/hooks/useHubListPagination";
 import { tableCellMutedClassName } from "@/lib/theme/feedback";
 import { posQueueHighlightClassName } from "@/lib/theme/immersive";
 import { text } from "@/lib/theme/surface";
@@ -29,6 +32,7 @@ type PosOrdersTableProps = {
   loading: boolean;
   hasActiveFilters: boolean;
   canManage: boolean;
+  serverPagination: ServerPagination;
   onVoid: (order: Order) => void;
   onRefund: (order: Order) => void;
 };
@@ -103,16 +107,18 @@ export function PosOrdersTable({
   loading,
   hasActiveFilters,
   canManage,
+  serverPagination,
   onVoid,
   onRefund,
 }: PosOrdersTableProps) {
   const emptyDescription = hasActiveFilters
     ? "No orders match your filters."
-    : "No orders in the last 14 days.";
+    : "No orders in the selected period.";
 
-  const listPagination = useHubListPagination(
-    { pageSize: 15 },
-    `${orders.length}-${hasActiveFilters}`,
+  const { page } = serverPagination;
+  const { tablePagination, totalPages, goToPage } = useServerTablePagination(
+    serverPagination,
+    "orders",
   );
 
   const columns = useMemo(
@@ -234,13 +240,9 @@ export function PosOrdersTable({
         ) : orders.length === 0 ? (
           <ResponsiveDataTableLayout.Empty message={emptyDescription} />
         ) : (
-          <PaginatedMobileList
-            items={orders}
-            pageSize={listPagination.pageSize}
-            page={listPagination.currentPage}
-            onPageChange={listPagination.setCurrentPage}
-          >
-            {(row) => (
+          <>
+            {orders.map((row) => (
+              <Fragment key={row.id}>
               <ListMobileCard>
                 <div className="mb-2 flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -272,14 +274,23 @@ export function PosOrdersTable({
                   />
                 </div>
               </ListMobileCard>
+              </Fragment>
+            ))}
+            {totalPages > 1 && (
+              <MobileListPagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPrevious={() => goToPage(Math.max(1, page - 1))}
+                onNext={() => goToPage(Math.min(totalPages, page + 1))}
+              />
             )}
-          </PaginatedMobileList>
+          </>
         )
       }
       desktop={
         <DataTable
           hideBorders
-          pagination={listPagination.tablePagination}
+          pagination={tablePagination}
           loading={loading}
           rowKey="id"
           dataSource={orders}

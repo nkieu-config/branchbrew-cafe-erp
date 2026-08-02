@@ -6,6 +6,8 @@ import { useAuth } from "@/context/AuthContext";
 import { HubListPage } from "@/components/shared/hub-list-page";
 import { ListFilterDate, ListFilterSelect } from "@/components/shared/list-filters";
 import { TrialBalanceTable } from "@/components/finance/TrialBalanceTable";
+import { ExportCsvButton } from "@/components/shared/export-csv-button";
+import { TRIAL_BALANCE_CSV_COLUMNS } from "@/lib/export/finance-columns";
 import { useTrialBalance } from "@/hooks/domains/useAccountingQueries";
 import {
   type AccountTypeFilter,
@@ -46,6 +48,7 @@ export default function TrialBalancePageClient() {
     error,
     refetch,
     isFetching,
+    dataUpdatedAt,
   } = useTrialBalance(selectedBranch, asOf || undefined);
 
   const filteredAccounts = useMemo(
@@ -138,6 +141,14 @@ export default function TrialBalancePageClient() {
           setTypeFilter("ALL");
           setAsOf("");
         }}
+        freshness={{ dataUpdatedAt, isFetching, onRefresh: () => void refetch() }}
+        actions={
+          <ExportCsvButton
+            filenameBase={`trial-balance${asOf ? `-as-of-${asOf}` : ""}`}
+            rows={filteredAccounts}
+            columns={TRIAL_BALANCE_CSV_COLUMNS}
+          />
+        }
         filters={
           <>
             <ListFilterSelect

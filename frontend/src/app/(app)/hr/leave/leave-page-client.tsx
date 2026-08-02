@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState, useDeferredValue } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Plus } from "lucide-react";
+import { CheckCircle, Plus, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,14 @@ import { HubListPage } from "@/components/shared/hub-list-page";
 import { ListFilterSelect } from "@/components/shared/list-filters";
 import { BranchEmptyState } from "@/components/shared/branch-empty-state";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { BulkActionBar } from "@/components/shared/bulk-action-bar";
 import {
   LeaveRequestsTable,
   type LeaveConfirmAction,
 } from "@/components/hr/LeaveRequestsTable";
 import { RequestLeaveModal } from "@/components/hr/RequestLeaveModal";
 import {
+  useBulkUpdateLeaveStatus,
   useCreateLeave,
   useLeaveRequests,
   useUpdateLeaveStatus,
@@ -61,6 +63,9 @@ export default function LeavePageClient() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState<LeaveConfirmAction | null>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [bulkAction, setBulkAction] = useState<"approve" | "reject" | null>(null);
+  const bulkLeaveMutation = useBulkUpdateLeaveStatus();
 
   const leaveStatusParam = searchParams.get("status");
 
@@ -124,6 +129,25 @@ export default function LeavePageClient() {
       setConfirmAction(null);
     } catch (err: unknown) {
       toast.error(getErrorMessage(err, "Failed to update leave status"));
+    }
+  };
+
+  const handleBulkDecision = async () => {
+    if (!bulkAction || selectedIds.length === 0) return;
+    const status = bulkAction === "approve" ? "APPROVED" : "REJECTED";
+    try {
+      const result = await bulkLeaveMutation.mutateAsync({ ids: selectedIds, status });
+      if (result.failed.length === 0) {
+        toast.success(`${result.succeeded.length} requests ${status.toLowerCase()}`);
+      } else {
+        toast.warning(
+          `${result.succeeded.length} of ${result.requested} ${status.toLowerCase()} — ${result.failed.length} could not be processed: ${result.failed[0].reason}`,
+        );
+      }
+      setSelectedIds(result.failed.map((failure) => failure.id));
+      setBulkAction(null);
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, "Failed to update leave requests"));
     }
   };
 
@@ -210,12 +234,40 @@ export default function LeavePageClient() {
           emptyLabel="No leave requests yet"
         />
 
+        <BulkActionBar
+          selectedCount={selectedIds.length}
+          itemLabel="request"
+          onClear={() => setSelectedIds([])}
+        >
+          <Button
+            type="button"
+            size="sm"
+            onClick={() => setBulkAction("approve")}
+            disabled={bulkLeaveMutation.isPending}
+          >
+            <CheckCircle className="mr-1.5 h-4 w-4" aria-hidden />
+            Approve selected
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="destructive"
+            onClick={() => setBulkAction("reject")}
+            disabled={bulkLeaveMutation.isPending}
+          >
+            <XCircle className="mr-1.5 h-4 w-4" aria-hidden />
+            Reject selected
+          </Button>
+        </BulkActionBar>
+
         <LeaveRequestsTable
           leaveRequests={filteredLeaveRequests}
           isManagerOrAdmin={isManagerOrAdmin}
           isLoading={isLoading}
           hasActiveFilters={hasActiveFilters}
           onConfirmAction={setConfirmAction}
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
         />
       </HubListPage>
 
@@ -239,6 +291,21 @@ export default function LeavePageClient() {
         destructive={confirmAction?.type === "reject"}
         loading={updateLeaveStatusMutation.isPending}
         onConfirm={handleConfirmStatusUpdate}
+      />
+
+      <ConfirmDialog
+        open={bulkAction !== null}
+        onOpenChange={(open) => !open && setBulkAction(null)}
+        title={
+          bulkAction === "approve"
+            ? `Approve ${selectedIds.length} leave requests?`
+            : `Reject ${selectedIds.length} leave requests?`
+        }
+        description="Each request is decided on its own — any that were already decided are reported back and stay selected."
+        confirmLabel={bulkAction === "approve" ? "Approve all" : "Reject all"}
+        destructive={bulkAction === "reject"}
+        loading={bulkLeaveMutation.isPending}
+        onConfirm={handleBulkDecision}
       />
     </>
   );

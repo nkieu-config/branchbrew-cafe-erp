@@ -1213,6 +1213,32 @@
               "example": "2026-07-11",
               "type": "string"
             }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Restrict to a single order status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "PREPARING",
+                "COMPLETED",
+                "CANCELLED",
+                "REFUNDED"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Matches order id, queue number or payment method",
+            "schema": {
+              "maxLength": 64,
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3539,10 +3565,56 @@
         "operationId": "AccountingController_getJournalEntries",
         "parameters": [
           {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows to return, capped at 500",
+            "schema": {
+              "minimum": 1,
+              "maximum": 500,
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "Rows to skip",
+            "schema": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
             "name": "branchId",
             "required": false,
             "in": "query",
             "schema": {
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Restrict to a single journal status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DRAFT",
+                "POSTED",
+                "VOIDED"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Matches entry id, reference or description",
+            "schema": {
+              "maxLength": 64,
               "type": "string"
             }
           }
@@ -3553,10 +3625,24 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/JournalEntryResponseDto"
-                  }
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseDto"
+                    },
+                    {
+                      "required": [
+                        "items"
+                      ],
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/JournalEntryResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -3612,7 +3698,7 @@
             }
           }
         },
-        "summary": "List journal entries",
+        "summary": "List journal entries in a bounded, paginated window",
         "tags": [
           "accounting"
         ]
@@ -6482,6 +6568,89 @@
           }
         },
         "summary": "Get my leave requests",
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/hr/leave/bulk-status": {
+      "patch": {
+        "description": "Each request is decided independently: one failure does not undo the rest. The response reports which ids succeeded and why the others did not.",
+        "operationId": "HrController_processLeaveRequestsBulk",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkProcessLeaveDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk decision applied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkLeaveResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Decide several leave requests at once",
         "tags": [
           "hr"
         ]
@@ -13951,6 +14120,81 @@
           "status",
           "createdAt",
           "updatedAt"
+        ]
+      },
+      "BulkProcessLeaveDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "Leave request ids to decide in one action",
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 1
+            }
+          },
+          "status": {
+            "enum": [
+              "APPROVED",
+              "REJECTED"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "ids",
+          "status"
+        ]
+      },
+      "BulkLeaveFailureDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 12
+          },
+          "reason": {
+            "type": "string",
+            "example": "Leave request has already been decided."
+          }
+        },
+        "required": [
+          "id",
+          "reason"
+        ]
+      },
+      "BulkLeaveResultDto": {
+        "type": "object",
+        "properties": {
+          "requested": {
+            "type": "number",
+            "example": 20,
+            "description": "Distinct ids submitted"
+          },
+          "succeeded": {
+            "example": [
+              11,
+              12,
+              13
+            ],
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "failed": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkLeaveFailureDto"
+            }
+          }
+        },
+        "required": [
+          "requested",
+          "succeeded",
+          "failed"
         ]
       },
       "ProcessLeaveDto": {

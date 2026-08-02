@@ -4,10 +4,17 @@ import { ReactNode } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { DataFreshness } from "@/components/shared/data-freshness";
 import { decorativeIconClassName } from "@/lib/theme/color-helpers";
 import { listToolbarClassName, listToolbarFieldClassName, listToolbarFiltersClassName, listToolbarSearchClassName } from "@/lib/theme/feedback";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
+
+export type ListToolbarFreshness = {
+  dataUpdatedAt: number;
+  isFetching?: boolean;
+  onRefresh?: () => void;
+};
 
 type ListToolbarProps = {
   search?: string;
@@ -15,6 +22,8 @@ type ListToolbarProps = {
   searchPlaceholder?: string;
   searchTestId?: string;
   filters?: ReactNode;
+  actions?: ReactNode;
+  freshness?: ListToolbarFreshness;
   onReset?: () => void;
   showReset?: boolean;
   className?: string;
@@ -26,6 +35,8 @@ export function ListToolbar({
   searchPlaceholder = "Search…",
   searchTestId,
   filters,
+  actions,
+  freshness,
   onReset,
   showReset = false,
   className,
@@ -57,6 +68,14 @@ export function ListToolbar({
         {filters && <div className={listToolbarFiltersClassName()}>{filters}</div>}
       </div>
       <div className="flex flex-wrap items-center gap-2 shrink-0">
+        {freshness && (
+          <DataFreshness
+            dataUpdatedAt={freshness.dataUpdatedAt}
+            isFetching={freshness.isFetching}
+            onRefresh={freshness.onRefresh}
+          />
+        )}
+        {actions}
         {showReset && onReset && (
           <Button
             type="button"

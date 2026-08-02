@@ -10,6 +10,8 @@ import {
   invalidatePosOrderSideEffects,
   orderKeys,
 } from '@/lib/query-keys';
+import type { OrderListWindow } from '@/lib/query-keys/orders';
+import { retryBackoffMs, shouldRetryQuery } from '@/lib/api/retry-policy';
 
 export const kdsOrdersQueryKey = (branchId?: number) => ['kdsOrders', branchId] as const;
 
@@ -77,6 +79,8 @@ export const useCreateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: unknown) => fetchAPI(ORDER_ENDPOINTS.create, { method: 'POST', body: JSON.stringify(data) }),
+    retry: shouldRetryQuery,
+    retryDelay: retryBackoffMs,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: orderKeys.root });
       invalidateNavCounts(queryClient);
@@ -84,12 +88,17 @@ export const useCreateOrder = () => {
   });
 };
 
-export const useBranchOrders = (branchId?: number) => {
+export const useBranchOrders = (
+  branchId: number | undefined,
+  window: OrderListWindow,
+) => {
   return useQuery({
-    queryKey: orderKeys.branch(branchId),
+    queryKey: orderKeys.branchList(branchId, window),
     queryFn: (): Promise<OrderPage> =>
-      fetchAPI(ORDER_ENDPOINTS.list({ branchId })),
+      fetchAPI(ORDER_ENDPOINTS.list({ branchId, ...window })),
     enabled: !!branchId,
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === branchId ? previous : undefined,
   });
 };
 

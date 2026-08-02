@@ -537,7 +537,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List journal entries */
+        /** List journal entries in a bounded, paginated window */
         get: operations["AccountingController_getJournalEntries"];
         put?: never;
         post?: never;
@@ -1078,6 +1078,26 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/hr/leave/bulk-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Decide several leave requests at once
+         * @description Each request is decided independently: one failure does not undo the rest. The response reports which ids succeeded and why the others did not.
+         */
+        patch: operations["HrController_processLeaveRequestsBulk"];
         trace?: never;
     };
     "/hr/leave/{id}/status": {
@@ -2841,6 +2861,34 @@ export interface components {
             updatedAt: string;
             user?: components["schemas"]["LeaveRequestUserSummaryDto"];
         };
+        BulkProcessLeaveDto: {
+            /** @description Leave request ids to decide in one action */
+            ids: number[];
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+        };
+        BulkLeaveFailureDto: {
+            /** @example 12 */
+            id: number;
+            /** @example Leave request has already been decided. */
+            reason: string;
+        };
+        BulkLeaveResultDto: {
+            /**
+             * @description Distinct ids submitted
+             * @example 20
+             */
+            requested: number;
+            /**
+             * @example [
+             *       11,
+             *       12,
+             *       13
+             *     ]
+             */
+            succeeded: number[];
+            failed: components["schemas"]["BulkLeaveFailureDto"][];
+        };
         ProcessLeaveDto: {
             /** @enum {string} */
             status: "APPROVED" | "REJECTED";
@@ -4515,6 +4563,10 @@ export interface operations {
                 branchId?: number;
                 /** @description Oldest order date to include; defaults to 14 days back */
                 since?: string;
+                /** @description Restrict to a single order status */
+                status?: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
+                /** @description Matches order id, queue number or payment method */
+                search?: string;
             };
             header?: never;
             path?: never;
@@ -6486,7 +6538,15 @@ export interface operations {
     AccountingController_getJournalEntries: {
         parameters: {
             query?: {
-                branchId?: string;
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                branchId?: number;
+                /** @description Restrict to a single journal status */
+                status?: "DRAFT" | "POSTED" | "VOIDED";
+                /** @description Matches entry id, reference or description */
+                search?: string;
             };
             header?: never;
             path?: never;
@@ -6500,7 +6560,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["JournalEntryResponseDto"][];
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["JournalEntryResponseDto"][];
+                    };
                 };
             };
             /** @description Bad request */
@@ -8906,6 +8968,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LeaveRequestResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_processLeaveRequestsBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkProcessLeaveDto"];
+            };
+        };
+        responses: {
+            /** @description Bulk decision applied */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkLeaveResultDto"];
                 };
             };
             /** @description Bad request */

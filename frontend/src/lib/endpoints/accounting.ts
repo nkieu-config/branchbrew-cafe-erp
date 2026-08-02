@@ -1,8 +1,22 @@
 export const ACCOUNTING_ENDPOINTS = {
   accounts: '/accounting/accounts',
-  journalEntries: (branchId?: number | string) => {
-    if (branchId && branchId !== 'ALL') return `/accounting/journal-entries?branchId=${branchId}`;
-    return '/accounting/journal-entries';
+  journalEntries: (
+    branchId?: number | string,
+    window: {
+      limit?: number;
+      offset?: number;
+      status?: string;
+      search?: string;
+    } = {},
+  ) => {
+    const params = new URLSearchParams();
+    if (branchId && branchId !== 'ALL') params.set('branchId', String(branchId));
+    if (window.limit != null) params.set('limit', String(window.limit));
+    if (window.offset != null) params.set('offset', String(window.offset));
+    if (window.status) params.set('status', window.status);
+    if (window.search) params.set('search', window.search);
+    const query = params.toString();
+    return query ? `/accounting/journal-entries?${query}` : '/accounting/journal-entries';
   },
   profitLoss: (branchId?: number | string) => {
     if (branchId && branchId !== 'ALL') return `/accounting/profit-loss?branchId=${branchId}`;

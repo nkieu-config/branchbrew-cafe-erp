@@ -1,6 +1,7 @@
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { AccountType, Prisma } from '@prisma/client';
+import { AccountType, JournalStatus, Prisma } from '@prisma/client';
+import { buildJournalEntrySearchFilter } from './helpers/journal-entry-search.util';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrderCreatedEvent } from '../orders/events/order-created.event';
 import { OrderVoidedEvent } from '../orders/events/order-voided.event';
@@ -411,19 +412,37 @@ export class AccountingService {
     });
   }
 
-  async getJournalEntries(branchId?: number, limit = 50) {
-    return this.prisma.journalEntry.findMany({
-      where: branchId ? { branchId } : {},
-      orderBy: { date: 'desc' },
-      take: limit,
-      include: {
-        lines: {
-          include: {
-            account: true,
+  async getJournalEntryPage(options: {
+    branchId?: number;
+    status?: JournalStatus;
+    search?: string;
+    take: number;
+    skip: number;
+  }) {
+    const where: Prisma.JournalEntryWhereInput = {
+      ...(options.branchId ? { branchId: options.branchId } : {}),
+      ...(options.status ? { status: options.status } : {}),
+      ...buildJournalEntrySearchFilter(options.search),
+    };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.journalEntry.findMany({
+        where,
+        orderBy: { date: 'desc' },
+        take: options.take,
+        skip: options.skip,
+        include: {
+          lines: {
+            include: {
+              account: true,
+            },
           },
         },
-      },
-    });
+      }),
+      this.prisma.journalEntry.count({ where }),
+    ]);
+
+    return { items, total };
   }
 
   async createJournalEntry(data: {

@@ -1,5 +1,4 @@
-import type { Order, OrderStatus } from "@/types/api";
-import { formatQueueNumber } from "@/lib/queue";
+import type { OrderStatus } from "@/types/api";
 
 export function isOrderToday(iso: string): boolean {
   const d = new Date(iso);
@@ -15,35 +14,20 @@ export function isTerminalOrderStatus(status: OrderStatus): boolean {
   return status === "CANCELLED" || status === "REFUNDED";
 }
 
-export function matchesPosOrderSearch(order: Order, search: string): boolean {
-  if (!search) return true;
-  const haystack = [
-    String(order.id),
-    order.status,
-    order.paymentMethod ?? "",
-    formatQueueNumber(order.queueNumber),
-  ]
-    .join(" ")
-    .toLowerCase();
-  return haystack.includes(search);
-}
+export const ORDER_PAGE_SIZE_DEFAULT = 25;
+export const ORDER_LOOKBACK_DEFAULT_DAYS = 14;
 
-export function filterPosOrders(
-  orders: Order[],
-  options: {
-    search: string;
-    statusFilter: OrderStatus | "ALL";
-  },
-): Order[] {
-  return orders.filter((order) => {
-    const matchesStatus = options.statusFilter === "ALL" || order.status === options.statusFilter;
-    return matchesStatus && matchesPosOrderSearch(order, options.search);
-  });
-}
+export const ORDER_LOOKBACK_OPTIONS = [
+  { value: "14", label: "Last 14 days" },
+  { value: "30", label: "Last 30 days" },
+  { value: "90", label: "Last 90 days" },
+  { value: "365", label: "Last 12 months" },
+] as const;
 
-export function hasPosOrderFilters(options: {
-  search: string;
-  statusFilter: OrderStatus | "ALL";
-}): boolean {
-  return options.search.trim().length > 0 || options.statusFilter !== "ALL";
+export function lookbackStartDate(days: number, from: Date = new Date()): string {
+  const start = new Date(from);
+  start.setDate(start.getDate() - days);
+  const month = String(start.getMonth() + 1).padStart(2, "0");
+  const day = String(start.getDate()).padStart(2, "0");
+  return `${start.getFullYear()}-${month}-${day}`;
 }

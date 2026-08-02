@@ -2,7 +2,10 @@ import { ACCOUNTING_ENDPOINTS } from "@/lib/endpoints/accounting";
 import { PRODUCTION_ENDPOINTS } from "@/lib/endpoints/production";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAPI } from '@/lib/api';
-import type { TrialBalance } from '@/types/accounting';
+import type { JournalEntry, TrialBalance } from '@/types/accounting';
+import type { Paginated } from '@/types/pagination';
+
+type JournalEntryPage = Paginated<JournalEntry>;
 
 // ==========================================
 // 💰 ACCOUNTING HOOKS
@@ -14,10 +17,19 @@ export const useLedger = (branchId?: string) => {
   });
 };
 
-export const useJournalEntries = (branchId?: string) => {
-  return useQuery({
-    queryKey: ['journalEntries', branchId],
-    queryFn: () => fetchAPI(ACCOUNTING_ENDPOINTS.journalEntries(branchId)),
+export type JournalEntryWindow = {
+  limit: number;
+  offset: number;
+  status?: string;
+  search?: string;
+};
+
+export const useJournalEntries = (branchId: string | undefined, window: JournalEntryWindow) => {
+  return useQuery<JournalEntryPage>({
+    queryKey: ['journalEntries', branchId, window],
+    queryFn: () => fetchAPI(ACCOUNTING_ENDPOINTS.journalEntries(branchId, window)),
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === branchId ? previous : undefined,
   });
 };
 
