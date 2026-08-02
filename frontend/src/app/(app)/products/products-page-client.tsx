@@ -16,12 +16,12 @@ import { getErrorMessage } from "@/lib/errors";
 import {
   extractProductCategories,
   filterMenuProducts,
-  hasMenuProductFilters,
   type MenuStatusFilter,
 } from "@/lib/filters/menu-product-filters";
 import { hubCtaClassName } from "@/lib/theme/hub-primitives";
 import { productsSectionPanelClassName } from "@/lib/theme/hub-products";
 import type { Product } from "@/types/api";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function ProductsPageClient() {
   const {
@@ -38,10 +38,16 @@ export default function ProductsPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    category: "ALL",
+    status: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
-  const [statusFilter, setStatusFilter] = useState<MenuStatusFilter>("ALL");
+  const categoryFilter = values.category;
+  const statusFilter = values.status as MenuStatusFilter;
 
   const categories = useMemo(() => extractProductCategories(products), [products]);
 
@@ -55,11 +61,7 @@ export default function ProductsPageClient() {
     [products, deferredSearch, categoryFilter, statusFilter],
   );
 
-  const hasActiveFilters = hasMenuProductFilters({
-    search,
-    categoryFilter,
-    statusFilter,
-  });
+  const hasActiveFilters = !isDefault;
 
   const handleEdit = useCallback((product: Product) => {
     setSelectedProduct(product);
@@ -110,16 +112,12 @@ export default function ProductsPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search menu items…"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setCategoryFilter("ALL");
-            setStatusFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={categoryFilter}
-                onValueChange={setCategoryFilter}
+                onValueChange={(value) => setValue("category", value)}
                 ariaLabel="Filter by category"
                 widthClassName="w-full sm:w-[200px]"
                 options={[
@@ -129,7 +127,7 @@ export default function ProductsPageClient() {
               />
               <ListFilterSelect
                 value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value as MenuStatusFilter)}
+                onValueChange={(value) => setValue("status", value)}
                 ariaLabel="Filter by status"
                 widthClassName="w-full sm:w-[180px]"
                 options={[

@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState, useDeferredValue } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import { useListUrlState } from "@/hooks/useListUrlState";
 import { useAuth } from "@/context/AuthContext";
 import { useHrUsers, useUpdateHourlyRate } from "@/hooks/domains/useHrQueries";
 import { HubListPage } from "@/components/shared/hub-list-page";
@@ -40,11 +41,18 @@ export default function EmployeesPageClient() {
   } = useHrUsers(branchIdNum);
   const updateHourlyRateMutation = useUpdateHourlyRate();
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    role: "ALL",
+    employment: "ALL",
+    rate: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [roleFilter, setRoleFilter] = useState<EmployeeRoleFilter>("ALL");
-  const [employmentTypeFilter, setEmploymentTypeFilter] = useState<EmploymentTypeFilter>("ALL");
-  const [rateFilter, setRateFilter] = useState<EmployeeRateFilter>("ALL");
+  const roleFilter = values.role as EmployeeRoleFilter;
+  const employmentTypeFilter = values.employment as EmploymentTypeFilter;
+  const rateFilter = values.rate as EmployeeRateFilter;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -63,11 +71,7 @@ export default function EmployeesPageClient() {
     [employees, deferredSearch, roleFilter, employmentTypeFilter, rateFilter],
   );
 
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    roleFilter !== "ALL" ||
-    employmentTypeFilter !== "ALL" ||
-    rateFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
   const handleEditRate = useCallback((record: User) => {
     setSelectedUser(record);
@@ -127,17 +131,12 @@ export default function EmployeesPageClient() {
           searchPlaceholder="Search name, email, role…"
           searchTestId="employees-search"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setRoleFilter("ALL");
-            setEmploymentTypeFilter("ALL");
-            setRateFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={roleFilter}
-                onValueChange={(value) => setRoleFilter(value as EmployeeRoleFilter)}
+                onValueChange={(value) => setValue("role", value)}
                 ariaLabel="Filter by role"
                 widthClassName="w-full sm:w-[180px]"
                 options={[
@@ -149,7 +148,7 @@ export default function EmployeesPageClient() {
               />
               <ListFilterSelect
                 value={employmentTypeFilter}
-                onValueChange={(value) => setEmploymentTypeFilter(value as EmploymentTypeFilter)}
+                onValueChange={(value) => setValue("employment", value)}
                 ariaLabel="Filter by employment type"
                 widthClassName="w-full sm:w-[180px]"
                 options={[
@@ -160,7 +159,7 @@ export default function EmployeesPageClient() {
               />
               <ListFilterSelect
                 value={rateFilter}
-                onValueChange={(value) => setRateFilter(value as EmployeeRateFilter)}
+                onValueChange={(value) => setValue("rate", value)}
                 ariaLabel="Filter by hourly rate"
                 widthClassName="w-full sm:w-[180px]"
                 options={[

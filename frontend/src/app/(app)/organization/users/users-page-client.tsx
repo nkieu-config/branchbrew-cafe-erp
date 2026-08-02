@@ -23,6 +23,7 @@ import {
 import { getErrorMessage } from "@/lib/errors";
 import { hubCtaClassName } from "@/lib/theme/hub-primitives";
 import { organizationSectionPanelClassName } from "@/lib/theme/organization";
+import { useListUrlState } from "@/hooks/useListUrlState";
 import type {
   Branch,
   CreateUserPayload,
@@ -52,10 +53,19 @@ export default function UsersPageClient({ embedded = false }: { embedded?: boole
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    role: "ALL",
+    branch: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [roleFilter, setRoleFilter] = useState<EmployeeRoleFilter>("ALL");
-  const [branchFilter, setBranchFilter] = useState<OrgUserBranchFilter>("ALL");
+  const roleFilter = values.role as EmployeeRoleFilter;
+  const branchFilter: OrgUserBranchFilter =
+    values.branch === "ALL" || values.branch === "hq"
+      ? values.branch
+      : Number(values.branch);
 
   const branchList = (branches as Branch[] | undefined) ?? [];
   const userList = (users as User[] | undefined) ?? [];
@@ -89,16 +99,8 @@ export default function UsersPageClient({ embedded = false }: { embedded?: boole
   const error = usersQueryError ?? branchesQueryError;
   const isFetching = usersFetching || branchesFetching;
 
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    roleFilter !== "ALL" ||
-    branchFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
-  const resetFilters = () => {
-    setSearch("");
-    setRoleFilter("ALL");
-    setBranchFilter("ALL");
-  };
 
   const handleEdit = (user: User) => {
     setEditingUser(user);
@@ -164,12 +166,12 @@ export default function UsersPageClient({ embedded = false }: { embedded?: boole
           onSearchChange={setSearch}
           searchPlaceholder="Search name, email, role…"
           showReset={hasActiveFilters}
-          onReset={resetFilters}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={roleFilter}
-                onValueChange={(value) => setRoleFilter(value as EmployeeRoleFilter)}
+                onValueChange={(value) => setValue("role", value)}
                 ariaLabel="Filter by role"
                 widthClassName="w-full sm:w-[160px]"
                 options={[
@@ -187,11 +189,7 @@ export default function UsersPageClient({ embedded = false }: { embedded?: boole
                       ? "hq"
                       : String(branchFilter)
                 }
-                onValueChange={(value) => {
-                  if (value === "ALL") setBranchFilter("ALL");
-                  else if (value === "hq") setBranchFilter("hq");
-                  else setBranchFilter(Number(value));
-                }}
+                onValueChange={(value) => setValue("branch", value)}
                 ariaLabel="Filter by branch"
                 widthClassName="w-full sm:w-[180px]"
                 options={[

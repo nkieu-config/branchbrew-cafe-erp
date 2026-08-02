@@ -48,14 +48,3 @@ export function filterMenuProducts(
   );
 }
 
-export function hasMenuProductFilters(options: {
-  search: string;
-  categoryFilter: string;
-  statusFilter: MenuStatusFilter;
-}): boolean {
-  return (
-    options.search.trim().length > 0 ||
-    options.categoryFilter !== "ALL" ||
-    options.statusFilter !== "ALL"
-  );
-}

@@ -55,6 +55,7 @@ import { modifierGroupPanelClassName } from "@/lib/theme/hub-products";
 import { productsSectionPanelClassName } from "@/lib/theme/hub-products";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function ModifiersPageClient() {
   const {
@@ -73,10 +74,16 @@ export default function ModifiersPageClient() {
   const updateOption = useUpdateModifierOption();
   const deleteOption = useDeleteModifierOption();
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    category: "ALL",
+    highlight: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [categoryFilter, setCategoryFilter] = useState<ModifierCategoryFilter>("ALL");
-  const [highlightFilter, setHighlightFilter] = useState<ModifierHighlightFilter>("ALL");
+  const categoryFilter = values.category as ModifierCategoryFilter;
+  const highlightFilter = values.highlight as ModifierHighlightFilter;
 
   const [groupDialogOpen, setGroupDialogOpen] = useState(false);
   const [optionDialogOpen, setOptionDialogOpen] = useState(false);
@@ -146,10 +153,7 @@ export default function ModifiersPageClient() {
     });
   }, [groups, deferredSearch, categoryFilter, highlightFilter]);
 
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    categoryFilter !== "ALL" ||
-    highlightFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
   const isSavingGroup = createGroup.isPending || updateGroup.isPending;
   const isSavingOption = createOption.isPending || updateOption.isPending;
@@ -449,16 +453,12 @@ export default function ModifiersPageClient() {
           searchPlaceholder="Search groups and options…"
           searchTestId="modifiers-search"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setCategoryFilter("ALL");
-            setHighlightFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={categoryFilter}
-                onValueChange={(value) => setCategoryFilter(value as ModifierCategoryFilter)}
+                onValueChange={(value) => setValue("category", value)}
                 ariaLabel="Filter by menu category"
                 widthClassName="w-full sm:w-[200px]"
                 options={[
@@ -468,7 +468,7 @@ export default function ModifiersPageClient() {
               />
               <ListFilterSelect
                 value={highlightFilter}
-                onValueChange={(value) => setHighlightFilter(value as ModifierHighlightFilter)}
+                onValueChange={(value) => setValue("highlight", value)}
                 ariaLabel="Filter by group type"
                 widthClassName="w-full sm:w-[180px]"
                 options={[

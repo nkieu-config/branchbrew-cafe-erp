@@ -23,6 +23,7 @@ import { getErrorMessage } from "@/lib/errors";
 import { financeSectionPanelClassName } from "@/lib/theme/finance";
 import { infoBannerClassName, infoBannerTextClassName } from "@/lib/theme/hub-banners";
 import { hubCtaClassName } from "@/lib/theme/hub-primitives";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function AccountsPageClient() {
   const {
@@ -34,10 +35,16 @@ export default function AccountsPageClient() {
     isFetching,
   } = useAccounts();
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    type: "ALL",
+    active: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [typeFilter, setTypeFilter] = useState<AccountTypeFilter>("ALL");
-  const [activeFilter, setActiveFilter] = useState<AccountActiveFilter>("ALL");
+  const typeFilter = values.type as AccountTypeFilter;
+  const activeFilter = values.active as AccountActiveFilter;
   const [isSeeding, setIsSeeding] = useState(false);
   const [showSeedConfirm, setShowSeedConfirm] = useState(false);
 
@@ -54,8 +61,7 @@ export default function AccountsPageClient() {
     [accountsTree, deferredSearch, typeFilter, activeFilter],
   );
 
-  const hasActiveFilters =
-    search.trim().length > 0 || typeFilter !== "ALL" || activeFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
   const showSeedAction = accountsData.length === 0 && !isLoading && !isError;
   const filteredAccountCount = filteredTree.reduce(
     (count, group) => count + group.children.length,
@@ -122,16 +128,12 @@ export default function AccountsPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search code or name…"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setTypeFilter("ALL");
-            setActiveFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={typeFilter}
-                onValueChange={(value) => setTypeFilter(value as AccountTypeFilter)}
+                onValueChange={(value) => setValue("type", value)}
                 ariaLabel="Filter by account type"
                 widthClassName="w-full sm:w-[160px]"
                 options={[
@@ -144,7 +146,7 @@ export default function AccountsPageClient() {
               />
               <ListFilterSelect
                 value={activeFilter}
-                onValueChange={(value) => setActiveFilter(value as AccountActiveFilter)}
+                onValueChange={(value) => setValue("active", value)}
                 ariaLabel="Filter by account status"
                 widthClassName="w-full sm:w-[160px]"
                 options={[

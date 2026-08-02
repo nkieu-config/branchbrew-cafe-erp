@@ -65,9 +65,3 @@ export function filterSuppliers(
   );
 }
 
-export function hasSupplierFilters(options: {
-  search: string;
-  contactFilter: SupplierContactFilter;
-}): boolean {
-  return options.search.trim().length > 0 || options.contactFilter !== "ALL";
-}

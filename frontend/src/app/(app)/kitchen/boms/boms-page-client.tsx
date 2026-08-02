@@ -20,10 +20,15 @@ import { hubCtaClassName, inlineLinkClassName } from "@/lib/theme/hub-primitives
 import { kitchenSectionPanelClassName } from "@/lib/theme/hub-kitchen";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function BomsPageClient() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
 
   const {
@@ -73,7 +78,7 @@ export default function BomsPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search target or ingredient…"
           showReset={search.trim().length > 0}
-          onReset={() => setSearch("")}
+          onReset={reset}
         />
 
         {summary.missingCostLines > 0 && (
@@ -94,7 +99,7 @@ export default function BomsPageClient() {
           isLoading={loading}
           isError={bomsError}
           isFetching={bomsFetching}
-          hasActiveFilters={search.trim().length > 0}
+          hasActiveFilters={!isDefault}
           filteredCount={filteredGroups.length}
           totalCount={summary.targets}
           itemLabel="BOM"

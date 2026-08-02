@@ -30,6 +30,7 @@ import { text } from "@/lib/theme/surface";
 import { typeHeadingClassName } from "@/lib/theme/typography";
 import { cn } from "@/lib/utils";
 import { QueryLoadingPanel } from "@/components/shared/query-states";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function BranchesPageClient({ embedded = false }: { embedded?: boolean }) {
   const {
@@ -45,9 +46,14 @@ export default function BranchesPageClient({ embedded = false }: { embedded?: bo
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBranch, setEditingBranch] = useState<Branch | null>(null);
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    type: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [typeFilter, setTypeFilter] = useState<BranchTypeFilter>("ALL");
+  const typeFilter = values.type as BranchTypeFilter;
 
   const branchList = (branches as Branch[] | undefined) ?? [];
   const summary = useMemo(() => summarizeBranches(branchList), [branchList]);
@@ -61,12 +67,8 @@ export default function BranchesPageClient({ embedded = false }: { embedded?: bo
     [branchList, typeFilter, deferredSearch],
   );
 
-  const hasActiveFilters = search.trim().length > 0 || typeFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
-  const resetFilters = () => {
-    setSearch("");
-    setTypeFilter("ALL");
-  };
 
   const handleEdit = (branch: Branch) => {
     setEditingBranch(branch);
@@ -129,11 +131,11 @@ export default function BranchesPageClient({ embedded = false }: { embedded?: bo
           onSearchChange={setSearch}
           searchPlaceholder="Search name or location…"
           showReset={hasActiveFilters}
-          onReset={resetFilters}
+          onReset={reset}
           filters={
             <ListFilterSelect
               value={typeFilter}
-              onValueChange={(value) => setTypeFilter(value as BranchTypeFilter)}
+              onValueChange={(value) => setValue("type", value)}
               ariaLabel="Filter by branch type"
               widthClassName="w-full sm:w-[180px]"
               options={[

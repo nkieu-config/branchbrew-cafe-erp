@@ -21,6 +21,7 @@ import { infoBannerClassName, infoBannerTextClassName } from "@/lib/theme/hub-ba
 import { hubLoadingSpinnerClassName } from "@/lib/theme/hub-primitives";
 import { settingsSectionPanelClassName } from "@/lib/theme/settings-hub-chrome";
 import { cn } from "@/lib/utils";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 const PAGE_SIZE = 15;
 const FETCH_BATCH = 100;
@@ -37,10 +38,16 @@ export default function AuditPageClient() {
   } = useAuditLogs(fetchLimit, 0);
 
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    action: "ALL",
+    target: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [actionFilter, setActionFilter] = useState<AuditActionCategory>("ALL");
-  const [targetTypeFilter, setTargetTypeFilter] = useState<AuditTargetTypeFilter>("ALL");
+  const actionFilter = values.action as AuditActionCategory;
+  const targetTypeFilter = values.target as AuditTargetTypeFilter;
   const [selectedLog, setSelectedLog] = useState<AuditLogRow | null>(null);
 
   const logs = logsData as AuditLogRow[];
@@ -66,8 +73,7 @@ export default function AuditPageClient() {
     return filteredLogs.slice(start, start + PAGE_SIZE);
   }, [filteredLogs, currentPage]);
 
-  const hasActiveFilters =
-    search.trim().length > 0 || actionFilter !== "ALL" || targetTypeFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
   useEffect(() => {
     if (page > totalPages) {
@@ -75,12 +81,6 @@ export default function AuditPageClient() {
     }
   }, [page, totalPages]);
 
-  const resetFilters = () => {
-    setSearch("");
-    setActionFilter("ALL");
-    setTargetTypeFilter("ALL");
-    setPage(1);
-  };
 
   const entryCountLabel = (count: number) =>
     `${count} entr${count === 1 ? "y" : "ies"}`;
@@ -120,13 +120,13 @@ export default function AuditPageClient() {
           }}
           searchPlaceholder="Search action, user, module…"
           showReset={hasActiveFilters}
-          onReset={resetFilters}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={actionFilter}
                 onValueChange={(value) => {
-                  setActionFilter(value as AuditActionCategory);
+                  setValue("action", value);
                   setPage(1);
                 }}
                 ariaLabel="Filter by action type"
@@ -144,7 +144,7 @@ export default function AuditPageClient() {
                 <ListFilterSelect
                   value={targetTypeFilter}
                   onValueChange={(value) => {
-                    setTargetTypeFilter(value as AuditTargetTypeFilter);
+                    setValue("target", value);
                     setPage(1);
                   }}
                   ariaLabel="Filter by target module"

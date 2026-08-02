@@ -23,13 +23,13 @@ import { getErrorMessage } from "@/lib/errors";
 import {
   countPurchaseOrdersBySupplier,
   filterSuppliers,
-  hasSupplierFilters,
   summarizeSuppliers,
   type SupplierContactFilter,
 } from "@/lib/filters/supplier-filters";
 import { hubCtaClassName } from "@/lib/theme/hub-primitives";
 import { procurementSectionPanelClassName } from "@/lib/theme/hub-procurement";
 import type { Supplier } from "@/types/api";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function SuppliersPageClient() {
   const { data: suppliers = [], isLoading, isError, error, refetch, isFetching } = useSuppliers();
@@ -38,9 +38,14 @@ export default function SuppliersPageClient() {
   const updateMutation = useUpdateSupplier();
   const deleteMutation = useDeleteSupplier();
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    contact: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [contactFilter, setContactFilter] = useState<SupplierContactFilter>("ALL");
+  const contactFilter = values.contact as SupplierContactFilter;
 
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Supplier | null>(null);
@@ -58,7 +63,7 @@ export default function SuppliersPageClient() {
     [suppliers, deferredSearch, contactFilter],
   );
 
-  const hasActiveFilters = hasSupplierFilters({ search, contactFilter });
+  const hasActiveFilters = !isDefault;
 
   const openCreate = useCallback(() => {
     setEditing(null);
@@ -129,14 +134,11 @@ export default function SuppliersPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search suppliers…"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setContactFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <ListFilterSelect
               value={contactFilter}
-              onValueChange={(value) => setContactFilter(value as SupplierContactFilter)}
+              onValueChange={(value) => setValue("contact", value)}
               ariaLabel="Filter by contact data"
               widthClassName="w-full sm:w-[180px]"
               options={[

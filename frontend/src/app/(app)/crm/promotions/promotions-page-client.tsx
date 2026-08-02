@@ -18,6 +18,7 @@ import type { Promotion } from "@/types/api";
 import { Button } from "@/components/ui/button";
 import { crmSectionPanelClassName } from "@/lib/theme/hub-crm";
 import { hubCtaClassName } from "@/lib/theme/hub-primitives";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 export default function PromotionsPageClient() {
   const {
@@ -30,10 +31,16 @@ export default function PromotionsPageClient() {
   } = usePromotions();
   const promotions = promotionsData || [];
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    status: "ALL",
+    discount: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [statusFilter, setStatusFilter] = useState<PromoStatusFilter>("ALL");
-  const [discountFilter, setDiscountFilter] = useState<PromoDiscountFilter>("ALL");
+  const statusFilter = values.status as PromoStatusFilter;
+  const discountFilter = values.discount as PromoDiscountFilter;
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Promotion | null>(null);
@@ -58,8 +65,7 @@ export default function PromotionsPageClient() {
     });
   }, [promotions, deferredSearch, statusFilter, discountFilter]);
 
-  const hasActiveFilters =
-    search.trim().length > 0 || statusFilter !== "ALL" || discountFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
   const openCreate = () => {
     setEditing(null);
@@ -92,16 +98,12 @@ export default function PromotionsPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search code or description…"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setStatusFilter("ALL");
-            setDiscountFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value as PromoStatusFilter)}
+                onValueChange={(value) => setValue("status", value)}
                 ariaLabel="Filter by status"
                 widthClassName="w-full sm:w-[180px]"
                 options={[
@@ -114,7 +116,7 @@ export default function PromotionsPageClient() {
               />
               <ListFilterSelect
                 value={discountFilter}
-                onValueChange={(value) => setDiscountFilter(value as PromoDiscountFilter)}
+                onValueChange={(value) => setValue("discount", value)}
                 ariaLabel="Filter by discount type"
                 widthClassName="w-full sm:w-[180px]"
                 options={[

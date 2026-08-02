@@ -4,6 +4,7 @@ import { useMemo, useState, useDeferredValue } from "react";
 import { usePageChromeExtension } from "@/components/layout/PageChrome";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import { useListUrlState } from "@/hooks/useListUrlState";
 import { useAuth } from "@/context/AuthContext";
 import {
   useCreateEquipment,
@@ -46,11 +47,18 @@ export default function AssetsPageClient() {
   const createMutation = useCreateEquipment();
   const maintMutation = useLogMaintenance();
 
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    status: "ALL",
+    type: "ALL",
+    highlight: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
-  const [statusFilter, setStatusFilter] = useState<EquipmentStatusFilter>("ALL");
-  const [typeFilter, setTypeFilter] = useState<EquipmentTypeFilter>("ALL");
-  const [highlightFilter, setHighlightFilter] = useState<EquipmentHighlightFilter>("ALL");
+  const statusFilter = values.status as EquipmentStatusFilter;
+  const typeFilter = values.type as EquipmentTypeFilter;
+  const highlightFilter = values.highlight as EquipmentHighlightFilter;
   const [registerOpen, setRegisterOpen] = useState(false);
   const [maintenanceTarget, setMaintenanceTarget] = useState<Equipment | null>(null);
 
@@ -69,18 +77,8 @@ export default function AssetsPageClient() {
     [equipmentList, statusFilter, typeFilter, highlightFilter, deferredSearch],
   );
 
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    statusFilter !== "ALL" ||
-    typeFilter !== "ALL" ||
-    highlightFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
-  const resetFilters = () => {
-    setSearch("");
-    setStatusFilter("ALL");
-    setTypeFilter("ALL");
-    setHighlightFilter("ALL");
-  };
 
   const handleCreate = async (payload: {
     branchId: number;
@@ -168,12 +166,12 @@ export default function AssetsPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search name, serial, type…"
           showReset={hasActiveFilters}
-          onReset={resetFilters}
+          onReset={reset}
           filters={
             <>
               <ListFilterSelect
                 value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value as EquipmentStatusFilter)}
+                onValueChange={(value) => setValue("status", value)}
                 ariaLabel="Filter by status"
                 widthClassName="w-full sm:w-[160px]"
                 options={[
@@ -186,7 +184,7 @@ export default function AssetsPageClient() {
               />
               <ListFilterSelect
                 value={typeFilter}
-                onValueChange={(value) => setTypeFilter(value as EquipmentTypeFilter)}
+                onValueChange={(value) => setValue("type", value)}
                 ariaLabel="Filter by type"
                 widthClassName="w-full sm:w-[180px]"
                 options={[
@@ -199,7 +197,7 @@ export default function AssetsPageClient() {
               />
               <ListFilterSelect
                 value={highlightFilter}
-                onValueChange={(value) => setHighlightFilter(value as EquipmentHighlightFilter)}
+                onValueChange={(value) => setValue("highlight", value)}
                 ariaLabel="Filter by maintenance schedule"
                 widthClassName="w-full sm:w-[160px]"
                 options={[

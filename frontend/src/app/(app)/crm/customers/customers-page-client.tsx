@@ -10,13 +10,19 @@ import { ListFilterSelect } from "@/components/shared/list-filters";
 import { getErrorMessage } from "@/lib/errors";
 import type { Customer, Tier } from "@/types/api";
 import { crmSectionPanelClassName } from "@/lib/theme/hub-crm";
+import { useListUrlState } from "@/hooks/useListUrlState";
 
 type TierFilter = "ALL" | Tier;
 
 export default function CustomersPageClient() {
-  const [search, setSearch] = useState("");
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    q: "",
+    tier: "ALL",
+  });
+  const search = values.q;
+  const setSearch = (next: string) => setValue("q", next);
   const deferredSearch = useDeferredValue(search.trim());
-  const [tierFilter, setTierFilter] = useState<TierFilter>("ALL");
+  const tierFilter = values.tier as TierFilter;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState<number | null>(null);
 
@@ -55,7 +61,7 @@ export default function CustomersPageClient() {
     return customers.filter((c: Customer) => c.tier === tierFilter);
   }, [customers, tierFilter]);
 
-  const hasActiveFilters = search.trim().length > 0 || tierFilter !== "ALL";
+  const hasActiveFilters = !isDefault;
 
   const openCustomerProfile = (id: number) => {
     setSelectedCustomerId(id);
@@ -80,14 +86,11 @@ export default function CustomersPageClient() {
           onSearchChange={setSearch}
           searchPlaceholder="Search name or phone…"
           showReset={hasActiveFilters}
-          onReset={() => {
-            setSearch("");
-            setTierFilter("ALL");
-          }}
+          onReset={reset}
           filters={
             <ListFilterSelect
               value={tierFilter}
-              onValueChange={(value) => setTierFilter(value as TierFilter)}
+              onValueChange={(value) => setValue("tier", value)}
               ariaLabel="Filter by tier"
               widthClassName="w-full sm:w-[180px]"
               options={[
