@@ -47,7 +47,7 @@ export default function CentralKitchenPageClient() {
   const activeBranch = branches.find((b) => b.id === activeBranchId);
   const isCentralKitchen = activeBranch?.isCentralKitchen === true;
 
-  const { data: ingredients = [] } = useIngredients();
+  const { data: ingredients = [], isLoading: loadingIngredients } = useIngredients();
   const {
     data: ordersData = [],
     isLoading,
@@ -66,6 +66,7 @@ export default function CentralKitchenPageClient() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeOrder, setActiveOrder] = useState<ProductionOrderWithTarget | null>(null);
+  const [pendingOrderId, setPendingOrderId] = useState<number | null>(null);
 
   const completeMutation = useCompleteKitchenOrder();
   const updateStatusMutation = useUpdateOrderStatus();
@@ -120,18 +121,27 @@ export default function CentralKitchenPageClient() {
       return;
     }
 
+    if (pendingOrderId != null) return;
+
+    const isCompleting = newStatus === "COMPLETED";
+    const pending = isCompleting
+      ? completeMutation.mutateAsync(orderId)
+      : updateStatusMutation.mutateAsync({ id: orderId, status: newStatus });
+
+    setPendingOrderId(orderId);
+    toast.promise(pending, {
+      loading: isCompleting ? "Deducting raw materials…" : "Updating status…",
+      success: isCompleting ? "Production completed & inventory updated!" : "Status updated",
+      error: (err: unknown) =>
+        getErrorMessage(err, isCompleting ? "Failed to complete order" : "Failed to update status"),
+    });
+
     try {
-      if (newStatus === "COMPLETED") {
-        toast.promise(completeMutation.mutateAsync(orderId), {
-          loading: "Deducting raw materials…",
-          success: "Production completed & inventory updated!",
-          error: (err: unknown) => getErrorMessage(err, "Failed to complete order"),
-        });
-      } else {
-        await updateStatusMutation.mutateAsync({ id: orderId, status: newStatus });
-      }
-    } catch (err: unknown) {
-      toast.error(getErrorMessage(err, "Failed to update status"));
+      await pending;
+    } catch {
+      // toast.promise already surfaced the failure
+    } finally {
+      setPendingOrderId(null);
     }
   };
 
@@ -199,6 +209,7 @@ export default function CentralKitchenPageClient() {
                 activeOrder={activeOrder}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
+                pendingOrderId={pendingOrderId}
               />
             ) : null}
           </HubListPage.Body>
@@ -210,6 +221,7 @@ export default function CentralKitchenPageClient() {
           open={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           ingredients={ingredients}
+          loadingIngredients={loadingIngredients}
           bomTargetIds={bomTargetIds}
           onSubmit={handleCreate}
           isSubmitting={createOrderMutation.isPending}

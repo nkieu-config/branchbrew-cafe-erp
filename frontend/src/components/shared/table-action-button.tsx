@@ -6,7 +6,7 @@ import { dataTableRowHoverClassName } from "@/lib/theme/data-table";
 import { metricValueClassName } from "@/lib/theme/metric";
 import type { MetricTone } from "@/lib/theme/metric";
 import { touchTargetClassName } from "@/lib/theme/typography";
-import type { LucideIcon } from "lucide-react";
+import { Loader2, type LucideIcon } from "lucide-react";
 
 type TableActionButtonProps = {
   /** Visible and accessible name; required for icon-only buttons. */
@@ -20,6 +20,9 @@ type TableActionButtonProps = {
   destructive?: boolean;
   /** Accent color for non-destructive actions (default: blue). */
   tone?: MetricTone;
+  /** Swaps the icon for a spinner and blocks re-entry while the row action runs. */
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 export function TableActionButton({
@@ -31,6 +34,8 @@ export function TableActionButton({
   variant = "ghost",
   destructive = false,
   tone = "blue",
+  loading = false,
+  disabled,
 }: TableActionButtonProps) {
   return (
     <Button
@@ -38,6 +43,8 @@ export function TableActionButton({
       variant={variant}
       size="sm"
       onClick={onClick}
+      disabled={loading || disabled}
+      aria-busy={loading || undefined}
       aria-label={iconOnly ? label : undefined}
       className={cn(
         touchTargetClassName(),
@@ -50,8 +57,12 @@ export function TableActionButton({
         className,
       )}
     >
-      {Icon && <Icon className="w-4 h-4" aria-hidden="true" />}
-      {!iconOnly && <span className={Icon ? "ml-1.5" : undefined}>{label}</span>}
+      {loading ? (
+        <Loader2 className="w-4 h-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+      ) : (
+        Icon && <Icon className="w-4 h-4" aria-hidden="true" />
+      )}
+      {!iconOnly && <span className={Icon || loading ? "ml-1.5" : undefined}>{label}</span>}
     </Button>
   );
 }

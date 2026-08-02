@@ -59,7 +59,7 @@ export function IngredientFormModal({
     });
   };
 
-  const { data: suppliers = [] } = useSuppliers();
+  const { data: suppliers = [], isPending: loadingSuppliers } = useSuppliers();
   const createMutation = useCreateIngredient();
   const updateMutation = useUpdateIngredient();
   const isSaving = createMutation.isPending || updateMutation.isPending;
@@ -207,8 +207,11 @@ export function IngredientFormModal({
               <SelectTrigger
                 id="ingredient-supplier"
                 className={formFieldInsetClassName("w-full")}
+                loading={loadingSuppliers}
               >
-                <SelectValue placeholder="Select supplier…" />
+                <SelectValue
+                  placeholder={loadingSuppliers ? "Loading suppliers…" : "Select supplier…"}
+                />
               </SelectTrigger>
               <SelectContent className={formSelectContentClassName()}>
                 <SelectItem value="none">None</SelectItem>

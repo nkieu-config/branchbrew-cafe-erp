@@ -62,6 +62,37 @@ function DashboardSortableGridSection({
   );
 }
 
+const WIDGET_SKELETONS: Record<
+  string,
+  { Skeleton: React.ComponentType<{ className?: string }>; className?: string }
+> = {
+  sales: { Skeleton: StatWidgetSkeleton },
+  topBranch: { Skeleton: StatWidgetSkeleton },
+  margin: { Skeleton: StatWidgetSkeleton },
+  lowStock: { Skeleton: AlertsWidgetSkeleton },
+  operationalTasks: { Skeleton: AlertsWidgetSkeleton },
+  topProducts: { Skeleton: ChartWidgetSkeleton, className: "md:col-span-2 xl:col-span-2" },
+  salesChart: { Skeleton: ChartWidgetSkeleton, className: "md:col-span-2 xl:col-span-2" },
+};
+
+/** Mirrors the real grid one-for-one so suspending never changes the page height. */
+function DashboardGridFallback({ widgetOrder }: { widgetOrder: string[] }) {
+  return (
+    <div className={dashboardGridClass()}>
+      {widgetOrder.map((id) => {
+        const entry = WIDGET_SKELETONS[id];
+        if (!entry) return null;
+        const { Skeleton, className } = entry;
+        return (
+          <div key={id} className={className}>
+            <Skeleton />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function DashboardGridSection({
   widgetOrder,
   onReorder,
@@ -84,17 +115,7 @@ function DashboardGridSection({
 
   if (customizeLayout) {
     return (
-      <Suspense
-        fallback={
-          <div className={dashboardGridClass()}>
-            <StatWidgetSkeleton />
-            <StatWidgetSkeleton />
-            <AlertsWidgetSkeleton />
-            <ChartWidgetSkeleton />
-            <ChartWidgetSkeleton />
-          </div>
-        }
-      >
+      <Suspense fallback={<DashboardGridFallback widgetOrder={widgetOrder} />}>
         <DashboardSummaryProvider branchId={analyticsBranch}>
           <DashboardSortableGridLazy
             widgetOrder={widgetOrder}
@@ -107,15 +128,7 @@ function DashboardGridSection({
   }
 
   return (
-    <Suspense
-      fallback={
-        <div className={dashboardGridClass()}>
-          <StatWidgetSkeleton />
-          <StatWidgetSkeleton />
-          <AlertsWidgetSkeleton />
-        </div>
-      }
-    >
+    <Suspense fallback={<DashboardGridFallback widgetOrder={widgetOrder} />}>
       <DashboardSummaryProvider branchId={analyticsBranch}>
         <DashboardStaticGrid widgetOrder={widgetOrder} widgets={widgets} />
       </DashboardSummaryProvider>

@@ -26,7 +26,7 @@ export function ModifierIngredientSelect({
   allowEmpty?: boolean;
   id?: string;
 }) {
-  const { data: ingredients = [] } = useIngredients();
+  const { data: ingredients = [], isPending: loadingIngredients } = useIngredients();
   const selectValue = value === "" ? MODIFIER_EMPTY_INGREDIENT : String(value);
 
   return (
@@ -36,8 +36,12 @@ export function ModifierIngredientSelect({
         onChange(v === MODIFIER_EMPTY_INGREDIENT || v == null ? "" : Number(v))
       }
     >
-      <SelectTrigger id={id} className={formFieldInsetClassName("w-full")}>
-        <SelectValue placeholder={placeholder} />
+      <SelectTrigger
+        id={id}
+        className={formFieldInsetClassName("w-full")}
+        loading={loadingIngredients}
+      >
+        <SelectValue placeholder={loadingIngredients ? "Loading ingredients…" : placeholder} />
       </SelectTrigger>
       <SelectContent className={formSelectContentClassName()}>
         {allowEmpty && (

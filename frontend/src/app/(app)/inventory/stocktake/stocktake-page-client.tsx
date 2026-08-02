@@ -81,8 +81,9 @@ export default function StocktakePageClient() {
   } = useStockCounts(branchId);
   const { data: adjustments = [], isLoading: adjustmentsLoading } =
     useStockAdjustments(branchId);
-  const { data: inventory = [] } = useBranchInventory(branchId) as {
+  const { data: inventory = [], isLoading: loadingInventory } = useBranchInventory(branchId) as {
     data?: BranchInventory[];
+    isLoading: boolean;
   };
 
   const createCount = useCreateStockCount();
@@ -421,8 +422,11 @@ export default function StocktakePageClient() {
               <SelectTrigger
                 id="adjust-ingredient"
                 className={formFieldInsetClassName("h-11 w-full")}
+                loading={loadingInventory}
               >
-                <SelectValue placeholder="Select ingredient" />
+                <SelectValue
+                  placeholder={loadingInventory ? "Loading ingredients…" : "Select ingredient"}
+                />
               </SelectTrigger>
               <SelectContent className={formSelectContentClassName()}>
                 {inventory.map((row) => (

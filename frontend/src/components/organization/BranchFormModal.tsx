@@ -80,7 +80,7 @@ export function BranchFormModal({
   };
 
   return (
-    <FormDialog open={open} onOpenChange={onOpenChange} className={organizationDialogContentClassName()}>
+    <FormDialog busy={isSubmitting} open={open} onOpenChange={onOpenChange} className={organizationDialogContentClassName()}>
       <FormDialog.Title>{editing ? "Edit branch" : "Add branch"}</FormDialog.Title>
       <FormDialog.Body className="space-y-4 pt-1">
         <FormField id="branch-name" error={fieldErrors.name} className="space-y-2">
@@ -135,6 +135,7 @@ export function BranchFormModal({
         <Button
           type="button"
           variant="outline"
+          disabled={isSubmitting}
           onClick={() => onOpenChange(false)}
           className="min-h-[44px]"
         >

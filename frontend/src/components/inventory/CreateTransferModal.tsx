@@ -53,6 +53,7 @@ export function CreateTransferModal({
 }: CreateTransferModalProps) {
   return (
     <FormModal
+      busy={submitting}
       title="Request transfer"
       icon={ArrowRightLeft}
       isOpen={isOpen}
@@ -172,7 +173,7 @@ export function CreateTransferModal({
         </div>
 
         <div className="flex justify-end gap-2 pt-4">
-          <Button type="button" variant="outline" onClick={onClose}>
+          <Button type="button" variant="outline" disabled={submitting} onClick={onClose}>
             Cancel
           </Button>
           <Button

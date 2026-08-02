@@ -142,6 +142,7 @@ export function ReceivePurchaseOrderDialog({
 
   return (
     <FormDialog
+      busy={isSubmitting}
       open={purchaseOrder != null}
       onOpenChange={(open) => !open && onClose()}
       className={procurementDialogContentClassName("sm:max-w-lg")}
@@ -182,7 +183,7 @@ export function ReceivePurchaseOrderDialog({
           )}
         </FormDialog.Body>
         <FormDialog.Footer className="gap-2 sm:gap-0">
-          <Button type="button" variant="outline" onClick={onClose} className="min-h-[44px]">
+          <Button type="button" variant="outline" disabled={isSubmitting} onClick={onClose} className="min-h-[44px]">
             Cancel
           </Button>
           <Button

@@ -172,7 +172,7 @@ export function CustomerListTable({
         <DataTable
           hideBorders
           pagination={listPagination.tablePagination}
-          loading={loading && !isError}
+          loading={loading}
           columns={columns}
           dataSource={customers}
           rowKey="id"

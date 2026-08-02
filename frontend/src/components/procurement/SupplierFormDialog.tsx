@@ -81,7 +81,7 @@ export function SupplierFormDialog({
   };
 
   return (
-    <FormDialog open={open} onOpenChange={onOpenChange} className={procurementDialogContentClassName()}>
+    <FormDialog busy={saving} open={open} onOpenChange={onOpenChange} className={procurementDialogContentClassName()}>
       <FormDialog.Title>{editing ? "Edit supplier" : "Add supplier"}</FormDialog.Title>
       <FormDialog.Body className="space-y-4 pt-1">
         <FormField id="supplier-name" error={fieldErrors.name} className="space-y-2">
@@ -129,6 +129,7 @@ export function SupplierFormDialog({
         <Button
           type="button"
           variant="outline"
+          disabled={saving}
           onClick={() => onOpenChange(false)}
           className="min-h-[44px]"
         >

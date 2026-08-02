@@ -12,7 +12,7 @@ import type { Branch } from "@/types/api";
 export function useBranchPickerInit() {
   const { user, activeBranchId, setActiveBranchId, isInitialized } = useAuth();
   const isSuperAdmin = user?.role === "SUPER_ADMIN";
-  const { data: branchesData = [] } = useBranches(isSuperAdmin);
+  const { data: branchesData = [], isLoading: isLoadingBranches } = useBranches(isSuperAdmin);
   const branches = branchesData as Branch[];
   const appliedForUserId = useRef<number | null>(null);
 
@@ -50,6 +50,7 @@ export function useBranchPickerInit() {
   return {
     isSuperAdmin,
     branches,
+    isLoadingBranches,
     activeBranchId,
     setActiveBranchId,
   };

@@ -55,9 +55,10 @@ import {
 
 const CreateTransferModal = dynamic(
   () => import("@/components/inventory/CreateTransferModal").then((m) => m.CreateTransferModal),
-  { ssr: false },
+  { ssr: false, loading: () => <DialogLoadingFallback label="Opening transfer form" /> },
 );
 
+import { DialogLoadingFallback } from "@/components/shared/dialog-loading-fallback";
 import type { StockTransfersPanelHandle } from "@/components/inventory/stock-transfers-panel-handle";
 
 export type { StockTransfersPanelHandle };

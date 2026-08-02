@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSettings, useUpdateSettings } from "@/hooks/domains/useSettingsQueries";
 import { useUnsavedChangesGuard } from "@/hooks/useUnsavedChangesGuard";
-import { Loader2, Save } from "lucide-react";
+import { Save } from "lucide-react";
 import { toast } from "sonner";
 import { HubListPage } from "@/components/shared/hub-list-page";
 import { Input } from "@/components/ui/input";
@@ -11,12 +11,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { getErrorMessage } from "@/lib/errors";
 import { parseVatRatePercent } from "@/lib/vat";
-import { hubCtaClassName, hubLoadingSpinnerClassName, statusInlineAlertClassName } from "@/lib/theme/hub-primitives";
+import { hubCtaClassName, statusInlineAlertClassName } from "@/lib/theme/hub-primitives";
 import { settingsSectionLabelClassName } from "@/lib/theme/settings-form-section";
 import { settingsSectionPanelClassName } from "@/lib/theme/settings-hub-chrome";
 import { formFieldInsetClassName } from "@/lib/theme/stock";
 import { text } from "@/lib/theme/surface";
-import { cn } from "@/lib/utils";
+import { QueryLoadingPanel } from "@/components/shared/query-states";
 
 const EMPTY_FORM: Record<string, string> = {
   companyName: "",
@@ -105,10 +105,7 @@ export default function SettingsPageClient() {
         />
 
         {isLoading ? (
-          <div className="flex h-48 items-center justify-center">
-            <Loader2 className={cn("w-8 h-8", hubLoadingSpinnerClassName())} aria-hidden />
-            <span className="sr-only">Loading settings</span>
-          </div>
+          <QueryLoadingPanel message="Loading settings" minHeightClassName="h-48" />
         ) : !isError ? (
           <div className="space-y-8">
             <section>

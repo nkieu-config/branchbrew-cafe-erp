@@ -10,7 +10,7 @@ import { ClockInOutWidget } from "@/components/hr/ClockInOutWidget";
 import { BranchPicker } from "@/components/shared/branch-picker";
 import { BreadcrumbTrail } from "@/components/layout/BreadcrumbTrail";
 import { formatStatusLabel } from "@/components/shared/status-badge";
-import { LogOut, Menu, Settings, User } from "lucide-react";
+import { Loader2, LogOut, Menu, Settings, User } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useMobileNav } from "@/context/MobileNavContext";
 import { useScrollCompact } from "@/context/ScrollCompactContext";
@@ -50,6 +50,7 @@ import type { Branch } from "@/types/api";
 function ProfileMenu() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const [menuPosition, setMenuPosition] = useState<{ top: number; left: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -146,13 +147,19 @@ function ProfileMenu() {
               type="button"
               role="menuitem"
               className={destructiveMenuItemClassName()}
+              disabled={loggingOut}
+              aria-busy={loggingOut || undefined}
               onClick={() => {
-                setOpen(false);
+                setLoggingOut(true);
                 void logout();
               }}
             >
-              <LogOut className="w-4 h-4" aria-hidden />
-              Logout
+              {loggingOut ? (
+                <Loader2 className="w-4 h-4 animate-spin motion-reduce:animate-none" aria-hidden />
+              ) : (
+                <LogOut className="w-4 h-4" aria-hidden />
+              )}
+              {loggingOut ? "Logging out…" : "Logout"}
             </button>
           </div>,
           document.body,
@@ -186,6 +193,7 @@ function ProfileMenu() {
 
 type TopbarActionsProps = {
   showBranchPicker: boolean;
+  branchesLoading: boolean;
   branches: Branch[];
   activeBranchId: number | null;
   onBranchChange: (branchId: number | null) => void;
@@ -194,6 +202,7 @@ type TopbarActionsProps = {
 /** Shared action cluster — branch inline on desktop; full-width row below on mobile. */
 function TopbarActions({
   showBranchPicker,
+  branchesLoading,
   branches,
   activeBranchId,
   onBranchChange,
@@ -204,6 +213,7 @@ function TopbarActions({
         <BranchPicker
           variant="topbar"
           branches={branches}
+          loading={branchesLoading}
           activeBranchId={activeBranchId}
           onChange={onBranchChange}
           className="hidden lg:flex lg:w-[12.5rem] lg:flex-none"
@@ -230,7 +240,8 @@ export function AppHeader({ className }: AppHeaderProps) {
   const compact = useScrollCompact();
   const { toggle, open: mobileNavOpen } = useMobileNav();
   const { user } = useAuth();
-  const { isSuperAdmin, branches, activeBranchId, setActiveBranchId } = useBranchPickerInit();
+  const { isSuperAdmin, branches, isLoadingBranches, activeBranchId, setActiveBranchId } =
+    useBranchPickerInit();
   const trail = resolveBreadcrumbTrail(pathname);
   const role = user?.role ?? "STAFF";
   const { showMobileTopbarTitle } = getPageChromeTitleVisibility(pathname, role, trail);
@@ -239,7 +250,8 @@ export function AppHeader({ className }: AppHeaderProps) {
   const isKdsRoute = pathname === "/kds" || pathname.startsWith("/kds/");
   const showKdsDesktopLabel = isKdsRoute && !showDesktopBreadcrumb && !compact;
   const mobileTopbarTitle = resolveTopbarPageTitle(pathname);
-  const showBranchPicker = isSuperAdmin && branches.length > 0;
+  // Reserve the row while branches load so the header never grows a row underneath the user.
+  const showBranchPicker = isSuperAdmin && (isLoadingBranches || branches.length > 0);
 
   return (
     <div className={topbarRegionClassName({ compact, className })}>
@@ -287,6 +299,7 @@ export function AppHeader({ className }: AppHeaderProps) {
 
           <TopbarActions
             showBranchPicker={showBranchPicker}
+            branchesLoading={isLoadingBranches}
             branches={branches}
             activeBranchId={activeBranchId}
             onBranchChange={setActiveBranchId}
@@ -298,6 +311,7 @@ export function AppHeader({ className }: AppHeaderProps) {
             <BranchPicker
               variant="topbar"
               branches={branches}
+              loading={isLoadingBranches}
               activeBranchId={activeBranchId}
               onChange={setActiveBranchId}
               className="w-full max-w-none h-9 min-h-[36px]"

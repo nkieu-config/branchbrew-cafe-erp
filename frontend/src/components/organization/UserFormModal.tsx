@@ -141,7 +141,7 @@ export function UserFormModal({
   };
 
   return (
-    <FormDialog open={open} onOpenChange={onOpenChange} className={organizationDialogWideClassName()}>
+    <FormDialog busy={isSubmitting} open={open} onOpenChange={onOpenChange} className={organizationDialogWideClassName()}>
       <FormDialog.Title>{initialValues ? "Edit user" : "Add user"}</FormDialog.Title>
       <FormDialog.Body className="space-y-4 pt-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -300,7 +300,7 @@ export function UserFormModal({
       </FormDialog.Body>
 
       <FormDialog.Footer className="gap-2 sm:gap-0">
-          <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="min-h-[44px]">
+          <Button type="button" variant="outline" disabled={isSubmitting} onClick={() => onOpenChange(false)} className="min-h-[44px]">
             Cancel
           </Button>
           <Button

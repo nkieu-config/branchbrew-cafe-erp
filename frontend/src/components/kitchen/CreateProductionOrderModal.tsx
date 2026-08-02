@@ -32,6 +32,7 @@ type CreateProductionOrderModalProps = {
   open: boolean;
   onClose: () => void;
   ingredients: Ingredient[];
+  loadingIngredients?: boolean;
   bomTargetIds: Set<number>;
   onSubmit: (payload: {
     targetIngredientId: number;
@@ -45,6 +46,7 @@ export function CreateProductionOrderModal({
   open,
   onClose,
   ingredients,
+  loadingIngredients = false,
   bomTargetIds,
   onSubmit,
   isSubmitting = false,
@@ -97,6 +99,7 @@ export function CreateProductionOrderModal({
 
   return (
     <FormDialog
+      busy={isSubmitting}
       open={open}
       onOpenChange={(next) => {
         if (!next) onClose();
@@ -124,8 +127,13 @@ export function CreateProductionOrderModal({
                   clearFieldError("target");
                 }}
               >
-                <FormFieldSelectTrigger className={formFieldInsetClassName("w-full")}>
-                  <SelectValue placeholder="Select product" />
+                <FormFieldSelectTrigger
+                  className={formFieldInsetClassName("w-full")}
+                  loading={loadingIngredients}
+                >
+                  <SelectValue
+                    placeholder={loadingIngredients ? "Loading products…" : "Select product"}
+                  />
                 </FormFieldSelectTrigger>
                 <SelectContent className={formSelectContentClassName()}>
                   {ingredients.map((ingredient) => (
@@ -192,7 +200,7 @@ export function CreateProductionOrderModal({
         </FormDialog.Body>
 
         <FormDialog.Footer className="gap-2 sm:gap-0">
-          <Button type="button" variant="outline" onClick={onClose} className="min-h-[44px]">
+          <Button type="button" variant="outline" disabled={isSubmitting} onClick={onClose} className="min-h-[44px]">
             Cancel
           </Button>
           <Button

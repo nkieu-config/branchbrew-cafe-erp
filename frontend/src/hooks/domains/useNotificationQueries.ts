@@ -5,6 +5,7 @@ import {
   NOTIFICATION_ENDPOINTS,
 } from "@/lib/endpoints/accounting";
 import { NAV_COUNTS_QUERY_KEY } from "@/lib/nav-counts";
+import type { AppNotification } from "@/types/api";
 
 export const NOTIFICATIONS_QUERY_KEY = "notifications";
 
@@ -29,7 +30,28 @@ export function useMarkNotificationRead() {
   return useMutation({
     mutationFn: (id: number) =>
       fetchAPI(NOTIFICATION_ENDPOINTS.markRead(id), { method: "PATCH" }),
-    onSuccess: () => invalidateNotifications(queryClient),
+    onMutate: async (id: number) => {
+      await queryClient.cancelQueries({ queryKey: [NOTIFICATIONS_QUERY_KEY] });
+      const previous = queryClient.getQueryData<AppNotification[]>([
+        NOTIFICATIONS_QUERY_KEY,
+      ]);
+      queryClient.setQueryData<AppNotification[]>(
+        [NOTIFICATIONS_QUERY_KEY],
+        (current) =>
+          current?.map((notification) =>
+            notification.id === id && !notification.readAt
+              ? { ...notification, readAt: new Date().toISOString() }
+              : notification,
+          ),
+      );
+      return { previous };
+    },
+    onError: (_error, _id, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData([NOTIFICATIONS_QUERY_KEY], context.previous);
+      }
+    },
+    onSettled: () => invalidateNotifications(queryClient),
   });
 }
 

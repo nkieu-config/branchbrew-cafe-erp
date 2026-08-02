@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { CheckCircle2, Clock, PlayCircle } from "lucide-react";
+import { CheckCircle2, Clock, Loader2, PlayCircle } from "lucide-react";
 import {
   DndContext,
   DragOverlay,
@@ -76,17 +76,25 @@ function KanbanColumn({
   );
 }
 
-function KanbanCard({ order, isOverlay = false }: { order: ProductionOrderWithTarget; isOverlay?: boolean }) {
+function KanbanCard({
+  order,
+  isOverlay = false,
+  isPending = false,
+}: {
+  order: ProductionOrderWithTarget;
+  isOverlay?: boolean;
+  isPending?: boolean;
+}) {
   const isCompleted = order.status === "COMPLETED";
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: order.id,
     data: { order },
-    disabled: isCompleted,
+    disabled: isCompleted || isPending,
   });
 
   const style = {
     transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging ? 0.4 : isPending ? 0.6 : 1,
   };
 
   return (
@@ -99,10 +107,16 @@ function KanbanCard({ order, isOverlay = false }: { order: ProductionOrderWithTa
         kanbanCardClassName(isOverlay),
         isCompleted && kanbanCompletedCardClassName(),
       )}
+      aria-busy={isPending || undefined}
     >
       <div className="flex justify-between items-start gap-2 mb-1.5">
         <span className={kanbanOrderBadgeClassName()}>{order.orderNumber}</span>
-        {order.plannedStartDate ? (
+        {isPending ? (
+          <Loader2
+            className="w-3.5 h-3.5 shrink-0 animate-spin motion-reduce:animate-none opacity-70"
+            aria-hidden
+          />
+        ) : order.plannedStartDate ? (
           <span className={kitchenMutedMetaClassName("tabular-nums shrink-0")}>
             {formatDate(order.plannedStartDate)}
           </span>
@@ -128,6 +142,8 @@ type KitchenKanbanBoardProps = {
   activeOrder: ProductionOrderWithTarget | null;
   onDragStart: (event: DragStartEvent) => void;
   onDragEnd: (event: DragEndEvent) => void;
+  /** Order whose status write is in flight — its card locks and shows a spinner. */
+  pendingOrderId?: number | null;
 };
 
 export function KitchenKanbanBoard({
@@ -137,6 +153,7 @@ export function KitchenKanbanBoard({
   activeOrder,
   onDragStart,
   onDragEnd,
+  pendingOrderId = null,
 }: KitchenKanbanBoardProps) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -155,7 +172,7 @@ export function KitchenKanbanBoard({
           emptyHint="No planned orders."
         >
           {plannedOrders.map((o) => (
-            <KanbanCard key={o.id} order={o} />
+            <KanbanCard key={o.id} order={o} isPending={pendingOrderId === o.id} />
           ))}
         </KanbanColumn>
 
@@ -167,7 +184,7 @@ export function KitchenKanbanBoard({
           emptyHint="Drag here when production starts."
         >
           {inProgressOrders.map((o) => (
-            <KanbanCard key={o.id} order={o} />
+            <KanbanCard key={o.id} order={o} isPending={pendingOrderId === o.id} />
           ))}
         </KanbanColumn>
 
@@ -179,7 +196,7 @@ export function KitchenKanbanBoard({
           emptyHint="Finished batches appear here."
         >
           {completedOrders.map((o) => (
-            <KanbanCard key={o.id} order={o} />
+            <KanbanCard key={o.id} order={o} isPending={pendingOrderId === o.id} />
           ))}
         </KanbanColumn>
       </div>

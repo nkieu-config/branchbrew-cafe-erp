@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Calendar, Popover, Radio, Select } from "antd";
 import { CalendarDays } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { AntdProvider } from "@/providers/AntdProvider";
 import { differenceInDays } from "date-fns";
 import { formatIsoDate } from "@/lib/intl-date";
@@ -35,6 +36,7 @@ type BatchWithSupplier = InventoryBatch & {
 
 type ExpiryHeatmapPanelProps = {
   batches: BatchWithSupplier[];
+  loading?: boolean;
 };
 
 function batchIngredientLabel(batch: BatchWithSupplier) {
@@ -64,7 +66,7 @@ const LEGEND_ITEMS = [
   { urgency: "safe" as const, label: "8d+" },
 ];
 
-export function ExpiryHeatmapPanel({ batches }: ExpiryHeatmapPanelProps) {
+export function ExpiryHeatmapPanel({ batches, loading = false }: ExpiryHeatmapPanelProps) {
   const { resolvedTheme } = useTheme();
   const themeKey = resolvedTheme ?? "light";
   const [calendarMode, setCalendarMode] = useState<"month" | "year">("month");
@@ -138,6 +140,13 @@ export function ExpiryHeatmapPanel({ batches }: ExpiryHeatmapPanelProps) {
         <CalendarDays className={expiryHeatmapHeaderIconClassName()} aria-hidden />
         Expiry calendar
       </div>
+      {loading ? (
+        <div className="px-4 pb-4" role="status" aria-live="polite">
+          <span className="sr-only">Loading expiry calendar</span>
+          <Skeleton className="h-[320px] w-full rounded-lg" />
+          <Skeleton className="mt-3 h-6 w-full rounded-lg" />
+        </div>
+      ) : (
       <div className="px-4 pb-4">
         <Calendar
           key={themeKey}
@@ -202,6 +211,7 @@ export function ExpiryHeatmapPanel({ batches }: ExpiryHeatmapPanelProps) {
           ))}
         </div>
       </div>
+      )}
     </div>
     </AntdProvider>
   );

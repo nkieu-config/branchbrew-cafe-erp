@@ -67,7 +67,11 @@ export function DataTable<RecordType extends object = object>({
     });
   });
 
-  if (props.loading && (!props.dataSource || (Array.isArray(props.dataSource) && props.dataSource.length === 0))) {
+  if (
+    props.loading &&
+    !isError &&
+    (!props.dataSource || (Array.isArray(props.dataSource) && props.dataSource.length === 0))
+  ) {
     return (
       <AntdProvider>
         <div className={dataTableSkeletonClassName({ hideBorders }, containerClassName)}>

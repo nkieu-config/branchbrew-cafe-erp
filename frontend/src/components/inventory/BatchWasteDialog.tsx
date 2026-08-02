@@ -37,7 +37,7 @@ export function BatchWasteDialog({
   isPending,
 }: BatchWasteDialogProps) {
   return (
-    <FormDialog open={open} onOpenChange={onOpenChange} className="rounded-xl sm:max-w-md">
+    <FormDialog busy={isPending} open={open} onOpenChange={onOpenChange} className="rounded-xl sm:max-w-md">
         <FormDialog.Title>Report waste</FormDialog.Title>
           <DialogDescription>
             {ingredientName && maxQty != null
@@ -68,7 +68,7 @@ export function BatchWasteDialog({
           </div>
         </FormDialog.Body>
         <FormDialog.Footer className="gap-2">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button disabled={isPending} variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
           <Button

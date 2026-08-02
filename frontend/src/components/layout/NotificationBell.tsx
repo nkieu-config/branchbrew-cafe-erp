@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Bell, CheckCheck } from "lucide-react";
+import { Bell, CheckCheck, Loader2 } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -102,10 +102,18 @@ export function NotificationBell() {
                 variant="ghost"
                 size="sm"
                 disabled={markAllRead.isPending}
+                aria-busy={markAllRead.isPending || undefined}
                 onClick={() => markAllRead.mutate()}
               >
-                <CheckCheck className="mr-1 h-4 w-4" aria-hidden />
-                Mark all read
+                {markAllRead.isPending ? (
+                  <Loader2
+                    className="mr-1 h-4 w-4 animate-spin motion-reduce:animate-none"
+                    aria-hidden
+                  />
+                ) : (
+                  <CheckCheck className="mr-1 h-4 w-4" aria-hidden />
+                )}
+                {markAllRead.isPending ? "Marking…" : "Mark all read"}
               </Button>
             ) : null}
           </div>

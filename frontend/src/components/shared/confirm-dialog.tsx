@@ -40,8 +40,14 @@ export function ConfirmDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (loading && !next) return;
+        onOpenChange(next);
+      }}
+    >
+      <DialogContent className="sm:max-w-md" showCloseButton={!loading}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
@@ -54,7 +60,7 @@ export function ConfirmDialog({
             type="button"
             variant={destructive ? "destructive" : "default"}
             onClick={handleConfirm}
-            disabled={loading}
+            loading={loading}
           >
             {confirmLabel}
           </Button>

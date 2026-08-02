@@ -114,6 +114,7 @@ export default function BomsPageClient() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         ingredients={ingredients}
+        loadingIngredients={loadingIng}
       />
     </div>
   );

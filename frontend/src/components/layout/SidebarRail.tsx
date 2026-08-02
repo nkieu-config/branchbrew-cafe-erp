@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Coffee, PanelLeftOpen } from "lucide-react";
+import { NavLinkIcon } from "@/components/layout/nav-link-status";
 import { useAuth } from "@/context/AuthContext";
 import {
   Tooltip,
@@ -77,13 +78,13 @@ export function SidebarRail({ onExpand, onNavigate, className }: SidebarRailProp
                 <TooltipTrigger
                   render={
                     <Link
-                      href={item.href}
+                      href={item.linkHref ?? item.href}
                       onClick={onNavigate}
                       aria-label={item.label}
                       aria-current={isCurrentPage ? "page" : undefined}
                       className={cn(sidebarRailLinkClassName(isActive, isCurrentPage), "relative")}
                     >
-                      <ItemIcon className="w-[18px] h-[18px] shrink-0" aria-hidden />
+                      <NavLinkIcon icon={ItemIcon} className="w-[18px] h-[18px] shrink-0" />
                     </Link>
                   }
                 />

@@ -36,7 +36,7 @@ export default defineConfig({
     },
     {
       name: "public",
-      testMatch: /smoke\.spec\.ts/,
+      testMatch: /(smoke|loading-ux)\.spec\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
     {

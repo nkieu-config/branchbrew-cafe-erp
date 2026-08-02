@@ -1,6 +1,5 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { useCustomer360 } from "@/hooks/domains/useCrmQueries";
 import { formatCurrency } from "@/lib/money";
 import { formatDate } from "@/lib/intl-date";
@@ -20,9 +19,9 @@ import {
   crmSheetContentClassName,
   customerTierTone,
 } from "@/lib/theme/hub-crm";
-import { hubLoadingSpinnerClassName } from "@/lib/theme/hub-primitives";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
+import { QueryLoadingPanel } from "@/components/shared/query-states";
 
 type Customer360SheetProps = {
   open: boolean;
@@ -145,10 +144,7 @@ export function Customer360Sheet({ open, onOpenChange, customerId }: Customer360
         </SheetHeader>
 
         {isLoading || !customer360 ? (
-          <div className={cn("flex items-center justify-center h-48 gap-2", text.muted)}>
-            <Loader2 className={cn("w-5 h-5 animate-spin", hubLoadingSpinnerClassName())} />
-            <span className="text-sm">Loading…</span>
-          </div>
+          <QueryLoadingPanel message="Loading member profile" minHeightClassName="h-48" />
         ) : (
           <Customer360Profile data={customer360} />
         )}

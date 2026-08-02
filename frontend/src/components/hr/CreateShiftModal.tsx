@@ -35,6 +35,7 @@ type CreateShiftModalProps = {
   open: boolean;
   onClose: () => void;
   employees: User[];
+  loadingEmployees?: boolean;
   branchId: number;
   defaultDate?: string;
   onSubmit: (payload: {
@@ -50,6 +51,7 @@ export function CreateShiftModal({
   open,
   onClose,
   employees,
+  loadingEmployees = false,
   branchId,
   defaultDate,
   onSubmit,
@@ -112,6 +114,7 @@ export function CreateShiftModal({
 
   return (
     <FormDialog
+      busy={isSubmitting}
       open={open}
       onOpenChange={(next) => {
         if (!next) onClose();
@@ -140,8 +143,13 @@ export function CreateShiftModal({
                 clearFieldError("employee");
               }}
             >
-              <FormFieldSelectTrigger className={formFieldInsetClassName("w-full")}>
-                <SelectValue placeholder="Select employee" />
+              <FormFieldSelectTrigger
+                className={formFieldInsetClassName("w-full")}
+                loading={loadingEmployees}
+              >
+                <SelectValue
+                  placeholder={loadingEmployees ? "Loading employees…" : "Select employee"}
+                />
               </FormFieldSelectTrigger>
               <SelectContent className={formSelectContentClassName()}>
                 {staffOptions.map((employee) => (
@@ -212,7 +220,7 @@ export function CreateShiftModal({
       </FormDialog.Body>
 
       <FormDialog.Footer className="gap-2 sm:gap-0">
-        <Button type="button" variant="outline" onClick={onClose} className="min-h-[44px]">
+        <Button type="button" variant="outline" disabled={isSubmitting} onClick={onClose} className="min-h-[44px]">
           Cancel
         </Button>
         <Button

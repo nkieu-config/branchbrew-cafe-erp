@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useDeferredValue } from "react";
-import { Loader2, MapPin, Pencil, Plus } from "lucide-react";
+import { MapPin, Pencil, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useBranches, useCreateBranch, useUpdateBranch } from "@/hooks/domains/useGeneralQueries";
 import { HubListPage } from "@/components/shared/hub-list-page";
@@ -21,7 +21,7 @@ import {
 import { getErrorMessage } from "@/lib/errors";
 import type { Branch } from "@/types/api";
 import { infoBannerClassName, infoBannerTextClassName } from "@/lib/theme/hub-banners";
-import { branchCardClassName, emptyStatePanelClassName, hubCtaClassName, hubLoadingSpinnerClassName } from "@/lib/theme/hub-primitives";
+import { branchCardClassName, emptyStatePanelClassName, hubCtaClassName } from "@/lib/theme/hub-primitives";
 import {
   organizationMutedMetaClassName,
   organizationSectionPanelClassName,
@@ -29,6 +29,7 @@ import {
 import { text } from "@/lib/theme/surface";
 import { typeHeadingClassName } from "@/lib/theme/typography";
 import { cn } from "@/lib/utils";
+import { QueryLoadingPanel } from "@/components/shared/query-states";
 
 export default function BranchesPageClient({ embedded = false }: { embedded?: boolean }) {
   const {
@@ -156,10 +157,7 @@ export default function BranchesPageClient({ embedded = false }: { embedded?: bo
 
         <HubListPage.Body>
         {isLoading ? (
-          <div className="flex h-48 items-center justify-center">
-            <Loader2 className={cn("w-8 h-8", hubLoadingSpinnerClassName())} aria-hidden />
-            <span className="sr-only">Loading branches</span>
-          </div>
+          <QueryLoadingPanel message="Loading branches" minHeightClassName="h-48" />
         ) : filteredBranches.length === 0 ? (
           <div className={emptyStatePanelClassName()}>
             <p className={typeHeadingClassName("text-base")}>

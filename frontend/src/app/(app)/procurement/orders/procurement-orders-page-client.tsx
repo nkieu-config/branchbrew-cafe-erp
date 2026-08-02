@@ -31,7 +31,6 @@ import {
   XCircle,
   CheckSquare,
   Send,
-  Loader2,
   Banknote,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -282,17 +281,12 @@ export default function ProcurementOrdersPageClient() {
       <div className="flex flex-wrap justify-end gap-1">
         {po.status === "DRAFT" && (po.items?.length ?? 0) > 0 && (
           <TableActionButton
-            icon={submittingPoId === po.id ? Loader2 : Send}
+            icon={Send}
             label={`Submit ${po.poNumber}`}
             iconOnly
-            onClick={() => {
-              if (submittingPoId === po.id) return;
-              setConfirmAction({ type: "submit", po });
-            }}
-            className={cn(
-              tableActionAccentClassName("indigo"),
-              submittingPoId === po.id && "[&_svg]:animate-spin",
-            )}
+            loading={submittingPoId === po.id}
+            onClick={() => setConfirmAction({ type: "submit", po })}
+            className={tableActionAccentClassName("indigo")}
           />
         )}
         {po.status === "PENDING" && canApprove && (
@@ -594,6 +588,8 @@ export default function ProcurementOrdersPageClient() {
         onClose={() => setIsModalOpen(false)}
         suppliers={suppliers}
         ingredients={ingredients}
+        loadingSuppliers={loadingSup}
+        loadingIngredients={loadingIng}
         onSubmit={handleCreateSubmit}
         isSubmitting={createMutation.isPending}
       />

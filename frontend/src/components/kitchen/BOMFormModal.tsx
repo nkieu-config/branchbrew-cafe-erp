@@ -42,6 +42,7 @@ type BOMFormModalProps = {
   isOpen: boolean;
   onClose: () => void;
   ingredients: Ingredient[];
+  loadingIngredients?: boolean;
 };
 
 function emptyLine(): RawLineDraft {
@@ -56,7 +57,12 @@ function isLineDirty(line: RawLineDraft) {
   return line.rawIngredientId > 0 || line.quantityNeeded.trim().length > 0;
 }
 
-export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps) {
+export function BOMFormModal({
+  isOpen,
+  onClose,
+  ingredients,
+  loadingIngredients = false,
+}: BOMFormModalProps) {
   const [targetId, setTargetId] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<{ target?: string }>({});
   const createMutation = useCreateProductionBOM();
@@ -137,6 +143,7 @@ export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps
 
   return (
     <FormDialog
+      busy={createMutation.isPending}
       open={isOpen}
       onOpenChange={(next) => {
         if (!next) onClose();
@@ -156,8 +163,13 @@ export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps
                 clearFieldError("target");
               }}
             >
-              <FormFieldSelectTrigger className={formFieldInsetClassName("w-full")}>
-                <SelectValue placeholder="Select product" />
+              <FormFieldSelectTrigger
+                className={formFieldInsetClassName("w-full")}
+                loading={loadingIngredients}
+              >
+                <SelectValue
+                  placeholder={loadingIngredients ? "Loading products…" : "Select product"}
+                />
               </FormFieldSelectTrigger>
               <SelectContent className={formSelectContentClassName()}>
                 {ingredients.map((ingredient) => (
@@ -171,7 +183,7 @@ export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps
           </FormField>
 
           <div className={formSectionClassName()}>
-            {ingredients.length === 0 ? (
+            {ingredients.length === 0 && !loadingIngredients ? (
               <FormEmptyIngredientsBanner />
             ) : (
               <>
@@ -190,8 +202,17 @@ export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps
                                 value != null && updateRow(idx, "rawIngredientId", Number(value))
                               }
                             >
-                              <SelectTrigger className={formFieldInsetClassName("w-full")}>
-                                <SelectValue placeholder="Select ingredient" />
+                              <SelectTrigger
+                                className={formFieldInsetClassName("w-full")}
+                                loading={loadingIngredients}
+                              >
+                                <SelectValue
+                                  placeholder={
+                                    loadingIngredients
+                                      ? "Loading ingredients…"
+                                      : "Select ingredient"
+                                  }
+                                />
                               </SelectTrigger>
                               <SelectContent className={formSelectContentClassName()}>
                                 {ingredients.map((ingredient) => (
@@ -252,7 +273,7 @@ export function BOMFormModal({ isOpen, onClose, ingredients }: BOMFormModalProps
         </FormDialog.Body>
 
         <FormModalFooter>
-          <Button type="button" variant="outline" onClick={onClose} className="min-h-[44px]">
+          <Button type="button" variant="outline" disabled={createMutation.isPending} onClick={onClose} className="min-h-[44px]">
             Cancel
           </Button>
           <Button

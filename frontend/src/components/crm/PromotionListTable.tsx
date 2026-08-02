@@ -284,7 +284,7 @@ export function PromotionListTable({
           columns={columns}
           dataSource={promotions}
           rowKey="id"
-          loading={loading && !isError}
+          loading={loading}
           emptyDescription={emptyDescription}
         />
       }

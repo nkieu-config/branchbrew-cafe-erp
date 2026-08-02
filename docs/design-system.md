@@ -134,10 +134,26 @@ Rules: don't duplicate a screen into "desktop" and "mobile" components when a br
 
 Overlays use **native `@starting-style`** via Base UI `data-starting-style` / `data-ending-style` (not `tw-animate-css`). Respect `motion-reduce:` — animations disable for prefers-reduced-motion.
 
+## Loading states
+
+| Need                           | Use                                                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Button working                 | `<Button loading>` — sets `disabled` + `aria-busy` + spinner                                                                                                 |
+| Button with a leading icon     | swap the icon for `Loader2` (`loading` would render two glyphs)                                                                                              |
+| Row action in a table          | `<TableActionButton loading>`                                                                                                                                |
+| Async `<Select>` options       | `<SelectTrigger loading>` + a "Loading …" placeholder                                                                                                        |
+| Dialog with a pending mutation | `busy` on `ConfirmDialog` / `FormDialog` / `FormModal` — also blocks Esc, backdrop, close                                                                     |
+| Centred spinner panel          | `QueryLoadingPanel`                                                                                                                                          |
+| Route segment / whole viewport | `PageSkeleton` in `loading.tsx` / `AppSplash` in `app/loading.tsx`                                                                                            |
+| Lazily loaded dialog           | `DialogLoadingFallback` — **only** when the dialog is rendered conditionally; a `dynamic()` `loading:` fallback renders whenever the chunk is pending, ignoring `open` |
+
+**Rules:** never render an empty state before the query resolves — gate on `isPending`, not `length === 0` (`enabled`-gated queries report `isLoading === false` before they run); reserve height so buttons never appear under the cursor; never apply `keepPreviousData` to a branch-scoped key.
+
 ## Automated checks
 
-| Check                   | Location                                                                      |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| Form validators         | `lib/crm/register-customer-validation.test.ts`, `lib/hr/*-validation.test.ts` |
-| Navigation / nav counts | `lib/navigation/navigation.test.ts`, `lib/nav-counts.test.ts`                 |
-| a11y smoke              | `e2e/a11y.spec.ts` (axe-core, critical/serious)                               |
+| Check                   | Location                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Form validators         | `lib/crm/register-customer-validation.test.ts`, `lib/hr/*-validation.test.ts`                                |
+| Navigation / nav counts | `lib/navigation/navigation.test.ts`, `lib/nav-counts.test.ts`                                                |
+| Loading states          | `components/ui/button.test.tsx`, `components/shared/table-action-button.test.tsx`, `e2e/loading-ux.spec.ts` |
+| a11y smoke              | `e2e/a11y.spec.ts` (axe-core, critical/serious)                                                             |

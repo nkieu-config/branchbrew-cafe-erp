@@ -6,7 +6,13 @@ export type NavRole = Role;
 export type SidebarItem = {
   id: string;
   label: string;
+  /** Base path used for active-state matching — keep it the hub root. */
   href: string;
+  /**
+   * Where the link actually navigates. Set this when `href` only redirects,
+   * so a click costs one round trip instead of two.
+   */
+  linkHref?: string;
   icon: LucideIcon;
   roles: NavRole[];
 };

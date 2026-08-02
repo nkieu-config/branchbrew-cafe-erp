@@ -56,7 +56,7 @@ export default function ShiftsPageClient() {
     refetch,
     isFetching,
   } = useShifts(role, branchIdNum);
-  const { data: employees = [] } = useHrUsers(branchIdNum);
+  const { data: employees = [], isLoading: loadingEmployees } = useHrUsers(branchIdNum);
   const createShiftMutation = useCreateShift();
 
   const [selectedDate, setSelectedDate] = useState(() => shiftDateFromUrl ?? toDateInputValue(new Date()));
@@ -222,6 +222,7 @@ export default function ShiftsPageClient() {
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         employees={employees}
+        loadingEmployees={loadingEmployees}
         branchId={branchIdNum}
         defaultDate={selectedDate}
         onSubmit={handleCreateShift}

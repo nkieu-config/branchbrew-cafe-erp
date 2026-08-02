@@ -99,7 +99,7 @@ export function ProductFormModal({
     minRows: 0,
   });
 
-  const { data: ingredientsData } = useIngredients();
+  const { data: ingredientsData, isPending: loadingIngredients } = useIngredients();
   const ingredients = ingredientsData || [];
 
   const createMutation = useCreateProduct();
@@ -307,8 +307,13 @@ export function ProductFormModal({
                               formFieldInsetClassName(formFieldInvalidClassName(isDuplicate)),
                             )}
                             aria-invalid={isDuplicate}
+                            loading={loadingIngredients}
                           >
-                            <SelectValue placeholder="Select ingredient…" />
+                            <SelectValue
+                              placeholder={
+                                loadingIngredients ? "Loading ingredients…" : "Select ingredient…"
+                              }
+                            />
                           </SelectTrigger>
                           <SelectContent className={formSelectContentClassName()}>
                             {ingredients.map((ing: Ingredient) => (

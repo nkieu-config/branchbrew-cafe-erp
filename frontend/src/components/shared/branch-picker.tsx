@@ -26,6 +26,7 @@ type BranchPickerProps = {
   onChange: (branchId: number | null) => void;
   variant?: "topbar" | "sidebar";
   className?: string;
+  loading?: boolean;
 };
 
 export function BranchPicker({
@@ -34,6 +35,7 @@ export function BranchPicker({
   onChange,
   variant = "topbar",
   className,
+  loading = false,
 }: BranchPickerProps) {
   const value = activeBranchId == null ? "all" : String(activeBranchId);
   const isSidebar = variant === "sidebar";
@@ -69,6 +71,7 @@ export function BranchPicker({
       >
         <SelectTrigger
           aria-label="Select branch"
+          loading={loading}
           className={
             isSidebar
               ? "h-11 min-h-[44px] w-full border-0 bg-transparent shadow-none text-xs font-medium focus-visible:ring-0 dark:bg-transparent dark:hover:bg-transparent"
@@ -81,7 +84,10 @@ export function BranchPicker({
                 )
           }
         >
-          <SelectValue placeholder="Branch" className="truncate" />
+          <SelectValue
+            placeholder={loading ? "Loading branches…" : "Branch"}
+            className="truncate"
+          />
         </SelectTrigger>
         <SelectContent
           align={isSidebar ? "start" : "end"}

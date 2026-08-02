@@ -21,6 +21,8 @@ type FormDialogRootProps = {
   className?: string;
   width?: number | string;
   testId?: string;
+  /** Blocks Esc/backdrop dismissal while a submission is in flight. */
+  busy?: boolean;
 };
 
 function FormDialogRoot({
@@ -30,12 +32,20 @@ function FormDialogRoot({
   className,
   width = 800,
   testId,
+  busy = false,
 }: FormDialogRootProps) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (busy && !next) return;
+        onOpenChange(next);
+      }}
+    >
       <DialogContent
         className={className ?? formDialogContentClassName(width)}
         data-testid={testId}
+        showCloseButton={!busy}
       >
         {children}
       </DialogContent>
@@ -97,6 +107,8 @@ interface FormModalProps {
   onClose: () => void;
   children: ReactNode;
   width?: number | string;
+  /** Blocks Esc/backdrop/close-button dismissal while a submission is in flight. */
+  busy?: boolean;
 }
 
 export function FormModal({
@@ -108,6 +120,7 @@ export function FormModal({
   onClose,
   children,
   width = 800,
+  busy = false,
 }: FormModalProps) {
   const resolvedIconClassName =
     iconClassName ??
@@ -117,10 +130,11 @@ export function FormModal({
     <Dialog
       open={isOpen}
       onOpenChange={(open) => {
-        if (!open) onClose();
+        if (open || busy) return;
+        onClose();
       }}
     >
-      <DialogContent className={formDialogContentClassName(width)} showCloseButton>
+      <DialogContent className={formDialogContentClassName(width)} showCloseButton={!busy}>
         <DialogHeader>
           <DialogTitle className={cn(typeHeadingClassName(), "flex items-center gap-2 text-lg")}>
             {Icon && <Icon className={cn("shrink-0", resolvedIconClassName)} aria-hidden />}

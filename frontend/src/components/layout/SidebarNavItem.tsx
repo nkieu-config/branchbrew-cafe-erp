@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NavLinkIcon, NavLinkPendingDot } from "@/components/layout/nav-link-status";
 import {
   getHubConfig,
   getVisibleHubTabs,
@@ -43,13 +44,13 @@ export function SidebarNavItem({
   return (
     <div className="space-y-0.5">
       <Link
-        href={item.href}
+        href={item.linkHref ?? item.href}
         onClick={onNavigate}
         aria-current={isParentCurrentPage ? "page" : undefined}
         className={sidebarNavLinkClassName(isHubActive, isParentCurrentPage)}
         data-testid={`nav-${item.id}`}
       >
-        <ItemIcon className={sidebarNavIconClassName(isHubActive)} aria-hidden />
+        <NavLinkIcon icon={ItemIcon} className={sidebarNavIconClassName(isHubActive)} />
         <span className="truncate">{item.label}</span>
       </Link>
 
@@ -69,6 +70,7 @@ export function SidebarNavItem({
                   className={sidebarNavChildLinkClassName(isChildActive)}
                 >
                   <span className="truncate">{tab.label}</span>
+                  <NavLinkPendingDot />
                 </Link>
               </li>
             );

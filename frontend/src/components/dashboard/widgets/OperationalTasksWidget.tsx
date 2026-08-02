@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { ClipboardList, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { DashboardWidgetHeader } from "@/components/dashboard/DashboardWidgetHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useNavCounts } from "@/hooks/useNavCounts";
@@ -25,7 +26,7 @@ import { cn } from "@/lib/utils";
 
 export function OperationalTasksWidget() {
   const { user } = useAuth();
-  const { data: counts } = useNavCounts(true);
+  const { data: counts, isPending } = useNavCounts(true);
 
   const tasks = useMemo(
     () => (counts ? buildOperationalTasks(counts, user?.role) : []),
@@ -33,6 +34,7 @@ export function OperationalTasksWidget() {
   );
 
   const taskCount = tasks.reduce((sum, task) => sum + task.count, 0);
+  const isLoading = isPending || !counts;
 
   return (
     <Card className={dashboardWidgetCardClass("alerts", "h-[240px] xl:h-full overflow-hidden flex flex-col")}>
@@ -41,10 +43,16 @@ export function OperationalTasksWidget() {
         icon={ClipboardList}
         title="Operational Tasks"
         description={
-          taskCount > 0 ? "Items needing follow-up outside inventory" : "No pending operational tasks"
+          isLoading
+            ? "Checking operational queues…"
+            : taskCount > 0
+              ? "Items needing follow-up outside inventory"
+              : "No pending operational tasks"
         }
         badge={
-          taskCount > 0 ? (
+          isLoading ? (
+            <Skeleton className="h-5 w-16 rounded-full" />
+          ) : taskCount > 0 ? (
             <span className={dashboardAlertCountBadgeClass("low")}>{taskCount} open</span>
           ) : (
             <span className={dashboardAlertCountBadgeClass("neutral")}>Clear</span>
@@ -52,7 +60,14 @@ export function OperationalTasksWidget() {
         }
       />
       <CardContent className="p-0 flex-1 overflow-y-auto">
-        {tasks.length > 0 ? (
+        {isLoading ? (
+          <div className="space-y-2 p-3" role="status" aria-live="polite">
+            <span className="sr-only">Loading operational tasks</span>
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+          </div>
+        ) : tasks.length > 0 ? (
           <div className="divide-y divide-[var(--widget-alerts-divider)]">
             {tasks.map((task) => (
               <Link

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
+import { NavLinkIcon } from "@/components/layout/nav-link-status";
 import {
   mobileBottomNavBarClassName,
   mobileBottomNavClassName,
@@ -31,11 +32,20 @@ type MobileBottomNavItemContentProps = {
   isActive: boolean;
 };
 
-function MobileBottomNavItemContent({ icon: Icon, label, isActive }: MobileBottomNavItemContentProps) {
+function MobileBottomNavItemContent({
+  icon: Icon,
+  label,
+  isActive,
+  withLinkStatus = false,
+}: MobileBottomNavItemContentProps & { withLinkStatus?: boolean }) {
   return (
     <>
       <span className={mobileBottomNavIconWrapClassName(isActive)}>
-        <Icon className={mobileBottomNavIconClassName(isActive)} aria-hidden />
+        {withLinkStatus ? (
+          <NavLinkIcon icon={Icon} className={mobileBottomNavIconClassName(isActive)} />
+        ) : (
+          <Icon className={mobileBottomNavIconClassName(isActive)} aria-hidden />
+        )}
       </span>
       <span className={mobileBottomNavLabelClassName(isActive)}>{label}</span>
     </>
@@ -61,7 +71,7 @@ export function MobileBottomNavLink({
       aria-label={label}
       className={cn(mobileBottomNavItemClassName(isActive), className)}
     >
-      <MobileBottomNavItemContent icon={icon} label={label} isActive={isActive} />
+      <MobileBottomNavItemContent icon={icon} label={label} isActive={isActive} withLinkStatus />
     </Link>
   );
 }

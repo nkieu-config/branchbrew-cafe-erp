@@ -44,6 +44,8 @@ type CreatePOModalProps = {
   onClose: () => void;
   suppliers: Supplier[];
   ingredients: Ingredient[];
+  loadingSuppliers?: boolean;
+  loadingIngredients?: boolean;
   onSubmit: (payload: {
     supplierId: number;
     items: { ingredientId: number; quantity: number; unitPrice: number }[];
@@ -73,6 +75,8 @@ export function CreatePOModal({
   onClose,
   suppliers,
   ingredients,
+  loadingSuppliers = false,
+  loadingIngredients = false,
   onSubmit,
   isSubmitting = false,
 }: CreatePOModalProps) {
@@ -158,6 +162,7 @@ export function CreatePOModal({
 
   return (
     <FormDialog
+      busy={isSubmitting}
       open={open}
       onOpenChange={(next) => {
         if (!next) onClose();
@@ -169,7 +174,7 @@ export function CreatePOModal({
         <FormDialog.Body className="space-y-4 pt-1">
           <FormField id="po-supplier" error={fieldErrors.supplier} className="space-y-2">
             <FormFieldLabel className={text.secondary}>Supplier</FormFieldLabel>
-            {suppliers.length === 0 ? (
+            {suppliers.length === 0 && !loadingSuppliers ? (
               <p className={cn("text-sm", text.muted)}>
                 No suppliers yet —{" "}
                 <Link href="/procurement/suppliers" className={inlineLinkClassName()}>
@@ -186,8 +191,13 @@ export function CreatePOModal({
                   clearFieldError("supplier");
                 }}
               >
-                <FormFieldSelectTrigger className={formFieldInsetClassName("w-full")}>
-                  <SelectValue placeholder="Select supplier" />
+                <FormFieldSelectTrigger
+                  className={formFieldInsetClassName("w-full")}
+                  loading={loadingSuppliers}
+                >
+                  <SelectValue
+                    placeholder={loadingSuppliers ? "Loading suppliers…" : "Select supplier"}
+                  />
                 </FormFieldSelectTrigger>
                 <SelectContent className={formSelectContentClassName()}>
                   {suppliers.map((supplier) => (
@@ -202,7 +212,7 @@ export function CreatePOModal({
           </FormField>
 
           <div className={formSectionClassName()}>
-            {ingredients.length === 0 ? (
+            {ingredients.length === 0 && !loadingIngredients ? (
               <FormEmptyIngredientsBanner />
             ) : (
               <>
@@ -221,8 +231,17 @@ export function CreatePOModal({
                                 value != null && handleIngredientChange(idx, value)
                               }
                             >
-                              <SelectTrigger className={formFieldInsetClassName("w-full")}>
-                                <SelectValue placeholder="Select ingredient" />
+                              <SelectTrigger
+                                className={formFieldInsetClassName("w-full")}
+                                loading={loadingIngredients}
+                              >
+                                <SelectValue
+                                  placeholder={
+                                    loadingIngredients
+                                      ? "Loading ingredients…"
+                                      : "Select ingredient"
+                                  }
+                                />
                               </SelectTrigger>
                               <SelectContent className={formSelectContentClassName()}>
                                 {ingredients.map((ingredient) => (
@@ -297,7 +316,7 @@ export function CreatePOModal({
         </FormDialog.Body>
 
         <FormModalFooter>
-          <Button type="button" variant="outline" onClick={onClose} className="min-h-[44px]">
+          <Button type="button" variant="outline" disabled={isSubmitting} onClick={onClose} className="min-h-[44px]">
             Cancel
           </Button>
           <Button

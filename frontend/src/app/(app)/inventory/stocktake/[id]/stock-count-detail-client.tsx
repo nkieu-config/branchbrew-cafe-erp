@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import type { ColumnsType } from "antd/es/table";
 import { ArrowLeft, Check, Loader2, Save, Send, X } from "lucide-react";
 import { DataTable } from "@/components/shared/data-table";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   StatusBadge,
   stockCountStatusTone,
@@ -304,6 +305,8 @@ export default function StockCountDetailClient({ id }: { id: number }) {
             <StatusBadge tone={stockCountStatusTone(count.status)}>
               {formatStatusLabel(count.status)}
             </StatusBadge>
+          ) : isLoading ? (
+            <Skeleton className="h-6 w-24 rounded-full" />
           ) : null}
           {count?.isBlind ? (
             <StatusBadge tone="purple">Blind</StatusBadge>
@@ -311,6 +314,12 @@ export default function StockCountDetailClient({ id }: { id: number }) {
         </div>
 
         <div className="flex flex-wrap gap-2">
+          {isLoading && !count ? (
+            <>
+              <Skeleton className="h-8 w-24" />
+              <Skeleton className="h-8 w-44" />
+            </>
+          ) : null}
           {isDraft ? (
             <>
               <Button
@@ -391,6 +400,11 @@ export default function StockCountDetailClient({ id }: { id: number }) {
             </span>
           ) : null}
           {count.notes ? <span>“{count.notes}”</span> : null}
+        </div>
+      ) : isLoading ? (
+        <div className="flex flex-wrap gap-x-6 gap-y-1">
+          <Skeleton className="h-5 w-72 max-w-full" />
+          <Skeleton className="h-5 w-40" />
         </div>
       ) : null}
 
