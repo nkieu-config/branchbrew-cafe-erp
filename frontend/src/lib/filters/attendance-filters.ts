@@ -114,3 +114,4 @@ export function filterAttendance(
       matchesAttendanceStatusFilter(record, options.statusFilter, options.shifts),
   );
 }
+export const ATTENDANCE_PAGE_SIZE_DEFAULT = 30;

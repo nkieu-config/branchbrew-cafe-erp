@@ -967,7 +967,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get my attendance records */
+        /** Get my attendance records in a bounded, paginated window */
         get: operations["HrController_getMyAttendance"];
         put?: never;
         post?: never;
@@ -5998,7 +5998,14 @@ export interface operations {
     CustomersController_findAll: {
         parameters: {
             query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                /** @description Matches member name or phone */
                 search?: string;
+                /** @description Restrict to one loyalty tier */
+                tier?: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
             };
             header?: never;
             path?: never;
@@ -6012,7 +6019,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"][];
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["CustomerResponseDto"][];
+                    };
                 };
             };
             /** @description Bad request */
@@ -8487,7 +8496,16 @@ export interface operations {
     };
     HrController_getMyAttendance: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                /** @description Earliest clock-in date */
+                from?: string;
+                /** @description Latest clock-in date */
+                to?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -8500,7 +8518,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AttendanceRecordResponseDto"][];
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["AttendanceRecordResponseDto"][];
+                    };
                 };
             };
             /** @description Bad request */

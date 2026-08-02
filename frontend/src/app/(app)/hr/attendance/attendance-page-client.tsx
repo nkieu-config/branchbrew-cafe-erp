@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Loader2, PlayCircle, StopCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useListUrlState } from "@/hooks/useListUrlState";
+import { ATTENDANCE_PAGE_SIZE_DEFAULT } from "@/lib/filters/attendance-filters";
 import { useAuth } from "@/context/AuthContext";
 import {
   useActiveClockIn,
@@ -32,6 +34,38 @@ export default function AttendancePageClient() {
   const { user, activeBranchId } = useAuth();
   const role = user?.role;
 
+  const { values, setValue, reset, isDefault } = useListUrlState({
+    status: "ALL",
+    from: "",
+    to: "",
+    page: "1",
+    size: String(ATTENDANCE_PAGE_SIZE_DEFAULT),
+  });
+  const statusFilter = values.status as AttendanceStatusFilter;
+  const startDate = values.from;
+  const endDate = values.to;
+  const page = Math.max(1, Number(values.page) || 1);
+  const pageSize = Number(values.size) || ATTENDANCE_PAGE_SIZE_DEFAULT;
+
+  const listWindow = useMemo(
+    () => ({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
+      ...(startDate ? { from: startDate } : {}),
+      ...(endDate ? { to: endDate } : {}),
+    }),
+    [page, pageSize, startDate, endDate],
+  );
+
+  const handlePageChange = (nextPage: number, nextPageSize: number) => {
+    if (nextPageSize !== pageSize) {
+      setValue("size", String(nextPageSize));
+      setValue("page", "1");
+      return;
+    }
+    setValue("page", String(nextPage));
+  };
+
   const {
     data: attendanceData,
     isLoading,
@@ -39,7 +73,7 @@ export default function AttendancePageClient() {
     error,
     refetch,
     isFetching,
-  } = useAttendance();
+  } = useAttendance(listWindow);
   const { data: shiftsData } = useMyShifts();
   const {
     data: activeClockIn,
@@ -49,11 +83,11 @@ export default function AttendancePageClient() {
   const clockInMutation = useClockIn();
   const clockOutMutation = useClockOut();
 
-  const [statusFilter, setStatusFilter] = useState<AttendanceStatusFilter>("ALL");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  const attendance = (attendanceData ?? []) as AttendanceRecordRow[];
+  const attendance = useMemo(
+    () => (attendanceData?.items ?? []) as AttendanceRecordRow[],
+    [attendanceData],
+  );
+  const totalAttendance = attendanceData?.total ?? 0;
   const shifts = (shiftsData ?? []) as Shift[];
   const isClockedIn = Boolean(activeClockIn);
 
@@ -71,8 +105,7 @@ export default function AttendancePageClient() {
     [attendance, statusFilter, startDateObj, endDateObj, shifts],
   );
 
-  const hasActiveFilters =
-    statusFilter !== "ALL" || startDate.length > 0 || endDate.length > 0;
+  const hasActiveFilters = !isDefault;
 
   const handleClockIn = async () => {
     if (!activeBranchId) {
@@ -156,16 +189,12 @@ export default function AttendancePageClient() {
 
         <HubListPage.Toolbar
           showReset={hasActiveFilters}
-          onReset={() => {
-            setStatusFilter("ALL");
-            setStartDate("");
-            setEndDate("");
-          }}
+          onReset={reset}
           filters={
             <ListFilterRow>
               <ListFilterSelect
                 value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value as AttendanceStatusFilter)}
+                onValueChange={(value) => setValue("status", value)}
                 ariaLabel="Filter by attendance status"
                 widthClassName="w-full sm:w-[180px]"
                 options={[
@@ -177,13 +206,13 @@ export default function AttendancePageClient() {
               />
               <ListFilterDate
                 value={startDate}
-                onChange={setStartDate}
+                onChange={(value) => setValue("from", value)}
                 ariaLabel="From date"
                 className="w-full sm:w-[160px]"
               />
               <ListFilterDate
                 value={endDate}
-                onChange={setEndDate}
+                onChange={(value) => setValue("to", value)}
                 ariaLabel="To date"
                 className="w-full sm:w-[160px]"
                 min={startDate || undefined}
@@ -198,11 +227,17 @@ export default function AttendancePageClient() {
           isFetching={isFetching || fetchingActive}
           hasActiveFilters={hasActiveFilters}
           filteredCount={filteredAttendance.length}
-          totalCount={attendance.length}
+          totalCount={totalAttendance}
           itemLabel="record"
         />
 
         <AttendanceTable
+          serverPagination={{
+            page,
+            pageSize,
+            total: totalAttendance,
+            onChange: handlePageChange,
+          }}
           attendance={filteredAttendance}
           shifts={shifts}
           isLoading={isLoading}

@@ -1,7 +1,13 @@
 export const HR_ENDPOINTS = {
   clockIn: '/hr/clock-in',
   clockOut: '/hr/clock-out',
-  attendanceMe: '/hr/attendance/me',
+  attendanceMe: (window: { limit?: number; offset?: number } = {}) => {
+    const params = new URLSearchParams();
+    if (window.limit != null) params.set('limit', String(window.limit));
+    if (window.offset != null) params.set('offset', String(window.offset));
+    const query = params.toString();
+    return query ? `/hr/attendance/me?${query}` : '/hr/attendance/me';
+  },
   attendanceStatus: '/hr/attendance/status',
   shiftsByBranch: (branchId: number) => `/hr/shifts/branch/${branchId}`,
   shiftsMe: '/hr/shifts/me',

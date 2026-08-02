@@ -20,7 +20,17 @@ import {
   resolveBranchId,
   resolveOptionalBranchId,
 } from '../auth/branch-scope.util';
+import {
+  ApiPaginatedResponse,
+  paginated,
+} from '../common/pagination/paginated-response.dto';
+import { resolvePageWindow } from '../common/pagination/pagination-query.dto';
+import {
+  ATTENDANCE_LIST_DEFAULT_LIMIT,
+  AttendanceListQueryDto,
+} from './dto/attendance-list-query.dto';
 import { ClockInDto } from './dto/clock-in.dto';
+
 import { CreateShiftDto } from './dto/create-shift.dto';
 import { RequestLeaveDto } from './dto/request-leave.dto';
 import { ProcessLeaveDto } from './dto/process-leave.dto';
@@ -70,14 +80,26 @@ export class HrController {
   }
 
   @Get('attendance/me')
-  @ApiOperation({ summary: 'Get my attendance records' })
-  @ApiOkResponse({
-    type: AttendanceRecordResponseDto,
-    isArray: true,
-    description: 'Attendance records retrieved',
+  @ApiOperation({
+    summary: 'Get my attendance records in a bounded, paginated window',
   })
-  getMyAttendance(@Request() req: RequestWithUser) {
-    return this.hrService.getMyAttendance(req.user.userId);
+  @ApiPaginatedResponse(
+    AttendanceRecordResponseDto,
+    'Attendance records retrieved',
+  )
+  async getMyAttendance(
+    @Request() req: RequestWithUser,
+    @Query() query: AttendanceListQueryDto,
+  ) {
+    const window = resolvePageWindow(query, ATTENDANCE_LIST_DEFAULT_LIMIT);
+    const { items, total } = await this.hrService.getMyAttendancePage({
+      userId: req.user.userId,
+      from: query.from ? new Date(`${query.from}T00:00:00.000Z`) : undefined,
+      to: query.to ? new Date(`${query.to}T23:59:59.999Z`) : undefined,
+      ...window,
+    });
+
+    return paginated(items, total, window);
   }
 
   @Get('attendance/status')

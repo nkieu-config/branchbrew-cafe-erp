@@ -5,10 +5,15 @@ import { fetchAPI } from '@/lib/api';
 // ==========================================
 // 👥 CRM HOOKS
 // ==========================================
-export const useCustomers = (search?: string) => {
+export const useCustomers = (window: {
+  limit: number;
+  offset: number;
+  search?: string;
+}) => {
   return useQuery({
-    queryKey: ['customers', search],
-    queryFn: () => fetchAPI(CUSTOMER_ENDPOINTS.list(search)),
+    queryKey: ['customers', window],
+    queryFn: () => fetchAPI(CUSTOMER_ENDPOINTS.list(window)),
+    placeholderData: (previous) => previous,
   });
 };
 

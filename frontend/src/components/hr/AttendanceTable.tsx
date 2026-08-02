@@ -5,16 +5,19 @@ import type { ColumnsType } from "antd/es/table";
 import { DataTable } from "@/components/shared/data-table";
 import {
   ListMobileCard,
-  PaginatedMobileList,
+  MobileListPagination,
   ResponsiveDataTableLayout,
 } from "@/components/shared/responsive-data-table";
+import {
+  useServerTablePagination,
+  type ServerPagination,
+} from "@/hooks/useServerTablePagination";
 import {
   type AttendanceRecordRow,
   isActiveRecord,
   isAttendanceLate,
 } from "@/lib/filters/attendance-filters";
 import { formatDate, formatTime } from "@/lib/intl-date";
-import { useHubListPagination } from "@/hooks/useHubListPagination";
 import {
   attendanceLateRowClassName,
   attendanceLateTimeClassName,
@@ -29,6 +32,7 @@ import type { Shift } from "@/types/api";
 
 type AttendanceTableProps = {
   attendance: AttendanceRecordRow[];
+  serverPagination: ServerPagination;
   shifts: Shift[];
   isLoading: boolean;
   hasActiveFilters: boolean;
@@ -39,14 +43,16 @@ export function AttendanceTable({
   shifts,
   isLoading,
   hasActiveFilters,
+  serverPagination,
 }: AttendanceTableProps) {
   const emptyDescription = hasActiveFilters
     ? "No records match the current filters."
     : "Clock in to start tracking your attendance.";
 
-  const listPagination = useHubListPagination(
-    { pageSize: 10 },
-    `${attendance.length}-${hasActiveFilters}`,
+  const { page } = serverPagination;
+  const { tablePagination, totalPages, goToPage } = useServerTablePagination(
+    serverPagination,
+    "records",
   );
 
   const columns = useMemo(
@@ -137,18 +143,14 @@ export function AttendanceTable({
         ) : attendance.length === 0 ? (
           <ResponsiveDataTableLayout.Empty message={emptyDescription} />
         ) : (
-          <PaginatedMobileList
-            items={attendance}
-            pageSize={listPagination.pageSize}
-            page={listPagination.currentPage}
-            onPageChange={listPagination.setCurrentPage}
-          >
-            {(record) => {
+          <>
+            {attendance.map((record) => {
               const isLate =
                 record.user?.role !== "SUPER_ADMIN" && isAttendanceLate(record.clockIn, shifts).isLate;
 
               return (
                 <ListMobileCard
+                  key={record.id}
                   className={isLate ? attendanceLateRowClassName("cursor-default") : undefined}
                 >
                   <div className="mb-2 flex items-start justify-between gap-3">
@@ -183,14 +185,22 @@ export function AttendanceTable({
                   ) : null}
                 </ListMobileCard>
               );
-            }}
-          </PaginatedMobileList>
+            })}
+            {totalPages > 1 && (
+              <MobileListPagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPrevious={() => goToPage(Math.max(1, page - 1))}
+                onNext={() => goToPage(Math.min(totalPages, page + 1))}
+              />
+            )}
+          </>
         )
       }
       desktop={
         <DataTable
           hideBorders
-          pagination={listPagination.tablePagination}
+          pagination={tablePagination}
           columns={columns}
           dataSource={attendance}
           rowKey="id"

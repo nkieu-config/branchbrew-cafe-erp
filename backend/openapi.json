@@ -2994,11 +2994,49 @@
         "operationId": "CustomersController_findAll",
         "parameters": [
           {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows to return, capped at 500",
+            "schema": {
+              "minimum": 1,
+              "maximum": 500,
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "Rows to skip",
+            "schema": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
             "name": "search",
             "required": false,
             "in": "query",
+            "description": "Matches member name or phone",
             "schema": {
+              "maxLength": 64,
               "type": "string"
+            }
+          },
+          {
+            "name": "tier",
+            "required": false,
+            "in": "query",
+            "description": "Restrict to one loyalty tier",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "REGULAR",
+                "SILVER",
+                "GOLD",
+                "PLATINUM"
+              ]
             }
           }
         ],
@@ -3008,10 +3046,24 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponseDto"
-                  }
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseDto"
+                    },
+                    {
+                      "required": [
+                        "items"
+                      ],
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/CustomerResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -5949,17 +6001,73 @@
     "/hr/attendance/me": {
       "get": {
         "operationId": "HrController_getMyAttendance",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Rows to return, capped at 500",
+            "schema": {
+              "minimum": 1,
+              "maximum": 500,
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "Rows to skip",
+            "schema": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "Earliest clock-in date",
+            "schema": {
+              "example": "2026-07-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "Latest clock-in date",
+            "schema": {
+              "example": "2026-07-31",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Attendance records retrieved",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AttendanceRecordResponseDto"
-                  }
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseDto"
+                    },
+                    {
+                      "required": [
+                        "items"
+                      ],
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AttendanceRecordResponseDto"
+                          }
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -6015,7 +6123,7 @@
             }
           }
         },
-        "summary": "Get my attendance records",
+        "summary": "Get my attendance records in a bounded, paginated window",
         "tags": [
           "hr"
         ]

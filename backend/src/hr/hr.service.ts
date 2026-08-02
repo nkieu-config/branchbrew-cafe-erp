@@ -86,13 +86,37 @@ export class HrService {
     });
   }
 
-  async getMyAttendance(userId: number) {
-    return this.prisma.attendanceRecord.findMany({
-      where: { userId },
-      include: { branch: true },
-      orderBy: { clockIn: 'desc' },
-      take: 30,
-    });
+  async getMyAttendancePage(options: {
+    userId: number;
+    from?: Date;
+    to?: Date;
+    take: number;
+    skip: number;
+  }) {
+    const where: Prisma.AttendanceRecordWhereInput = {
+      userId: options.userId,
+      ...(options.from || options.to
+        ? {
+            clockIn: {
+              ...(options.from ? { gte: options.from } : {}),
+              ...(options.to ? { lte: options.to } : {}),
+            },
+          }
+        : {}),
+    };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.attendanceRecord.findMany({
+        where,
+        include: { branch: true },
+        orderBy: [{ clockIn: 'desc' }, { id: 'desc' }],
+        take: options.take,
+        skip: options.skip,
+      }),
+      this.prisma.attendanceRecord.count({ where }),
+    ]);
+
+    return { items, total };
   }
 
   async getActiveClockIn(userId: number) {

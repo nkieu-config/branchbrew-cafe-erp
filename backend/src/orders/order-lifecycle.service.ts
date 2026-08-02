@@ -68,7 +68,7 @@ export class OrderLifecycleService {
       this.prisma.order.findMany({
         where,
         include: orderListInclude,
-        orderBy: { createdAt: 'desc' },
+        orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
         take: options.take,
         skip: options.skip,
       }),

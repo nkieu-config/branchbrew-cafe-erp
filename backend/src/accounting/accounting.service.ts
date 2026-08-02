@@ -428,7 +428,7 @@ export class AccountingService {
     const [items, total] = await this.prisma.$transaction([
       this.prisma.journalEntry.findMany({
         where,
-        orderBy: { date: 'desc' },
+        orderBy: [{ date: 'desc' }, { id: 'desc' }],
         take: options.take,
         skip: options.skip,
         include: {

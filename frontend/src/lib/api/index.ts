@@ -97,7 +97,6 @@ export const getWasteLogs = (branchId?: number) => fetchAPI(API_ENDPOINTS.ingred
 export const clockIn = (branchId: number) =>
   fetchAPI(API_ENDPOINTS.hr.clockIn, { method: 'POST', body: JSON.stringify({ branchId }) });
 export const clockOut = () => fetchAPI(API_ENDPOINTS.hr.clockOut, { method: 'POST' });
-export const getMyAttendance = () => fetchAPI(API_ENDPOINTS.hr.attendanceMe);
 export const getActiveClockIn = () => fetchAPI(API_ENDPOINTS.hr.attendanceStatus);
 export const createShift = (data: CreateShiftDTO) =>
   fetchAPI(API_ENDPOINTS.hr.createShift, { method: 'POST', body: JSON.stringify(data) });
@@ -186,7 +185,6 @@ export const logMaintenance = (equipmentId: number, data: LogMaintenanceDTO) =>
   fetchAPI(API_ENDPOINTS.equipment.maintenance(equipmentId), { method: 'POST', body: JSON.stringify(data) });
 
 // Customers
-export const getCustomers = (search?: string) => fetchAPI(API_ENDPOINTS.customers.list(search));
 export const getCustomer360 = (id: number) => fetchAPI(API_ENDPOINTS.customers.detail360(id));
 
 // Reports

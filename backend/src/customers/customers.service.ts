@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Tier } from '@prisma/client';
+import { Prisma, Tier } from '@prisma/client';
 import { OnEvent } from '@nestjs/event-emitter';
 import { OrderCreatedEvent } from '../orders/events/order-created.event';
 import { toNum } from '../common/decimal.util';
@@ -55,19 +55,36 @@ export class CustomersService {
     });
   }
 
-  async findAll(search?: string) {
-    const where = search
-      ? {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' as const } },
-            { phone: { contains: search } },
-          ],
-        }
-      : {};
-    return this.prisma.customer.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-    });
+  async findPage(options: {
+    search?: string;
+    tier?: Tier;
+    take: number;
+    skip: number;
+  }) {
+    const term = options.search?.trim();
+    const where: Prisma.CustomerWhereInput = {
+      ...(options.tier ? { tier: options.tier } : {}),
+      ...(term
+        ? {
+            OR: [
+              { name: { contains: term, mode: 'insensitive' as const } },
+              { phone: { contains: term } },
+            ],
+          }
+        : {}),
+    };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.customer.findMany({
+        where,
+        orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+        take: options.take,
+        skip: options.skip,
+      }),
+      this.prisma.customer.count({ where }),
+    ]);
+
+    return { items, total };
   }
 
   async findOne(id: number) {

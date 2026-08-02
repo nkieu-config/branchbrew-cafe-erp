@@ -23,6 +23,15 @@ import {
   Customer360ResponseDto,
   CustomerResponseDto,
 } from './dto/customer-response.dto';
+import {
+  ApiPaginatedResponse,
+  paginated,
+} from '../common/pagination/paginated-response.dto';
+import { resolvePageWindow } from '../common/pagination/pagination-query.dto';
+import {
+  CUSTOMER_LIST_DEFAULT_LIMIT,
+  CustomerListQueryDto,
+} from './dto/customer-list-query.dto';
 
 @ApiTags('customers')
 @ApiCommonErrorResponses()
@@ -44,13 +53,16 @@ export class CustomersController {
   @ApiOperation({
     summary: 'List customers — the member directory, not a till lookup',
   })
-  @ApiOkResponse({
-    type: CustomerResponseDto,
-    isArray: true,
-    description: 'Customers retrieved',
-  })
-  findAll(@Query('search') search?: string) {
-    return this.customersService.findAll(search);
+  @ApiPaginatedResponse(CustomerResponseDto, 'Customers retrieved')
+  async findAll(@Query() query: CustomerListQueryDto) {
+    const window = resolvePageWindow(query, CUSTOMER_LIST_DEFAULT_LIMIT);
+    const { items, total } = await this.customersService.findPage({
+      search: query.search,
+      tier: query.tier,
+      ...window,
+    });
+
+    return paginated(items, total, window);
   }
 
   @Get('phone/:phone')

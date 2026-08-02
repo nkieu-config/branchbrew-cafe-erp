@@ -47,10 +47,11 @@ export const useMyShifts = () => {
   });
 };
 
-export const useAttendance = () => {
+export const useAttendance = (window: { limit: number; offset: number }) => {
   return useQuery({
-    queryKey: ['attendance', 'me'],
-    queryFn: () => fetchAPI(HR_ENDPOINTS.attendanceMe),
+    queryKey: ['attendance', 'me', window],
+    queryFn: () => fetchAPI(HR_ENDPOINTS.attendanceMe(window)),
+    placeholderData: (previous) => previous,
   });
 };
 

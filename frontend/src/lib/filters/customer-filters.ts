@@ -1,0 +1,1 @@
+export const CUSTOMER_PAGE_SIZE_DEFAULT = 25;

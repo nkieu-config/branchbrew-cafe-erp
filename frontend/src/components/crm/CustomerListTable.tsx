@@ -5,9 +5,13 @@ import type { ColumnsType } from "antd/es/table";
 import { DataTable } from "@/components/shared/data-table";
 import {
   ListMobileCard,
-  PaginatedMobileList,
+  MobileListPagination,
   ResponsiveDataTableLayout,
 } from "@/components/shared/responsive-data-table";
+import {
+  useServerTablePagination,
+  type ServerPagination,
+} from "@/hooks/useServerTablePagination";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { TierIcon } from "@/components/crm/TierIcon";
 import { formatDate } from "@/lib/intl-date";
@@ -17,12 +21,12 @@ import {
   crmPointsSuffixClassName,
   customerTierTone,
 } from "@/lib/theme/hub-crm";
-import { useHubListPagination } from "@/hooks/useHubListPagination";
 import { text } from "@/lib/theme/surface";
 import { cn } from "@/lib/utils";
 
 type CustomerListTableProps = {
   customers: Customer[];
+  serverPagination: ServerPagination;
   loading: boolean;
   isError: boolean;
   hasActiveFilters: boolean;
@@ -77,6 +81,7 @@ const CustomerMobileCard = memo(function CustomerMobileCard({
 
 export function CustomerListTable({
   customers,
+  serverPagination,
   loading,
   isError,
   hasActiveFilters,
@@ -143,9 +148,10 @@ export function CustomerListTable({
 
   const emptyDescription = hasActiveFilters ? "No members match your filters." : "No members yet.";
 
-  const listPagination = useHubListPagination(
-    { pageSize: 15 },
-    `${customers.length}-${hasActiveFilters}`,
+  const { page } = serverPagination;
+  const { tablePagination, totalPages, goToPage } = useServerTablePagination(
+    serverPagination,
+    "members",
   );
 
   return (
@@ -156,22 +162,29 @@ export function CustomerListTable({
         ) : !loading && !isError && customers.length === 0 ? (
           <ResponsiveDataTableLayout.Empty message={emptyDescription} />
         ) : (
-          <PaginatedMobileList
-            items={customers}
-            pageSize={listPagination.pageSize}
-            page={listPagination.currentPage}
-            onPageChange={listPagination.setCurrentPage}
-          >
-            {(customer) => (
-              <CustomerMobileCard customer={customer} onSelectCustomer={onSelectCustomer} />
+          <>
+            {customers.map((customer) => (
+              <CustomerMobileCard
+                key={customer.id}
+                customer={customer}
+                onSelectCustomer={onSelectCustomer}
+              />
+            ))}
+            {totalPages > 1 && (
+              <MobileListPagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPrevious={() => goToPage(Math.max(1, page - 1))}
+                onNext={() => goToPage(Math.min(totalPages, page + 1))}
+              />
             )}
-          </PaginatedMobileList>
+          </>
         )
       }
       desktop={
         <DataTable
           hideBorders
-          pagination={listPagination.tablePagination}
+          pagination={tablePagination}
           loading={loading}
           columns={columns}
           dataSource={customers}
