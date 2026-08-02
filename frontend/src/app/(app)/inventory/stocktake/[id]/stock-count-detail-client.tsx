@@ -316,8 +316,9 @@ export default function StockCountDetailClient({ id }: { id: number }) {
         <div className="flex flex-wrap gap-2">
           {isLoading && !count ? (
             <>
-              <Skeleton className="h-8 w-24" />
-              <Skeleton className="h-8 w-44" />
+              <Skeleton className="h-8 w-20" />
+              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-8 w-36" />
             </>
           ) : null}
           {isDraft ? (
