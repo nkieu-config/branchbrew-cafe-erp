@@ -37,6 +37,12 @@ import { toNumber } from "@/lib/money";
 import { toReceiptOrder } from "@/lib/pos-receipt";
 import type { PosCartItem } from "@/lib/pos-cart";
 import {
+  clearPosCart,
+  countPosCartUnits,
+  loadPosCart,
+  savePosCart,
+} from "@/lib/pos-cart-storage";
+import {
   getModifierExtra,
   getModifierSummary,
   productNeedsModifiers,
@@ -118,7 +124,13 @@ export default function PosTerminalPageClient() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<ReceiptOrder | null>(null);
   const [clientRequestId, setClientRequestId] = useState(() => crypto.randomUUID());
+  const [hydratedBranchId, setHydratedBranchId] = useState<number | null>(null);
   const receiptRef = useRef<HTMLDivElement>(null);
+
+  const updateCart = (updater: (prev: PosCartItem[]) => PosCartItem[]) => {
+    setCart(updater);
+    setClientRequestId(crypto.randomUUID());
+  };
 
   const handlePrint = useReactToPrint({
     contentRef: receiptRef,
@@ -128,6 +140,57 @@ export default function PosTerminalPageClient() {
   const createOrderMutation = useCreateOrder();
   const getCustomerMutation = useCustomerByPhone();
   const validatePromoMutation = useValidatePromotion();
+
+  useEffect(() => {
+    if (!activeBranchId) return;
+
+    const saved = loadPosCart(activeBranchId);
+    if (saved) {
+      setCart(saved.cart);
+      setCustomer(saved.customer);
+      setCustomerPhone(saved.customerPhone);
+      setPointsToRedeem(saved.pointsToRedeem);
+      setPromoCode(saved.promoCode);
+      setAppliedPromo(saved.appliedPromo);
+      setClientRequestId(saved.clientRequestId);
+      toast.info(
+        `Restored ${countPosCartUnits(saved.cart)} item(s) from your unfinished order`,
+      );
+    } else {
+      setCart([]);
+      setCustomer(null);
+      setCustomerPhone("");
+      setPointsToRedeem(0);
+      setPromoCode("");
+      setAppliedPromo(null);
+    }
+    setHydratedBranchId(activeBranchId);
+  }, [activeBranchId]);
+
+  useEffect(() => {
+    if (!activeBranchId || hydratedBranchId !== activeBranchId) return;
+    savePosCart({
+      branchId: activeBranchId,
+      cart,
+      customer,
+      customerPhone,
+      pointsToRedeem,
+      promoCode,
+      appliedPromo,
+      clientRequestId,
+      savedAt: Date.now(),
+    });
+  }, [
+    activeBranchId,
+    hydratedBranchId,
+    cart,
+    customer,
+    customerPhone,
+    pointsToRedeem,
+    promoCode,
+    appliedPromo,
+    clientRequestId,
+  ]);
 
   useEffect(() => {
     const anyDialogOpen =
@@ -165,7 +228,7 @@ export default function PosTerminalPageClient() {
     unitPrice?: number,
   ) => {
     const price = unitPrice ?? toNumber(product.price);
-    setCart((prev) => {
+    updateCart((prev) => {
       const existing = prev.find(
         (item) =>
           item.product.id === product.id &&
@@ -213,11 +276,11 @@ export default function PosTerminalPageClient() {
   }, [showModifiers, selectedProduct?.id, modifierGroups]);
 
   const removeFromCart = (cartId: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== cartId));
+    updateCart((prev) => prev.filter((item) => item.id !== cartId));
   };
 
   const adjustCartQuantity = (cartId: string, delta: number) => {
-    setCart((prev) =>
+    updateCart((prev) =>
       prev
         .map((item) =>
           item.id === cartId ? { ...item, quantity: item.quantity + delta } : item,
@@ -300,6 +363,7 @@ export default function PosTerminalPageClient() {
       });
 
       toast.success("Order completed successfully!");
+      clearPosCart();
       setCompletedOrder(toReceiptOrder(orderData, user?.name ?? undefined));
       setShowSuccess(true);
       setClientRequestId(crypto.randomUUID());

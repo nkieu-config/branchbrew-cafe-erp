@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { loginApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { motion, useReducedMotion } from "framer-motion";
 import { GITHUB_REPO_URL } from "@/lib/brand";
 import { getErrorMessage } from "@/lib/errors";
+import { resolveReturnPath } from "@/lib/auth/session-expiry";
 import {
   authBrandMarkClassName,
   authBrandTaglineClassName,
@@ -27,11 +28,12 @@ import {
   authHeroPanelInnerClassName,
   authInputClassName,
   authLeftPanelClassName,
-  authLoadingClassName,
   authPageShellClassName,
   authPrimaryButtonClassName,
 } from "@/lib/theme/auth";
+import { AppSplash } from "@/components/shared/app-splash";
 import { LoginHeroCard } from "./login-hero";
+import { LoginSkeleton } from "./login-skeleton";
 import { text } from "@/lib/theme/surface";
 import { typeHeadingClassName } from "@/lib/theme/typography";
 import { cn } from "@/lib/utils";
@@ -82,25 +84,26 @@ export default function LoginContent() {
   const [showCredentials, setShowCredentials] = useState(false);
   const { login, isAuthenticated, isInitialized } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnPath = resolveReturnPath(searchParams.get("next"));
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (isInitialized && isAuthenticated) {
-      router.replace("/");
+      router.replace(returnPath ?? "/");
     }
-  }, [isInitialized, isAuthenticated, router]);
+  }, [isInitialized, isAuthenticated, router, returnPath]);
 
   const loginWithCredentials = async (loginEmail: string, loginPassword: string) => {
     setLoading(true);
     setLoginError(null);
     try {
       const response = await loginApi({ email: loginEmail, password: loginPassword });
-      login(response.user);
+      login(response.user, returnPath);
     } catch (err: unknown) {
       const message = getErrorMessage(err, "Failed to login");
       setLoginError(message);
       toast.error(message);
-    } finally {
       setLoading(false);
       setLoadingDemoId(null);
     }
@@ -122,11 +125,11 @@ export default function LoginContent() {
   const isDemoBusy = loadingDemoId !== null;
 
   if (!isInitialized) {
-    return <div className={authLoadingClassName()}>Loading…</div>;
+    return <LoginSkeleton />;
   }
 
   if (isAuthenticated) {
-    return null;
+    return <AppSplash label="Signing you in…" />;
   }
 
   return (
@@ -215,11 +218,19 @@ export default function LoginContent() {
 
             <button
               type="submit"
-              className={authPrimaryButtonClassName()}
+              className={authPrimaryButtonClassName("gap-2")}
               disabled={loading || isDemoBusy}
+              aria-busy={loading || undefined}
               data-testid="login-submit"
             >
-              {loading && !loadingDemoId ? "Signing in…" : "Sign in"}
+              {loading && !loadingDemoId ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden />
+                  Signing in…
+                </>
+              ) : (
+                "Sign in"
+              )}
             </button>
           </form>
 

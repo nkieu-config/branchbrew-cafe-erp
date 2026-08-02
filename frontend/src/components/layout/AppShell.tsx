@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { Suspense, useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import { SessionExpiredDialog } from "@/components/auth/session-expired-dialog";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarRail } from "@/components/layout/SidebarRail";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -130,6 +131,10 @@ function AppShellInner({ children }: { children: React.ReactNode }) {
         </main>
 
         {showMobileBottomNav && <MobileBottomNav />}
+
+        <Suspense fallback={null}>
+          <SessionExpiredDialog />
+        </Suspense>
       </div>
   );
 }

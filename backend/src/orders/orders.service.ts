@@ -25,6 +25,8 @@ export class OrdersService {
     since: Date;
     take: number;
     skip: number;
+    status?: OrderStatus;
+    search?: string;
   }) {
     return this.lifecycleService.findPage(options);
   }

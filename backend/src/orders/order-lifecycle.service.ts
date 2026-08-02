@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { OutboxService } from '../outbox/outbox.service';
 import { OUTBOX_EVENT_TYPES } from '../outbox/outbox-event.types';
@@ -13,6 +13,7 @@ import {
   isTerminalOrderStatus,
 } from './helpers/order-void.util';
 import { canTransitionOrderStatus } from './helpers/order-status.util';
+import { buildOrderSearchFilter } from './helpers/order-search.util';
 import { kdsOrderInclude } from './kds-order.include';
 import {
   applyOrderReversalEffects,
@@ -53,10 +54,14 @@ export class OrderLifecycleService {
     since: Date;
     take: number;
     skip: number;
+    status?: OrderStatus;
+    search?: string;
   }) {
-    const where = {
+    const where: Prisma.OrderWhereInput = {
       ...(options.branchId ? { branchId: options.branchId } : {}),
       createdAt: { gte: options.since },
+      ...(options.status ? { status: options.status } : {}),
+      ...buildOrderSearchFilter(options.search),
     };
 
     const [items, total] = await this.prisma.$transaction([

@@ -8,18 +8,20 @@ import {
   useEffect,
   useCallback,
   useMemo,
+  startTransition,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { fetchAPI } from "@/lib/api/client";
 import { clearStoredBranchId, setStoredBranchId } from "@/lib/branch-storage";
+import { resetSessionExpiredNotice } from "@/lib/auth/session-expiry";
 import type { SessionUser } from "@/types/auth";
 
 type AuthContextType = {
   user: SessionUser | null;
   isAuthenticated: boolean;
-  login: (user: SessionUser) => void;
+  login: (user: SessionUser, returnPath?: string | null) => void;
   logout: () => Promise<void>;
   activeBranchId: number | null;
   setActiveBranchId: (id: number | null) => void;
@@ -47,7 +49,7 @@ export function AuthProvider({
 
   const setActiveBranchId = useCallback(
     (id: number | null) => {
-      setActiveBranchIdState(id);
+      startTransition(() => setActiveBranchIdState(id));
       if (user?.role === "SUPER_ADMIN") {
         setStoredBranchId(id);
       }
@@ -81,11 +83,13 @@ export function AuthProvider({
   }, [hydratedFromServer]);
 
   const login = useCallback(
-    (newUser: SessionUser) => {
+    (newUser: SessionUser, returnPath?: string | null) => {
       setUser(newUser);
       setActiveBranchIdState(newUser.branchId ?? null);
       setIsInitialized(true);
-      const landing = newUser.role === "STAFF" ? "/pos/terminal" : "/";
+      resetSessionExpiredNotice();
+      const landing =
+        returnPath ?? (newUser.role === "STAFF" ? "/pos/terminal" : "/");
       router.push(landing);
       toast.success("Logged in successfully");
     },
@@ -102,6 +106,7 @@ export function AuthProvider({
     setActiveBranchIdState(null);
     queryClient.clear();
     clearStoredBranchId();
+    resetSessionExpiredNotice();
     router.push("/login");
     toast.success("Logged out successfully");
   }, [router, queryClient]);

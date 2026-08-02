@@ -1,3 +1,6 @@
+import { notifySessionExpired } from '@/lib/auth/session-expiry';
+import { createNetworkError } from './network-error';
+
 const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 const API_URL =
@@ -32,19 +35,13 @@ export class ApiError extends Error {
 }
 
 function networkError(): Error {
-  return new Error(
-    `Unable to reach the API at ${API_URL}. Start the backend with: npm run dev:backend`,
-  );
+  return createNetworkError(API_URL);
 }
 
 async function throwApiError(response: Response): Promise<never> {
   const errorData: ApiErrorBody = await response.json().catch(() => ({}));
-  if (
-    response.status === 401 &&
-    typeof window !== 'undefined' &&
-    window.location.pathname !== '/login'
-  ) {
-    window.location.href = '/login';
+  if (response.status === 401) {
+    notifySessionExpired();
   }
   throw new ApiError(
     errorData.message || 'An error occurred while fetching data',

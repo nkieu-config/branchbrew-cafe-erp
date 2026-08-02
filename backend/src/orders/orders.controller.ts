@@ -82,6 +82,8 @@ export class OrdersController {
     const { items, total } = await this.ordersService.findPage({
       branchId,
       since: resolveOrderListSince(query.since),
+      status: query.status,
+      search: query.search,
       ...window,
     });
 
