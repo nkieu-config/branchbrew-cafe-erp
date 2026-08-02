@@ -34,14 +34,25 @@ function writeToUrl<T extends ListUrlState>(values: T, defaults: T): void {
  * reload or a return from a detail page restores what the user was looking at.
  * Uses `history.replaceState` rather than the router so typing in a search box
  * does not trigger a navigation per keystroke.
+ *
+ * The URL is read after mount rather than in the state initialiser: the server
+ * cannot see `location.search`, so seeding from it directly makes the first
+ * client render disagree with the server whenever a filter is in the link.
  */
 export function useListUrlState<T extends ListUrlState>(defaults: T) {
   const [frozenDefaults] = useState(defaults);
-  const [values, setValues] = useState<T>(() => readInitial(frozenDefaults));
+  const [values, setValues] = useState<T>(frozenDefaults);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    setValues(readInitial(frozenDefaults));
+    setHydrated(true);
+  }, [frozenDefaults]);
+
+  useEffect(() => {
+    if (!hydrated) return;
     writeToUrl(values, frozenDefaults);
-  }, [values, frozenDefaults]);
+  }, [hydrated, values, frozenDefaults]);
 
   const setValue = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
     setValues((prev) => (prev[key] === value ? prev : { ...prev, [key]: value }));

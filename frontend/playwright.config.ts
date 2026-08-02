@@ -41,7 +41,7 @@ export default defineConfig({
     },
     {
       name: "authenticated",
-      testMatch: /smoke-authenticated\.spec\.ts/,
+      testMatch: /(smoke-authenticated|resilience)\.spec\.ts/,
       dependencies: ["setup"],
       use: {
         ...devices["Desktop Chrome"],

@@ -149,6 +149,23 @@ Overlays use **native `@starting-style`** via Base UI `data-starting-style` / `d
 
 **Rules:** never render an empty state before the query resolves — gate on `isPending`, not `length === 0` (`enabled`-gated queries report `isLoading === false` before they run); reserve height so buttons never appear under the cursor; never apply `keepPreviousData` to a branch-scoped key.
 
+## List screens
+
+| Need                          | Use                                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Filters that survive a reload | `useListUrlState(defaults)` — mirrors state to the URL via `replaceState`, so typing costs no navigation |
+| Server-paged table            | `useServerTablePagination` — antd reports the server `total`, never the loaded slice                    |
+| Freshness + manual refresh    | `freshness` on `HubListPage.Toolbar` (`dataUpdatedAt`, `isFetching`, `onRefresh`)                       |
+| Extra toolbar controls        | `actions` on `HubListPage.Toolbar`                                                                      |
+| Download the current view     | `<ExportCsvButton>` — pass `loadRows` (not `rows`) for a paged table, or the export covers one page     |
+| Multi-row operations          | `<BulkActionBar>` + antd `rowSelection`; the endpoint decides each row independently                    |
+
+**Rules:** filter and page server-side once a list can grow per transaction — client filtering over a paged window finds nothing on page 2; a bulk endpoint reports per-row outcomes rather than failing the batch; escape CSV cells through `lib/export/csv.ts` (a leading `=` is a formula, not a name).
+
+## Connection & retry
+
+Query defaults live in `providers/QueryProvider.tsx`: refetch on focus and reconnect, retry only transport failures and 5xx via `lib/api/retry-policy.ts`. Mutations do **not** retry by default — opt in only where an idempotency key makes a replay safe (`useCreateOrder`). `ConnectionStatusBanner` reports offline state and queued mutations; a 401 raises the session-expired dialog instead of navigating away.
+
 ## Automated checks
 
 | Check                   | Location                                                                                                    |
@@ -156,4 +173,6 @@ Overlays use **native `@starting-style`** via Base UI `data-starting-style` / `d
 | Form validators         | `lib/crm/register-customer-validation.test.ts`, `lib/hr/*-validation.test.ts`                                |
 | Navigation / nav counts | `lib/navigation/navigation.test.ts`, `lib/nav-counts.test.ts`                                                |
 | Loading states          | `components/ui/button.test.tsx`, `components/shared/table-action-button.test.tsx`, `e2e/loading-ux.spec.ts` |
+| Resilience              | `e2e/resilience.spec.ts` (cart survives reload, session expiry, URL state, paging, offline)                 |
+| API contract            | `lib/api/client.test.ts`, `lib/api/retry-policy.test.ts`, `lib/auth/session-expiry.test.ts`                  |
 | a11y smoke              | `e2e/a11y.spec.ts` (axe-core, critical/serious)                                                             |

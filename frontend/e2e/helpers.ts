@@ -31,6 +31,11 @@ export const testIds = {
   modifiersNewGroup: "modifiers-new-group",
   hrScheduleShift: "hr-schedule-shift",
   hrScheduleShiftDialog: "hr-schedule-shift-dialog",
+  sessionExpiredDialog: "session-expired-dialog",
+  connectionStatus: "connection-status-banner",
+  bulkActionBar: "bulk-action-bar",
+  exportCsv: "export-csv",
+  dataFreshness: "data-freshness",
 } as const;
 
 export const locators = {
