@@ -17,4 +17,9 @@ export type TrialBalanceAccount =
 
 export type TrialBalance = components['schemas']['TrialBalanceResponseDto'];
 
+export type BalanceSheetLine =
+  components['schemas']['BalanceSheetLineResponseDto'];
+
+export type BalanceSheet = components['schemas']['BalanceSheetResponseDto'];
+
 export type AppNotification = components['schemas']['NotificationResponseDto'];

@@ -598,6 +598,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/accounting/balance-sheet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Balance sheet — assets against liabilities and equity
+         * @description Regroups the same posted lines the trial balance reads, so the two reports can never disagree. Retained earnings is computed from the revenue and expense accounts because there is no period close.
+         */
+        get: operations["AccountingController_getBalanceSheet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/accounting/seed": {
         parameters: {
             query?: never;
@@ -2534,6 +2554,64 @@ export interface components {
             totalCredit: number;
             /**
              * @description True when total debits equal total credits
+             * @example true
+             */
+            isBalanced: boolean;
+        };
+        BalanceSheetLineResponseDto: {
+            /**
+             * @description Null on a computed line that has no account behind it
+             * @example 3
+             */
+            accountId: number | null;
+            /** @example 1030 */
+            code: string | null;
+            /** @example Inventory */
+            name: string;
+            /**
+             * @description Balance on the account's normal side
+             * @example 36150.25
+             */
+            amount: number;
+            /**
+             * @description True for retained earnings, which is derived from the revenue and expense accounts rather than posted
+             * @example false
+             */
+            isComputed: boolean;
+        };
+        BalanceSheetResponseDto: {
+            /**
+             * @description BRANCH excludes chain-level entries, so it is a partial view
+             * @example CHAIN
+             * @enum {string}
+             */
+            scope: "CHAIN" | "BRANCH";
+            /** @example 1 */
+            branchId: number | null;
+            /**
+             * @description Inclusive cut-off date; null means every posted entry
+             * @example 2026-07-25
+             */
+            asOf: string | null;
+            assets: components["schemas"]["BalanceSheetLineResponseDto"][];
+            liabilities: components["schemas"]["BalanceSheetLineResponseDto"][];
+            /** @description Posted equity accounts plus the computed retained earnings */
+            equity: components["schemas"]["BalanceSheetLineResponseDto"][];
+            /**
+             * @description Revenue less expenses for every posted entry up to the cut-off. There is no period close, so this accumulates from go-live rather than resetting each year
+             * @example 128400.5
+             */
+            retainedEarnings: number;
+            /** @example 412500.25 */
+            totalAssets: number;
+            /** @example 84100 */
+            totalLiabilities: number;
+            /** @example 328400.25 */
+            totalEquity: number;
+            /** @example 412500.25 */
+            totalLiabilitiesAndEquity: number;
+            /**
+             * @description True when assets equal liabilities plus equity. It follows from the trial balance being balanced, so a false here means the ledger itself is broken
              * @example true
              */
             isBalanced: boolean;
@@ -6775,6 +6853,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TrialBalanceResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AccountingController_getBalanceSheet: {
+        parameters: {
+            query?: {
+                branchId?: number;
+                /** @description Inclusive cut-off date in YYYY-MM-DD form */
+                asOf?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Balance sheet retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BalanceSheetResponseDto"];
                 };
             };
             /** @description Bad request */

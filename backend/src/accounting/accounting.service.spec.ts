@@ -752,4 +752,125 @@ describe('AccountingService', () => {
       );
     });
   });
+
+  describe('getBalanceSheet', () => {
+    const balancedBooks = [
+      {
+        account_id: 1,
+        code: '1010',
+        name: 'Cash',
+        type: 'ASSET',
+        total_debit: '6800.00',
+        total_credit: '0',
+      },
+      {
+        account_id: 2,
+        code: '1030',
+        name: 'Inventory',
+        type: 'ASSET',
+        total_debit: '3200.00',
+        total_credit: '800.00',
+      },
+      {
+        account_id: 3,
+        code: '2010',
+        name: 'Accounts Payable',
+        type: 'LIABILITY',
+        total_debit: '0',
+        total_credit: '1200.00',
+      },
+      {
+        account_id: 4,
+        code: '3010',
+        name: 'Owner Equity',
+        type: 'EQUITY',
+        total_debit: '0',
+        total_credit: '7000.00',
+      },
+      {
+        account_id: 5,
+        code: '4010',
+        name: 'Sales Revenue',
+        type: 'REVENUE',
+        total_debit: '0',
+        total_credit: '1800.00',
+      },
+      {
+        account_id: 6,
+        code: '5010',
+        name: 'Cost of Goods Sold (COGS)',
+        type: 'EXPENSE',
+        total_debit: '800.00',
+        total_credit: '0',
+      },
+    ];
+
+    it('groups posted accounts into assets, liabilities and equity', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(balancedBooks);
+
+      const result = await service.getBalanceSheet();
+
+      expect(result.assets.map((line) => line.code)).toEqual(['1010', '1030']);
+      expect(result.liabilities.map((line) => line.code)).toEqual(['2010']);
+      expect(result.equity.map((line) => line.name)).toEqual([
+        'Owner Equity',
+        'Retained earnings',
+      ]);
+    });
+
+    it('derives retained earnings from revenue less expenses', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(balancedBooks);
+
+      const result = await service.getBalanceSheet();
+
+      expect(result.retainedEarnings).toBe(1000);
+      expect(result.equity.at(-1)).toEqual({
+        accountId: null,
+        code: null,
+        name: 'Retained earnings',
+        amount: 1000,
+        isComputed: true,
+      });
+    });
+
+    it('balances assets against liabilities plus equity', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(balancedBooks);
+
+      const result = await service.getBalanceSheet();
+
+      expect(result.totalAssets).toBe(9200);
+      expect(result.totalLiabilities).toBe(1200);
+      expect(result.totalEquity).toBe(8000);
+      expect(result.totalLiabilitiesAndEquity).toBe(9200);
+      expect(result.isBalanced).toBe(true);
+    });
+
+    it('goes out of balance when the ledger behind it does', async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        ...balancedBooks.slice(0, 3),
+        { ...balancedBooks[3], total_credit: '6999.00' },
+        ...balancedBooks.slice(4),
+      ]);
+
+      const result = await service.getBalanceSheet();
+
+      expect(result.totalAssets).toBe(9200);
+      expect(result.totalLiabilitiesAndEquity).toBe(9199);
+      expect(result.isBalanced).toBe(false);
+    });
+
+    it('carries the scope and cut-off date through from the trial balance', async () => {
+      prismaMock.$queryRaw.mockResolvedValue(balancedBooks);
+
+      const result = await service.getBalanceSheet(2, '2026-07-25');
+
+      expect(result).toEqual(
+        expect.objectContaining({
+          scope: 'BRANCH',
+          branchId: 2,
+          asOf: '2026-07-25',
+        }),
+      );
+    });
+  });
 });

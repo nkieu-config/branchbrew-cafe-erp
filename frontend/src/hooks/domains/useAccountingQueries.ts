@@ -2,7 +2,7 @@ import { ACCOUNTING_ENDPOINTS } from "@/lib/endpoints/accounting";
 import { PRODUCTION_ENDPOINTS } from "@/lib/endpoints/production";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAPI } from '@/lib/api';
-import type { JournalEntry, TrialBalance } from '@/types/accounting';
+import type { BalanceSheet, JournalEntry, TrialBalance } from '@/types/accounting';
 import type { Paginated } from '@/types/pagination';
 
 type JournalEntryPage = Paginated<JournalEntry>;
@@ -37,6 +37,13 @@ export const useTrialBalance = (branchId?: string, asOf?: string) => {
   return useQuery<TrialBalance>({
     queryKey: ['trialBalance', branchId ?? 'ALL', asOf ?? 'latest'],
     queryFn: () => fetchAPI(ACCOUNTING_ENDPOINTS.trialBalance(branchId, asOf)),
+  });
+};
+
+export const useBalanceSheet = (branchId?: string, asOf?: string) => {
+  return useQuery<BalanceSheet>({
+    queryKey: ['balanceSheet', branchId ?? 'ALL', asOf ?? 'latest'],
+    queryFn: () => fetchAPI(ACCOUNTING_ENDPOINTS.balanceSheet(branchId, asOf)),
   });
 };
 

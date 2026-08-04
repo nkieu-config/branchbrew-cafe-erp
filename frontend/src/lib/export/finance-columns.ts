@@ -1,8 +1,19 @@
 import type { CsvColumn } from "@/lib/export/csv";
 import type {
+  BalanceSheetLine,
   JournalEntry,
   TrialBalanceAccount,
 } from "@/types/accounting";
+
+export type BalanceSheetCsvRow = BalanceSheetLine & { section: string };
+
+export const BALANCE_SHEET_CSV_COLUMNS: readonly CsvColumn<BalanceSheetCsvRow>[] = [
+  { header: "Section", value: (row) => row.section },
+  { header: "Code", value: (row) => row.code ?? "" },
+  { header: "Account", value: (row) => row.name },
+  { header: "Amount", value: (row) => row.amount },
+  { header: "Computed", value: (row) => (row.isComputed ? "yes" : "no") },
+];
 
 export const TRIAL_BALANCE_CSV_COLUMNS: readonly CsvColumn<TrialBalanceAccount>[] = [
   { header: "Code", value: (row) => row.code },

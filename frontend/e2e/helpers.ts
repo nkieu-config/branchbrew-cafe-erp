@@ -25,6 +25,8 @@ export const testIds = {
   financeExportSales: "finance-export-sales",
   financeExpenseSearch: "finance-expense-search",
   trialBalanceStatus: "trial-balance-status",
+  balanceSheetStatus: "balance-sheet-status",
+  balanceSheetStatement: "balance-sheet-statement",
   inventorySearch: "inventory-search",
   employeesSearch: "employees-search",
   modifiersSearch: "modifiers-search",
@@ -58,6 +60,9 @@ export const locators = {
   financeExportSales: (page: Page) => page.getByTestId(testIds.financeExportSales),
   financeExpenseSearch: (page: Page) => page.getByTestId(testIds.financeExpenseSearch),
   trialBalanceStatus: (page: Page) => page.getByTestId(testIds.trialBalanceStatus),
+  balanceSheetStatus: (page: Page) => page.getByTestId(testIds.balanceSheetStatus),
+  balanceSheetStatement: (page: Page) =>
+    page.getByTestId(testIds.balanceSheetStatement),
   inventorySearch: (page: Page) => page.getByTestId(testIds.inventorySearch),
   employeesSearch: (page: Page) => page.getByTestId(testIds.employeesSearch),
   modifiersSearch: (page: Page) => page.getByTestId(testIds.modifiersSearch),

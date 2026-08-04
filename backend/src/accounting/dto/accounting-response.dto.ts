@@ -179,6 +179,94 @@ export class TrialBalanceResponseDto {
   isBalanced: boolean;
 }
 
+export class BalanceSheetLineResponseDto {
+  @ApiProperty({
+    type: Number,
+    example: 3,
+    nullable: true,
+    description: 'Null on a computed line that has no account behind it',
+  })
+  accountId: number | null;
+
+  @ApiProperty({ type: String, example: '1030', nullable: true })
+  code: string | null;
+
+  @ApiProperty({ example: 'Inventory' })
+  name: string;
+
+  @ApiProperty({
+    example: 36150.25,
+    description: "Balance on the account's normal side",
+  })
+  amount: number;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'True for retained earnings, which is derived from the revenue and expense accounts rather than posted',
+  })
+  isComputed: boolean;
+}
+
+export class BalanceSheetResponseDto {
+  @ApiProperty({
+    enum: ['CHAIN', 'BRANCH'],
+    example: 'CHAIN',
+    description: 'BRANCH excludes chain-level entries, so it is a partial view',
+  })
+  scope: 'CHAIN' | 'BRANCH';
+
+  @ApiProperty({ type: Number, example: 1, nullable: true })
+  branchId: number | null;
+
+  @ApiProperty({
+    type: String,
+    example: '2026-07-25',
+    nullable: true,
+    description: 'Inclusive cut-off date; null means every posted entry',
+  })
+  asOf: string | null;
+
+  @ApiProperty({ type: BalanceSheetLineResponseDto, isArray: true })
+  assets: BalanceSheetLineResponseDto[];
+
+  @ApiProperty({ type: BalanceSheetLineResponseDto, isArray: true })
+  liabilities: BalanceSheetLineResponseDto[];
+
+  @ApiProperty({
+    type: BalanceSheetLineResponseDto,
+    isArray: true,
+    description: 'Posted equity accounts plus the computed retained earnings',
+  })
+  equity: BalanceSheetLineResponseDto[];
+
+  @ApiProperty({
+    example: 128400.5,
+    description:
+      'Revenue less expenses for every posted entry up to the cut-off. There is no period close, so this accumulates from go-live rather than resetting each year',
+  })
+  retainedEarnings: number;
+
+  @ApiProperty({ example: 412500.25 })
+  totalAssets: number;
+
+  @ApiProperty({ example: 84100 })
+  totalLiabilities: number;
+
+  @ApiProperty({ example: 328400.25 })
+  totalEquity: number;
+
+  @ApiProperty({ example: 412500.25 })
+  totalLiabilitiesAndEquity: number;
+
+  @ApiProperty({
+    example: true,
+    description:
+      'True when assets equal liabilities plus equity. It follows from the trial balance being balanced, so a false here means the ledger itself is broken',
+  })
+  isBalanced: boolean;
+}
+
 export class SeedAccountsResponseDto {
   @ApiProperty({ example: true })
   success: boolean;

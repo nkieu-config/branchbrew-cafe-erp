@@ -716,4 +716,60 @@ export class AccountingService {
       isBalanced: isBalancedMoney(totalDebit, totalCredit),
     };
   }
+
+  async getBalanceSheet(branchId?: number, asOf?: string) {
+    const trialBalance = await this.getTrialBalance(branchId, asOf);
+
+    const linesOf = (type: AccountType) =>
+      trialBalance.accounts
+        .filter((account) => account.type === type)
+        .map((account) => ({
+          accountId: account.accountId,
+          code: account.code,
+          name: account.name,
+          amount: account.balance,
+          isComputed: false,
+        }));
+
+    const totalOf = (lines: { amount: number }[]) =>
+      sumMoney(lines.map((line) => line.amount));
+
+    const assets = linesOf('ASSET');
+    const liabilities = linesOf('LIABILITY');
+
+    const retainedEarnings = roundMoney(
+      totalOf(linesOf('REVENUE')).minus(totalOf(linesOf('EXPENSE'))),
+    );
+
+    const equity = [
+      ...linesOf('EQUITY'),
+      {
+        accountId: null,
+        code: null,
+        name: 'Retained earnings',
+        amount: retainedEarnings,
+        isComputed: true,
+      },
+    ];
+
+    const totalAssets = totalOf(assets);
+    const totalLiabilities = totalOf(liabilities);
+    const totalEquity = totalOf(equity);
+    const totalLiabilitiesAndEquity = totalLiabilities.plus(totalEquity);
+
+    return {
+      scope: trialBalance.scope,
+      branchId: trialBalance.branchId,
+      asOf: trialBalance.asOf,
+      assets,
+      liabilities,
+      equity,
+      retainedEarnings,
+      totalAssets: roundMoney(totalAssets),
+      totalLiabilities: roundMoney(totalLiabilities),
+      totalEquity: roundMoney(totalEquity),
+      totalLiabilitiesAndEquity: roundMoney(totalLiabilitiesAndEquity),
+      isBalanced: isBalancedMoney(totalAssets, totalLiabilitiesAndEquity),
+    };
+  }
 }

@@ -26,5 +26,16 @@ test.describe("finance business flow", () => {
     await expect(locators.trialBalanceStatus(page)).toContainText(
       "Debits equal credits",
     );
+
+    await page.getByRole("link", { name: "Balance Sheet" }).click();
+    await expect(page).toHaveURL(/\/finance\/balance-sheet/);
+
+    // Same posted lines, regrouped: if the trial balance balances this must too.
+    await expect(locators.balanceSheetStatus(page)).toContainText(
+      "Assets equal liabilities plus equity",
+    );
+    await expect(locators.balanceSheetStatement(page)).toContainText(
+      "Retained earnings",
+    );
   });
 });

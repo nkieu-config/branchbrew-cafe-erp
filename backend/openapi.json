@@ -4015,6 +4015,98 @@
         ]
       }
     },
+    "/accounting/balance-sheet": {
+      "get": {
+        "description": "Regroups the same posted lines the trial balance reads, so the two reports can never disagree. Retained earnings is computed from the revenue and expense accounts because there is no period close.",
+        "operationId": "AccountingController_getBalanceSheet",
+        "parameters": [
+          {
+            "name": "branchId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "asOf",
+            "required": false,
+            "in": "query",
+            "description": "Inclusive cut-off date in YYYY-MM-DD form",
+            "schema": {
+              "example": "2026-07-25",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Balance sheet retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceSheetResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Balance sheet — assets against liabilities and equity",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
     "/accounting/seed": {
       "post": {
         "operationId": "AccountingController_seedAccounts",
@@ -13292,6 +13384,127 @@
           "accounts",
           "totalDebit",
           "totalCredit",
+          "isBalanced"
+        ]
+      },
+      "BalanceSheetLineResponseDto": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "number",
+            "nullable": true,
+            "example": 3,
+            "description": "Null on a computed line that has no account behind it"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true,
+            "example": "1030"
+          },
+          "name": {
+            "type": "string",
+            "example": "Inventory"
+          },
+          "amount": {
+            "type": "number",
+            "example": 36150.25,
+            "description": "Balance on the account's normal side"
+          },
+          "isComputed": {
+            "type": "boolean",
+            "example": false,
+            "description": "True for retained earnings, which is derived from the revenue and expense accounts rather than posted"
+          }
+        },
+        "required": [
+          "accountId",
+          "code",
+          "name",
+          "amount",
+          "isComputed"
+        ]
+      },
+      "BalanceSheetResponseDto": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "enum": [
+              "CHAIN",
+              "BRANCH"
+            ],
+            "type": "string",
+            "example": "CHAIN",
+            "description": "BRANCH excludes chain-level entries, so it is a partial view"
+          },
+          "branchId": {
+            "type": "number",
+            "nullable": true,
+            "example": 1
+          },
+          "asOf": {
+            "type": "string",
+            "nullable": true,
+            "example": "2026-07-25",
+            "description": "Inclusive cut-off date; null means every posted entry"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BalanceSheetLineResponseDto"
+            }
+          },
+          "liabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BalanceSheetLineResponseDto"
+            }
+          },
+          "equity": {
+            "description": "Posted equity accounts plus the computed retained earnings",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BalanceSheetLineResponseDto"
+            }
+          },
+          "retainedEarnings": {
+            "type": "number",
+            "example": 128400.5,
+            "description": "Revenue less expenses for every posted entry up to the cut-off. There is no period close, so this accumulates from go-live rather than resetting each year"
+          },
+          "totalAssets": {
+            "type": "number",
+            "example": 412500.25
+          },
+          "totalLiabilities": {
+            "type": "number",
+            "example": 84100
+          },
+          "totalEquity": {
+            "type": "number",
+            "example": 328400.25
+          },
+          "totalLiabilitiesAndEquity": {
+            "type": "number",
+            "example": 412500.25
+          },
+          "isBalanced": {
+            "type": "boolean",
+            "example": true,
+            "description": "True when assets equal liabilities plus equity. It follows from the trial balance being balanced, so a false here means the ledger itself is broken"
+          }
+        },
+        "required": [
+          "scope",
+          "branchId",
+          "asOf",
+          "assets",
+          "liabilities",
+          "equity",
+          "retainedEarnings",
+          "totalAssets",
+          "totalLiabilities",
+          "totalEquity",
+          "totalLiabilitiesAndEquity",
           "isBalanced"
         ]
       },

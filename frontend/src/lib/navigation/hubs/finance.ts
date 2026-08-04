@@ -1,4 +1,4 @@
-import { Landmark, Wallet, BookOpen, Scale } from "lucide-react";
+import { Landmark, Wallet, BookOpen, Scale, Library } from "lucide-react";
 import type { HubConfig } from "../types";
 
 export const financeHub: HubConfig = {
@@ -28,6 +28,13 @@ export const financeHub: HubConfig = {
       label: "Trial Balance",
       path: "/finance/trial-balance",
       icon: Scale,
+      roles: ["SUPER_ADMIN", "MANAGER"],
+    },
+    {
+      id: "balance-sheet",
+      label: "Balance Sheet",
+      path: "/finance/balance-sheet",
+      icon: Library,
       roles: ["SUPER_ADMIN", "MANAGER"],
     },
     {

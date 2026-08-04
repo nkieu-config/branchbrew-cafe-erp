@@ -23,6 +23,7 @@ import {
   ProfitLossMonthResponseDto,
   SeedAccountsResponseDto,
   TrialBalanceResponseDto,
+  BalanceSheetResponseDto,
   VatReportMonthResponseDto,
 } from './dto/accounting-response.dto';
 import {
@@ -149,6 +150,40 @@ export class AccountingController {
       parseOptionalPositiveInt(branchId, 'branchId'),
     );
     return this.accountingService.getTrialBalance(
+      resolvedBranchId,
+      parseOptionalDateString(asOf, 'asOf'),
+    );
+  }
+
+  @Get('balance-sheet')
+  @Roles('SUPER_ADMIN', 'MANAGER')
+  @ApiOperation({
+    summary: 'Balance sheet — assets against liabilities and equity',
+    description:
+      'Regroups the same posted lines the trial balance reads, so the two reports can never disagree. Retained earnings is computed from the revenue and expense accounts because there is no period close.',
+  })
+  @ApiQuery({ name: 'branchId', required: false, type: Number })
+  @ApiQuery({
+    name: 'asOf',
+    required: false,
+    type: String,
+    example: '2026-07-25',
+    description: 'Inclusive cut-off date in YYYY-MM-DD form',
+  })
+  @ApiOkResponse({
+    type: BalanceSheetResponseDto,
+    description: 'Balance sheet retrieved',
+  })
+  async getBalanceSheet(
+    @Request() req: RequestWithUser,
+    @Query('branchId') branchId?: string,
+    @Query('asOf') asOf?: string,
+  ) {
+    const resolvedBranchId = resolveOptionalBranchId(
+      req.user,
+      parseOptionalPositiveInt(branchId, 'branchId'),
+    );
+    return this.accountingService.getBalanceSheet(
       resolvedBranchId,
       parseOptionalDateString(asOf, 'asOf'),
     );
