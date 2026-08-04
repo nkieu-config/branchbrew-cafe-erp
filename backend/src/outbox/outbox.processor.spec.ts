@@ -3,7 +3,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Logger } from '@nestjs/common';
 import { OutboxProcessor } from './outbox.processor';
 import { PrismaService } from '../prisma/prisma.service';
-import { MAX_OUTBOX_ATTEMPTS } from './outbox.constants';
+import { MAX_OUTBOX_ATTEMPTS, retryBackoffMs } from './outbox.constants';
 import { NotificationsService } from '../notifications/notifications.service';
 
 describe('OutboxProcessor', () => {
@@ -140,6 +140,53 @@ describe('OutboxProcessor', () => {
     expect(staleClause).toBeDefined();
     expect(staleClause.claimedAt.lt).toBeInstanceOf(Date);
     expect(staleClause.claimedAt.lt.getTime()).toBeLessThan(Date.now());
+  });
+
+  it('spaces retry eligibility exponentially by attempt count', async () => {
+    prisma.outboxEvent.findMany.mockResolvedValue([]);
+    const before = Date.now();
+
+    await processor.handleCron();
+
+    const after = Date.now();
+    const where = prisma.outboxEvent.findMany.mock.calls[0][0].where;
+    const retryClauses = where.OR.filter(
+      (clause: { status: string; attempts?: unknown }) =>
+        clause.status === 'PENDING' &&
+        typeof clause.attempts === 'number' &&
+        clause.attempts > 0,
+    );
+
+    expect(
+      retryClauses.map((clause: { attempts: number }) => clause.attempts),
+    ).toEqual([1, 2, 3, 4]);
+
+    const thresholds = retryClauses.map((clause: { claimedAt: { lt: Date } }) =>
+      clause.claimedAt.lt.getTime(),
+    );
+    expect(thresholds[0] - thresholds[1]).toBe(30_000);
+    expect(thresholds[1] - thresholds[2]).toBe(60_000);
+    expect(thresholds[2] - thresholds[3]).toBe(120_000);
+    expect(before - thresholds[0]).toBeLessThanOrEqual(30_000);
+    expect(after - thresholds[0]).toBeGreaterThanOrEqual(30_000);
+
+    const failedClauses = where.OR.filter(
+      (clause: { status: string }) => clause.status === 'FAILED',
+    );
+    expect(failedClauses).toHaveLength(MAX_OUTBOX_ATTEMPTS - 1);
+    failedClauses.forEach(
+      (
+        clause: {
+          attempts: number;
+          OR: [{ claimedAt: null }, { claimedAt: { lt: Date } }];
+        },
+        index: number,
+      ) => {
+        expect(clause.attempts).toBe(index + 1);
+        expect(clause.OR[0]).toEqual({ claimedAt: null });
+        expect(clause.OR[1].claimedAt.lt.getTime()).toBe(thresholds[index]);
+      },
+    );
   });
 
   it('reclaims and dispatches a stale PROCESSING event', async () => {
@@ -327,5 +374,20 @@ describe('OutboxProcessor', () => {
 
       expect(notifications.notifyUser).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('retryBackoffMs', () => {
+  it('starts at the base delay and doubles each attempt', () => {
+    expect(retryBackoffMs(1)).toBe(30_000);
+    expect(retryBackoffMs(2)).toBe(60_000);
+    expect(retryBackoffMs(3)).toBe(120_000);
+    expect(retryBackoffMs(4)).toBe(240_000);
+  });
+
+  it('clamps attempts outside the retryable range', () => {
+    expect(retryBackoffMs(0)).toBe(retryBackoffMs(1));
+    expect(retryBackoffMs(-3)).toBe(retryBackoffMs(1));
+    expect(retryBackoffMs(99)).toBe(retryBackoffMs(MAX_OUTBOX_ATTEMPTS));
   });
 });

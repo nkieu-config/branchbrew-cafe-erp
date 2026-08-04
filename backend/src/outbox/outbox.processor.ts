@@ -7,11 +7,29 @@ import {
   MAX_DRAIN_ITERATIONS,
   MAX_OUTBOX_ATTEMPTS,
   OUTBOX_BATCH_SIZE,
-  RETRY_BACKOFF_MS,
+  retryBackoffMs,
   STALE_PROCESSING_MS,
 } from './outbox.constants';
 import { dispatchOutboxEvent } from './outbox-event.registry';
 import { NotificationsService } from '../notifications/notifications.service';
+
+function retryEligibilityBranches(now: number): Prisma.OutboxEventWhereInput[] {
+  return Array.from(
+    { length: MAX_OUTBOX_ATTEMPTS - 1 },
+    (_, index): Prisma.OutboxEventWhereInput[] => {
+      const attempts = index + 1;
+      const eligibleBefore = new Date(now - retryBackoffMs(attempts));
+      return [
+        { status: 'PENDING', attempts, claimedAt: { lt: eligibleBefore } },
+        {
+          status: 'FAILED',
+          attempts,
+          OR: [{ claimedAt: null }, { claimedAt: { lt: eligibleBefore } }],
+        },
+      ];
+    },
+  ).flat();
+}
 
 @Injectable()
 export class OutboxProcessor {
@@ -45,22 +63,12 @@ export class OutboxProcessor {
   }> {
     const now = Date.now();
     const staleBefore = new Date(now - STALE_PROCESSING_MS);
-    const retryBefore = new Date(now - RETRY_BACKOFF_MS);
 
     const events = await this.prisma.outboxEvent.findMany({
       where: {
         OR: [
           { status: 'PENDING', attempts: 0 },
-          {
-            status: 'PENDING',
-            attempts: { gt: 0 },
-            claimedAt: { lt: retryBefore },
-          },
-          {
-            status: 'FAILED',
-            attempts: { lt: MAX_OUTBOX_ATTEMPTS },
-            OR: [{ claimedAt: null }, { claimedAt: { lt: retryBefore } }],
-          },
+          ...retryEligibilityBranches(now),
           {
             status: 'PROCESSING',
             claimedAt: { lt: staleBefore },
