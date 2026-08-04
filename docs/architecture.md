@@ -205,6 +205,8 @@ Choices made knowingly for a portfolio-scale deployment, with the reasoning:
 - **Standard costing, no weighted average** — see [standard costing](#standard-costing) above; partial PO receipt is likewise out of scope.
 - **Whole-order refunds only** — partial refunds multiply the accounting reversal cases without demonstrating a new concept.
 - **Output VAT only** — sales post VAT to a liability account; input VAT on purchases is out of scope for the demo.
+- **No fiscal periods, no period close** — entries post at transaction time and the past is never locked; a correction is a dated reversal, never an edit. Locking a period and rolling P&L into retained earnings is the step from *records transactions correctly* to *an auditor can sign it*, and it is the largest single gap against a production ERP.
+- **Trial balance and P&L, no balance sheet** — a balance sheet needs a retained-earnings figure, which needs the period close above.
 - **No promotion usage limits** — promo codes validate eligibility but not redemption counts.
 - **Server pagination only where lists grow with trade** — orders, journal entries, customers and attendance page server-side through a shared `PaginationQueryDto`, each ordered with a unique `id` tiebreaker so offset pages cannot repeat or drop rows. Catalogue-sized tables (products, ingredients, suppliers, branches, users, accounts) grow with the size of the business rather than with sales, so they stay unpaginated on purpose.
 

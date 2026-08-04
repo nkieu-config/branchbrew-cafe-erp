@@ -127,6 +127,18 @@ Use the **Demo accounts** buttons on the login page for Manager, Admin, Staff, a
 
 ---
 
+### Flow E — Try to break the books (≈2 min)
+
+**Login:** `manager@branchbrew.dev`
+
+1. **Orders** (`/pos/orders`) — Void the sale from Flow A.
+2. **Ledger** (`/finance/ledger`) — The original `ORD-*` entry is untouched; a second entry `VOID-ORD-*` posts the mirror image beside it.
+3. **Trial balance** (`/finance/trial-balance`) — Still balances.
+
+**Story to tell:** The ledger is append-only. A mistake is corrected by a new entry, never by editing or deleting the old one, so history stays intact and the books stay balanced — the same reason a real ledger is auditable.
+
+---
+
 ## Super Admin extras
 
 **Login:** `admin@branchbrew.dev`
