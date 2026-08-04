@@ -66,7 +66,7 @@ This is the core reliability decision in the system. The POS never writes journa
 2. A dispatcher picks up committed events and fans them out to handlers: accounting, loyalty, notifications, and the realtime gateway.
 3. Each event payload is checked by a runtime validator before a handler runs, so a malformed event fails loudly instead of posting garbage.
 
-Delivery is **at-least-once** through both crash windows: an event that commits but never dispatches stays `PENDING`, and one whose worker dies mid-dispatch is reclaimed once its `claimedAt` stamp goes stale. Redelivery is harmless because the ledger dedupes on a unique natural `reference`. Side effects can therefore be delayed, but they cannot desync from committed state. The worst case is an event that exhausts its five attempts and lands in `FAILED`, which is visible in logs but not yet alerted on (see the hardening roadmap below).
+Delivery is **at-least-once** through both crash windows: an event that commits but never dispatches stays `PENDING`, and one whose worker dies mid-dispatch is reclaimed once its `claimedAt` stamp goes stale. Redelivery is harmless because the ledger dedupes on a unique natural `reference`. Side effects can therefore be delayed, but they cannot desync from committed state. The worst case is an event that exhausts its five attempts and lands in `FAILED`: every super admin gets an in-app notification, the event stays listed at `GET /outbox/failed`, and `POST /outbox/:id/replay` requeues it once the cause is fixed. Deployments that scrape `/metrics` also get the `OutboxEventsFailed` rule in [infra/observability/alerts.yml](../infra/observability/alerts.yml).
 
 Throughput here is measured rather than assumed. A k6 load test caught the original processor, which polled one batch of 10 events every 10 seconds, draining at exactly 1.00 events/sec while the till sold 20 orders/sec. A 30-second rush left the ledger nine and a half minutes behind. Applying an event costs a median of 2 ms, so the limit was the schedule and not the work: the processor was busy 0.3% of the time.
 
@@ -84,7 +84,7 @@ Measured after the fix, the drain rate tracks the arrival rate up to the 150 eve
 - **Message broker (Kafka / RabbitMQ / BullMQ).** A broker publish cannot join the Postgres transaction, so a broker does not remove the outbox; it sits behind one, adding a second piece of stateful infrastructure to operate. At one service and one database, Postgres itself is a perfectly good queue; a broker earns its place when there are multiple producing services or consumers that need independent scaling, neither of which exists here.
 - **`LISTEN`/`NOTIFY`.** Pushing events instead of polling would cut the median lag from 0.5 s to single-digit milliseconds. Rejected: it needs a dedicated connection held outside Prisma's pool, and it does not remove the cron anyway — retries and stale claims still need a periodic sweep, so `LISTEN`/`NOTIFY` would be a second delivery path layered on top of the one that already exists. Half a second of lag on a coffee-shop ledger does not buy that.
 
-Known hardening still on the roadmap: an operator replay path for `FAILED` events (terminal today, visible only in logs), jitter on the retry backoff, and payload schema versioning.
+Known hardening still on the roadmap: jitter on the retry backoff, and payload schema versioning.
 
 ## Event-driven double-entry accounting
 
@@ -195,6 +195,8 @@ The frontend is a Vercel project rooted at `frontend/`; the API is a Docker serv
 
 **Trade-off — the deploy does not run migrations.** Render starts the API image directly, and `migrate-demo.yml` applies migrations on push in parallel with that build rather than before it. So **migrations must stay backward-compatible with the deployed code** — additive columns and indexes, never a rename or a drop in the same release.
 
+**Trade-off — one API instance.** Three things assume a single process, and they fail differently at instance two. Socket.IO rooms are process-local, so an order dispatched on one instance never reaches a kitchen display connected to another — scale-out therefore starts with an adapter, and the pick is `@socket.io/postgres-adapter` over the Redis one because the system already runs on exactly one Postgres. The rate limiter's counters are in-memory, so limits quietly become per-instance: softer, not broken. The outbox needs nothing — every claim is an atomic compare-and-swap guarded on `status` + `attempts`, so competing pollers are already safe. What breaks first is realtime, not the queue.
+
 ## Deliberate trade-offs
 
 Choices made knowingly for a portfolio-scale deployment, with the reasoning:
@@ -204,6 +206,6 @@ Choices made knowingly for a portfolio-scale deployment, with the reasoning:
 - **Whole-order refunds only** — partial refunds multiply the accounting reversal cases without demonstrating a new concept.
 - **Output VAT only** — sales post VAT to a liability account; input VAT on purchases is out of scope for the demo.
 - **No promotion usage limits** — promo codes validate eligibility but not redemption counts.
-- **Pagination on `/orders` only** — it is the list that actually grows, so it is bounded by a 14-day default window and a 500-row cap through a shared `PaginationQueryDto`. Customers, settlements and audit logs are single-digit tables on this deployment; wiring them through the same envelope would be churn without an observable effect.
+- **Server pagination only where lists grow with trade** — orders, journal entries, customers and attendance page server-side through a shared `PaginationQueryDto`, each ordered with a unique `id` tiebreaker so offset pages cannot repeat or drop rows. Catalogue-sized tables (products, ingredients, suppliers, branches, users, accounts) grow with the size of the business rather than with sales, so they stay unpaginated on purpose.
 
-Roadmap beyond demo scale: pagination across all list endpoints (audit and auth already paginate), branch-scoping and read-auditing for customer records, end-to-end `Decimal` stock quantities with a scheduled reconciliation between branch stock and batch-level quantities, outbox hardening (an operator replay path, jitter on the retry backoff), and metrics with an alert on failed outbox events.
+Roadmap beyond demo scale: extending server pagination to purchase orders, production orders and stock counts, branch-scoping and read-auditing for customer records, end-to-end `Decimal` stock quantities with a scheduled reconciliation between branch stock and batch-level quantities, and jitter on the outbox retry backoff.
