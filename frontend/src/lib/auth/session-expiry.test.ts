@@ -36,6 +36,27 @@ describe("session expiry signalling", () => {
     unsubscribe();
   });
 
+  it("tells a subscriber that arrives after the expiry, not only before it", () => {
+    const handler = vi.fn();
+
+    notifySessionExpired();
+    const unsubscribe = onSessionExpired(handler);
+
+    expect(handler).toHaveBeenCalledTimes(1);
+    unsubscribe();
+  });
+
+  it("does not replay an expiry that a reset has already cleared", () => {
+    const handler = vi.fn();
+
+    notifySessionExpired();
+    resetSessionExpiredNotice();
+    const unsubscribe = onSessionExpired(handler);
+
+    expect(handler).not.toHaveBeenCalled();
+    unsubscribe();
+  });
+
   it("stops notifying once unsubscribed", () => {
     const handler = vi.fn();
     onSessionExpired(handler)();

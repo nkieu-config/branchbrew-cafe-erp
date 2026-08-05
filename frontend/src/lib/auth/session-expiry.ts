@@ -17,6 +17,7 @@ export function resetSessionExpiredNotice(): void {
 export function onSessionExpired(handler: () => void): () => void {
   if (typeof window === 'undefined') return () => {};
   window.addEventListener(SESSION_EXPIRED_EVENT, handler);
+  if (notified) handler();
   return () => window.removeEventListener(SESSION_EXPIRED_EVENT, handler);
 }
 
