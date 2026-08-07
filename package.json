@@ -46,6 +46,10 @@
     "packages/types"
   ],
   "overrides": {
+    "js-yaml": "4.3.1",
     "multer": "2.2.0"
+  },
+  "dependencies": {
+    "js-yaml": "4.3.1"
   }
 }
