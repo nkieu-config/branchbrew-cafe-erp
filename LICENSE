@@ -1,19 +1,21 @@
-Copyright (c) 2026 Natthachak Jeungraksareechai. All rights reserved.
+MIT License
 
-This repository is published publicly for one purpose only: to let prospective
-employers and reviewers read the author's software-engineering work.
+Copyright (c) 2026 Natthachak Jeungraksareechai
 
-Permission is granted to VIEW and READ this source code for evaluation.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Without the author's prior written permission, you may NOT:
-  - copy, reproduce, mirror, or redistribute this code or any part of it;
-  - modify it or create derivative works from it;
-  - use it, in whole or in part, in any project, product, or service,
-    whether commercial or non-commercial; or
-  - present it, in whole or in part, as your own work — academic,
-    professional, or portfolio.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-No other rights are granted. All rights not expressly granted above are
-reserved by the author.
-
-Requests for permission: natthachak.config@gmail.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

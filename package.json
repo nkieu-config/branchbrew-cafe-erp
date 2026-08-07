@@ -2,7 +2,7 @@
   "name": "branchbrew",
   "version": "1.0.0",
   "description": "Enterprise ERP Root",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "engines": {
     "node": "22.x",

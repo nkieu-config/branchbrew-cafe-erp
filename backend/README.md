@@ -29,7 +29,7 @@ Feature modules sit directly under `src/`, one directory per domain.
 | `src/common/`                            | `decimal.util.ts` (money math), `vat.util.ts`, exception filters, middleware                 |
 | `src/prisma/`                            | Prisma service, schema, migrations, seed scripts                                             |
 
-**If you read one thing, read [`src/outbox/`](src/outbox/).** The system's consistency rests on it, and [`outbox.processor.ts`](src/outbox/outbox.processor.ts) is the file the load test forced me to rewrite (see [Performance](../README.md#performance--the-bottleneck-the-load-test-found-and-the-fix)). Why the modules are drawn this way: [`docs/architecture.md`](../docs/architecture.md).
+**If you read one thing, read [`src/outbox/`](src/outbox/).** The system's consistency rests on it, and [`outbox.processor.ts`](src/outbox/outbox.processor.ts) is the file the load test forced me to rewrite (see the [performance investigation](../README.md#performance-investigation-9m34s-to-under-one-second)). Why the modules are drawn this way: [`docs/architecture.md`](../docs/architecture.md).
 
 ## Setup
 
