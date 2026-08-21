@@ -15,6 +15,21 @@
 CVE-2026-13676
 CVE-2026-16221
 
+# deepmerge-ts 7.1.5 — stack exhaustion on recursive object graphs.
+#
+# Reached only as @prisma/client -> prisma -> @prisma/config -> deepmerge-ts,
+# where it merges Prisma's own config files at CLI start-up. No request data
+# reaches that merge, and the service never calls it at runtime.
+#
+# It cannot be selected away. `prisma` is an *optional peer* of @prisma/client,
+# so npm installs the whole CLI into the production image and `--omit=dev`
+# cannot exclude it; @prisma/config pins deepmerge-ts to an exact 7.1.5 rather
+# than a range, so no Prisma release up to the current stable 7.9.1 carries the
+# patched 8.0.0; and `overrides` is ignored in this workspace, as recorded above.
+#
+# Remove when a Prisma release bumps @prisma/config onto deepmerge-ts 8.
+CVE-2026-40345
+
 # sharp 0.34.5 — inherited libvips vulnerabilities.
 #
 # The advisory scopes the impact to "those processing untrusted input". This app

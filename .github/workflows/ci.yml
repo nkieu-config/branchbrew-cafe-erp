@@ -47,6 +47,13 @@ jobs:
     name: Security — npm audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: [changes]
+    # The dependency tree can only move when manifests, lockfile or workspace
+    # code move. A docs-only push has nothing to audit.
+    if: >-
+      needs.changes.outputs.root == 'true' ||
+      needs.changes.outputs.backend == 'true' ||
+      needs.changes.outputs.frontend == 'true'
 
     steps:
       - uses: actions/checkout@v7
@@ -60,6 +67,13 @@ jobs:
       - name: Install Dependencies
         run: ./scripts/npm-ci-retry.sh
 
+      # This gate and the Trivy scan below use different severity thresholds on
+      # purpose: they answer different questions. npm audit reads the source
+      # tree — including devDependencies and optional peers that never reach a
+      # release — so it fails only on `critical`, cheaply and before any image
+      # is built. Trivy reads the image that actually ships and fails on HIGH,
+      # because everything it can see is deployed. Levelling the two would just
+      # trade one class of false positive for another.
       - name: Dependency audit
         run: npm run audit:ci
 
