@@ -13,11 +13,16 @@ How BranchBrew ERP is put together, and why. This is the deep-dive companion to 
 ```mermaid
 flowchart LR
   POS["POS terminal"] -->|"REST + httpOnly JWT"| API["NestJS API"]
-  API --> PG[("PostgreSQL")]
-  API -->|"same transaction"| OB["Transactional outbox"]
-  OB --> ACC["Accounting handler — journal entries"]
-  OB --> LOY["Loyalty handler — points"]
-  OB --> NOTIF["Notification handler — alerts"]
+  subgraph TX["PostgreSQL — one commit"]
+    BIZ[("Order, stock, customer")]
+    OB[("Outbox events")]
+  end
+  API --> BIZ
+  API --> OB
+  OB --> ACC["Accounting — journal entries"]
+  OB --> LOY["Loyalty — points and tier"]
+  OB --> PROC["Procurement — auto-reorder"]
+  OB --> NOTIF["Notifications — alerts"]
   OB --> RT["Realtime gateway"]
   RT -->|WebSocket| KDS["Kitchen display"]
 ```
@@ -45,6 +50,23 @@ The backend is organized as NestJS feature modules with zero `forwardRef`, so th
 | Platform     | `auth`, `branches`, `notifications`, `outbox`, `realtime`, `navigation`, `common`, `config`, `prisma` |
 
 The schema behind these modules is in [data-model.md](data-model.md): core ERD and the invariants the database itself enforces.
+
+### Layers and the Dependency Rule
+
+Modules are sliced vertically by business domain; inside each one the layer a file belongs to is legible from its path. The line worth defending is between rules and infrastructure: the 15 files under `**/domain/` hold order-status transitions, void and refund eligibility, recipe explosion, loyalty points, normal balance, and the chart of accounts, and ESLint refuses any import of `@prisma/client` or `@nestjs/*` inside them. The 9 files left in `helpers/` are the ones that take a `Prisma.TransactionClient`. Sorting by "does this touch the database" is the whole distinction, and CI is what keeps it true.
+
+Because domain files cannot import the ORM, each declares the values it needs as a local union. [`utility-types.type-test.ts`](../backend/src/type-tests/utility-types.type-test.ts) asserts at compile time that those unions still equal the Prisma enums they mirror, so widening an enum in `schema.prisma` breaks the build instead of silently splitting the two.
+
+| Edge | Source dependency | Held by |
+| --- | --- | --- |
+| `domain/` → framework | none | `dependency-rule/domain-is-framework-free` in [eslint.config.mjs](../backend/eslint.config.mjs) |
+| controller → ORM | none | `dependency-rule/controllers-do-not-touch-the-orm` |
+| domain union → database enum | proven equal at compile time | [type tests](../backend/src/type-tests/utility-types.type-test.ts) |
+| module → module | acyclic — zero `forwardRef` in the repo | Nest fails at startup on a cycle, and nothing here hides one |
+| outbox → accounting | **none, and that is the point** | the dispatcher emits; handlers subscribe with `@OnEvent`, so the queue never learns who consumes it |
+| service → ORM | direct — Prisma models are the data model | not inverted; see below |
+
+The last row is the honest one. Services inject `PrismaService` and query it directly rather than through a repository interface, so use cases are portable across web frameworks but not across databases. That is a deliberate trade at this size — one service, one Postgres, and a schema whose constraints are load-bearing. One known leak remains inside the boundary: `common/decimal.util.ts` still types money as `Prisma.Decimal`, so anything importing it inherits the ORM transitively. The lint rule checks direct imports only and does not catch that; moving the money kernel onto `decimal.js` is the next step.
 
 ## Where to start reading the code
 
