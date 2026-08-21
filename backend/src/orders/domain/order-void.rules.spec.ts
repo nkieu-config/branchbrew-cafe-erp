@@ -1,9 +1,9 @@
 import {
   buildIngredientRequirementsFromOrderItems,
   isSameCalendarDay,
-} from './order-void.util';
+} from './order-void.rules';
 
-describe('order-void.util', () => {
+describe('order-void.rules', () => {
   describe('isSameCalendarDay', () => {
     it('returns true for same local calendar day', () => {
       const a = new Date('2026-06-27T08:00:00');

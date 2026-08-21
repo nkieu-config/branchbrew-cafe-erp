@@ -29,7 +29,6 @@ import {
 } from './dto/equipment-response.dto';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiCommonErrorResponses } from '../common/http/swagger-error.decorators';
-import { Prisma } from '@prisma/client';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('equipment')
@@ -105,22 +104,7 @@ export class EquipmentController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateEquipmentDto,
   ) {
-    const updateData: Prisma.EquipmentUpdateInput = {};
-    if (dto.name !== undefined) updateData.name = dto.name;
-    if (dto.type !== undefined) updateData.type = dto.type;
-    if (dto.serialNumber !== undefined)
-      updateData.serialNumber = dto.serialNumber;
-    if (dto.status !== undefined) updateData.status = dto.status;
-    if (dto.purchaseDate !== undefined) {
-      updateData.purchaseDate = new Date(dto.purchaseDate);
-    }
-    if (dto.warrantyExpiry !== undefined) {
-      updateData.warrantyExpiry = new Date(dto.warrantyExpiry);
-    }
-    if (dto.nextMaintenanceDate !== undefined) {
-      updateData.nextMaintenanceDate = new Date(dto.nextMaintenanceDate);
-    }
-    return this.equipmentService.update(id, updateData, req.user);
+    return this.equipmentService.update(id, dto, req.user);
   }
 
   @Roles('SUPER_ADMIN', 'MANAGER')

@@ -8,6 +8,37 @@ import {
 } from '../auth/branch-scope.util';
 import { NotificationsService } from '../notifications/notifications.service';
 
+export type EquipmentUpdateFields = {
+  name?: string;
+  type?: EquipmentType;
+  serialNumber?: string;
+  status?: EquipmentStatus;
+  purchaseDate?: string;
+  warrantyExpiry?: string;
+  nextMaintenanceDate?: string;
+};
+
+function toEquipmentUpdateInput(
+  changes: EquipmentUpdateFields,
+): Prisma.EquipmentUpdateInput {
+  const data: Prisma.EquipmentUpdateInput = {};
+  if (changes.name !== undefined) data.name = changes.name;
+  if (changes.type !== undefined) data.type = changes.type;
+  if (changes.serialNumber !== undefined)
+    data.serialNumber = changes.serialNumber;
+  if (changes.status !== undefined) data.status = changes.status;
+  if (changes.purchaseDate !== undefined) {
+    data.purchaseDate = new Date(changes.purchaseDate);
+  }
+  if (changes.warrantyExpiry !== undefined) {
+    data.warrantyExpiry = new Date(changes.warrantyExpiry);
+  }
+  if (changes.nextMaintenanceDate !== undefined) {
+    data.nextMaintenanceDate = new Date(changes.nextMaintenanceDate);
+  }
+  return data;
+}
+
 @Injectable()
 export class EquipmentService {
   private readonly logger = new Logger(EquipmentService.name);
@@ -87,7 +118,7 @@ export class EquipmentService {
 
   async update(
     id: number,
-    data: Prisma.EquipmentUpdateInput,
+    changes: EquipmentUpdateFields,
     user?: BranchScopedUser,
   ) {
     if (user) {
@@ -100,7 +131,7 @@ export class EquipmentService {
 
     return this.prisma.equipment.update({
       where: { id },
-      data,
+      data: toEquipmentUpdateInput(changes),
     });
   }
 

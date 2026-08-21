@@ -2,9 +2,9 @@ import {
   applyIngredientSwaps,
   buildItemIngredientRequirements,
   buildIngredientRequirementsFromOrderItems,
-} from './recipe-requirements.helper';
+} from './recipe-requirements';
 
-describe('recipe-requirements.helper', () => {
+describe('recipe-requirements', () => {
   const milkId = 10;
   const oatId = 11;
   const beansId = 1;

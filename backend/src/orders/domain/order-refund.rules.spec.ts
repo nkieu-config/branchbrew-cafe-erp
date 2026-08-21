@@ -1,9 +1,9 @@
 import {
   assertRefundable,
   OrderRefundValidationError,
-} from './order-refund.util';
+} from './order-refund.rules';
 
-describe('order-refund.util', () => {
+describe('order-refund.rules', () => {
   it('allows refund for completed orders from a previous day', () => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);

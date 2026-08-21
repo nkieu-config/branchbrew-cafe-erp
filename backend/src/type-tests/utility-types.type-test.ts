@@ -16,6 +16,14 @@ import {
   OrderLifecycleStatus,
   OrderSnapshot,
 } from '../orders/domain/order.snapshot';
+import type {
+  AccountType as PrismaAccountType,
+  OrderStatus as PrismaOrderStatus,
+  PaymentMethod as PrismaPaymentMethod,
+} from '@prisma/client';
+import { OrderPaymentMethod } from '../orders/domain/order-status.rules';
+import { LedgerAccountType } from '../accounting/domain/normal-balance';
+import { PaymentAccountMethod } from '../accounting/domain/payment-accounts';
 import { ProductionCompletedSnapshot } from '../production/domain/production-completed.snapshot';
 import { PurchaseOrderReceivedSnapshot } from '../procurement/domain/purchase-order-received.snapshot';
 import {
@@ -106,3 +114,28 @@ type _AuditDetailsConstraint = Assert<
 >;
 
 type _AuditTargetLiteral = Assert<IsEqual<typeof AUDIT_TARGETS.ORDER, 'Order'>>;
+
+/**
+ * Anti-corruption boundary between the domain layer and the database schema.
+ *
+ * Files under `src/**‍/domain/` may not import `@prisma/client` (enforced by the
+ * `dependency-rule/domain-is-framework-free` block in eslint.config.mjs), so each
+ * one declares the vocabulary it needs as a local union. These assertions are what
+ * keeps those unions honest: widen or rename a Prisma enum without updating the
+ * matching domain union and the type-check fails here rather than at runtime.
+ */
+type _OrderLifecycleStatusMatchesSchema = Assert<
+  IsEqual<OrderLifecycleStatus, PrismaOrderStatus>
+>;
+
+type _OrderPaymentMethodMatchesSchema = Assert<
+  IsEqual<OrderPaymentMethod, PrismaPaymentMethod>
+>;
+
+type _LedgerAccountTypeMatchesSchema = Assert<
+  IsEqual<LedgerAccountType, PrismaAccountType>
+>;
+
+type _PaymentAccountMethodCoversSchema = Assert<
+  IsEqual<PaymentAccountMethod, PrismaPaymentMethod>
+>;

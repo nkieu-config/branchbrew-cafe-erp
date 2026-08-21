@@ -1,4 +1,6 @@
-export { buildIngredientRequirementsFromOrderItems } from './recipe-requirements.helper';
+import { OrderLifecycleStatus } from './order-status.rules';
+
+export { buildIngredientRequirementsFromOrderItems } from './recipe-requirements';
 
 export function isSameCalendarDay(a: Date, b: Date): boolean {
   return (
@@ -8,8 +10,6 @@ export function isSameCalendarDay(a: Date, b: Date): boolean {
   );
 }
 
-export function isTerminalOrderStatus(
-  status: 'PENDING' | 'PREPARING' | 'COMPLETED' | 'CANCELLED' | 'REFUNDED',
-): boolean {
+export function isTerminalOrderStatus(status: OrderLifecycleStatus): boolean {
   return status === 'CANCELLED' || status === 'REFUNDED';
 }

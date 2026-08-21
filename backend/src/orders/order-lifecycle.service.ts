@@ -11,8 +11,8 @@ import {
 import {
   isSameCalendarDay,
   isTerminalOrderStatus,
-} from './helpers/order-void.util';
-import { canTransitionOrderStatus } from './helpers/order-status.util';
+} from './domain/order-void.rules';
+import { canTransitionOrderStatus } from './domain/order-status.rules';
 import { buildOrderSearchFilter } from './helpers/order-search.util';
 import { kdsOrderInclude } from './kds-order.include';
 import {
@@ -23,7 +23,7 @@ import {
   assertRefundable,
   isOrderRefundValidationError,
   OrderRefundErrorKind,
-} from './helpers/order-refund.util';
+} from './domain/order-refund.rules';
 import { AuditService } from '../audit/audit.service';
 import { orderListInclude } from './orders.types';
 import { ApiErrorCode } from '../common/errors/api-error-code.enum';

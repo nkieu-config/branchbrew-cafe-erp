@@ -33,6 +33,56 @@ export default tseslint.config(
     },
   },
   {
+    name: 'dependency-rule/domain-is-framework-free',
+    files: ['src/**/domain/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@prisma/client',
+              message:
+                'Domain rules must not depend on the ORM. Declare the values this rule needs as a local union and prove it still matches the schema in src/type-tests/utility-types.type-test.ts.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['@nestjs/*'],
+              message:
+                'Domain rules must not depend on the web framework. Throw a plain error here and translate it at the controller or service boundary.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    name: 'dependency-rule/controllers-do-not-touch-the-orm',
+    files: ['src/*/**/*.controller.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@prisma/client',
+              message:
+                'Controllers translate HTTP, they do not speak to the database. Go through the module service.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['**/prisma/prisma.service'],
+              message:
+                'Controllers translate HTTP, they do not speak to the database. Go through the module service.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.spec.ts', 'test/**/*.ts'],
     rules: {
       '@typescript-eslint/unbound-method': 'off',

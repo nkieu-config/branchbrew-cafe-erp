@@ -1,4 +1,20 @@
-import { OrderStatus } from '@prisma/client';
+export const ORDER_LIFECYCLE_STATUSES = [
+  'PENDING',
+  'PREPARING',
+  'COMPLETED',
+  'CANCELLED',
+  'REFUNDED',
+] as const;
+
+export type OrderLifecycleStatus = (typeof ORDER_LIFECYCLE_STATUSES)[number];
+
+export const ORDER_PAYMENT_METHODS = [
+  'CASH',
+  'CREDIT_CARD',
+  'QR_PROMPTPAY',
+] as const;
+
+export type OrderPaymentMethod = (typeof ORDER_PAYMENT_METHODS)[number];
 
 const KITCHEN_CATEGORIES = /coffee|beverage|drink|tea/i;
 
@@ -15,15 +31,15 @@ export function resolveInitialOrderStatus(
 }
 
 const FORWARD_TRANSITIONS: Partial<
-  Record<OrderStatus, readonly OrderStatus[]>
+  Record<OrderLifecycleStatus, readonly OrderLifecycleStatus[]>
 > = {
   PENDING: ['PREPARING', 'COMPLETED'],
   PREPARING: ['COMPLETED'],
 };
 
 export function canTransitionOrderStatus(
-  from: OrderStatus,
-  to: OrderStatus,
+  from: OrderLifecycleStatus,
+  to: OrderLifecycleStatus,
 ): boolean {
   return FORWARD_TRANSITIONS[from]?.includes(to) ?? false;
 }

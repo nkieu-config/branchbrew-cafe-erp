@@ -1,7 +1,7 @@
 import { OrderStatus } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { InventoryHelper } from '../../common/helpers/inventory.helper';
-import { buildIngredientRequirementsFromOrderItems } from './recipe-requirements.helper';
+import { buildIngredientRequirementsFromOrderItems } from '../domain/recipe-requirements';
 
 export const ORDER_REVERSAL_INCLUDE = {
   items: {

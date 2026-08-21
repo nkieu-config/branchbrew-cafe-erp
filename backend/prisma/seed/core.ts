@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { DEFAULT_CHART_OF_ACCOUNTS } from '../../src/accounting/chart-of-accounts';
+import { DEFAULT_CHART_OF_ACCOUNTS } from '../../src/accounting/domain/chart-of-accounts';
 import { inclusiveTaxAmount } from '../../src/common/vat.util';
 import { SEED_VAT_RATE_PERCENT } from './helpers';
 import {

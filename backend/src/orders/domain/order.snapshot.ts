@@ -1,22 +1,17 @@
 import { toNum } from '../../common/decimal.util';
+import {
+  ORDER_LIFECYCLE_STATUSES,
+  ORDER_PAYMENT_METHODS,
+  OrderLifecycleStatus,
+  OrderPaymentMethod,
+} from './order-status.rules';
 
-export const ORDER_LIFECYCLE_STATUSES = [
-  'PENDING',
-  'PREPARING',
-  'COMPLETED',
-  'CANCELLED',
-  'REFUNDED',
-] as const;
-
-export type OrderLifecycleStatus = (typeof ORDER_LIFECYCLE_STATUSES)[number];
-
-export const ORDER_PAYMENT_METHODS = [
-  'CASH',
-  'CREDIT_CARD',
-  'QR_PROMPTPAY',
-] as const;
-
-export type OrderPaymentMethod = (typeof ORDER_PAYMENT_METHODS)[number];
+export {
+  ORDER_LIFECYCLE_STATUSES,
+  ORDER_PAYMENT_METHODS,
+  type OrderLifecycleStatus,
+  type OrderPaymentMethod,
+};
 
 export type OrderSnapshot = {
   id: number;

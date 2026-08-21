@@ -19,12 +19,12 @@ import {
   isBalancedMoney,
   sumMoney,
 } from '../common/decimal.util';
-import { DEFAULT_CHART_OF_ACCOUNTS } from './chart-of-accounts';
+import { DEFAULT_CHART_OF_ACCOUNTS } from './domain/chart-of-accounts';
 import {
   paymentAccountLabel,
   resolvePaymentAccountCode,
-} from './payment-accounts.util';
-import { normalBalanceOf } from './normal-balance.util';
+} from './domain/payment-accounts';
+import { normalBalanceOf } from './domain/normal-balance';
 import { OrderSnapshot } from '../orders/domain/order.snapshot';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { DEFAULT_CHART_OF_ACCOUNTS } from '../src/accounting/chart-of-accounts';
+import { DEFAULT_CHART_OF_ACCOUNTS } from '../src/accounting/domain/chart-of-accounts';
 import { PrismaService } from '../src/prisma/prisma.service';
 
 export const E2E_PASSWORD = 'password123';

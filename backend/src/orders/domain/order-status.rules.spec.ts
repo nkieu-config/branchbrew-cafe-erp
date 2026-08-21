@@ -2,9 +2,9 @@ import {
   canTransitionOrderStatus,
   productRequiresKitchen,
   resolveInitialOrderStatus,
-} from './order-status.util';
+} from './order-status.rules';
 
-describe('order-status.util', () => {
+describe('order-status.rules', () => {
   it('detects kitchen-prep categories', () => {
     expect(productRequiresKitchen('Coffee')).toBe(true);
     expect(productRequiresKitchen('Hot Beverage')).toBe(true);

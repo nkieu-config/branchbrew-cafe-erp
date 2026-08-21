@@ -1,5 +1,5 @@
-import { OrderStatus } from '@prisma/client';
-import { isSameCalendarDay, isTerminalOrderStatus } from './order-void.util';
+import { OrderLifecycleStatus } from './order-status.rules';
+import { isSameCalendarDay, isTerminalOrderStatus } from './order-void.rules';
 
 export type OrderRefundErrorKind =
   | 'ORDER_ALREADY_REVERSED'
@@ -27,7 +27,10 @@ export function isOrderRefundValidationError(
   return error instanceof OrderRefundValidationError;
 }
 
-export function assertVoidable(createdAt: Date, status: OrderStatus): void {
+export function assertVoidable(
+  createdAt: Date,
+  status: OrderLifecycleStatus,
+): void {
   if (isTerminalOrderStatus(status)) {
     throwOrderRefundError('ORDER_ALREADY_REVERSED');
   }
@@ -36,7 +39,10 @@ export function assertVoidable(createdAt: Date, status: OrderStatus): void {
   }
 }
 
-export function assertRefundable(createdAt: Date, status: OrderStatus): void {
+export function assertRefundable(
+  createdAt: Date,
+  status: OrderLifecycleStatus,
+): void {
   if (isTerminalOrderStatus(status)) {
     throwOrderRefundError('ORDER_ALREADY_REVERSED');
   }

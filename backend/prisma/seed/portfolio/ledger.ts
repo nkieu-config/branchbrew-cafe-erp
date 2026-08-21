@@ -2,7 +2,7 @@ import { dec, roundMoney } from '../../../src/common/decimal.util';
 import {
   paymentAccountLabel,
   resolvePaymentAccountCode,
-} from '../../../src/accounting/payment-accounts.util';
+} from '../../../src/accounting/domain/payment-accounts';
 import { dateDaysAgo } from '../helpers';
 import type { SeedContext } from '../types';
 import type { Order, Prisma } from '@prisma/client';

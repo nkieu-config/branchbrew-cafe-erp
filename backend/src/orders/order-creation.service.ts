@@ -11,15 +11,15 @@ import {
   pointsEarnedForSpend,
   pointsToDiscountAmount,
   POINTS_PER_CURRENCY_UNIT,
-} from '../customers/loyalty.constants';
+} from '../customers/domain/loyalty.constants';
 import {
   productRequiresKitchen,
   resolveInitialOrderStatus,
-} from './helpers/order-status.util';
+} from './domain/order-status.rules';
 import {
   buildItemIngredientRequirements,
   mergeRequirementMaps,
-} from './helpers/recipe-requirements.helper';
+} from './domain/recipe-requirements';
 import { allocateQueueNumber } from './helpers/queue-number.helper';
 import {
   CreateOrderInput,

@@ -1,9 +1,9 @@
 import {
   resolvePaymentAccountCode,
   PAYMENT_ACCOUNT_CODES,
-} from './payment-accounts.util';
+} from './payment-accounts';
 
-describe('payment-accounts.util', () => {
+describe('payment-accounts', () => {
   it('maps each payment method to a clearing account', () => {
     expect(resolvePaymentAccountCode('CASH')).toBe('1010');
     expect(resolvePaymentAccountCode('CREDIT_CARD')).toBe('1040');
