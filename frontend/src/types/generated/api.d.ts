@@ -4,515 +4,6 @@
  */
 
 export interface paths {
-    "/health": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Health check */
-        get: operations["AppController_health"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/products": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List products */
-        get: operations["ProductsController_findAll"];
-        put?: never;
-        /** Create product */
-        post: operations["ProductsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/products/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get product by id */
-        get: operations["ProductsController_findOne"];
-        put?: never;
-        post?: never;
-        /** Delete product */
-        delete: operations["ProductsController_remove"];
-        options?: never;
-        head?: never;
-        /** Update product */
-        patch: operations["ProductsController_update"];
-        trace?: never;
-    };
-    "/ingredients/inventory/branch": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get branch ingredient inventory */
-        get: operations["IngredientsController_getBranchInventory"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingredients/waste/logs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get ingredient waste logs */
-        get: operations["IngredientsController_getWasteLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingredients": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List ingredients */
-        get: operations["IngredientsController_findAll"];
-        put?: never;
-        /** Create ingredient */
-        post: operations["IngredientsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingredients/{id}/sync-inventory": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sync ingredient inventory for all branches */
-        post: operations["IngredientsController_syncBranchInventory"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/ingredients/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get ingredient by id */
-        get: operations["IngredientsController_findOne"];
-        put?: never;
-        post?: never;
-        /** Delete ingredient */
-        delete: operations["IngredientsController_remove"];
-        options?: never;
-        head?: never;
-        /** Update ingredient */
-        patch: operations["IngredientsController_update"];
-        trace?: never;
-    };
-    "/orders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List orders in a bounded, paginated window */
-        get: operations["OrdersController_findAll"];
-        put?: never;
-        /** Create order */
-        post: operations["OrdersController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/orders/kds": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List kitchen display orders */
-        get: operations["OrdersController_getKdsOrders"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/orders/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Update order status */
-        patch: operations["OrdersController_updateOrderStatus"];
-        trace?: never;
-    };
-    "/orders/{id}/void": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Void order */
-        post: operations["OrdersController_voidOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/orders/{id}/refund": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Refund order */
-        post: operations["OrdersController_refundOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/orders/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get order by id */
-        get: operations["OrdersController_findOne"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/suppliers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List suppliers */
-        get: operations["SuppliersController_findAll"];
-        put?: never;
-        /** Create supplier */
-        post: operations["SuppliersController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/suppliers/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete supplier */
-        delete: operations["SuppliersController_remove"];
-        options?: never;
-        head?: never;
-        /** Update supplier */
-        patch: operations["SuppliersController_update"];
-        trace?: never;
-    };
-    "/purchase-orders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List purchase orders */
-        get: operations["PurchaseOrdersController_findAll"];
-        put?: never;
-        /** Create purchase order */
-        post: operations["PurchaseOrdersController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase-orders/ap-aging": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Accounts-payable aging for unpaid received POs */
-        get: operations["PurchaseOrdersController_apAging"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase-orders/{id}/submit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Submit purchase order */
-        patch: operations["PurchaseOrdersController_submit"];
-        trace?: never;
-    };
-    "/purchase-orders/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Approve purchase order */
-        patch: operations["PurchaseOrdersController_approve"];
-        trace?: never;
-    };
-    "/purchase-orders/{id}/reject": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Reject purchase order */
-        patch: operations["PurchaseOrdersController_reject"];
-        trace?: never;
-    };
-    "/purchase-orders/{id}/receive": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Receive purchase order */
-        post: operations["PurchaseOrdersController_receive"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase-orders/{id}/pay": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Record supplier payment for a received PO */
-        post: operations["PurchaseOrdersController_pay"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/outbox/failed": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List outbox events that exhausted their retries */
-        get: operations["OutboxController_listFailed"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/outbox/{id}/replay": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Requeue a failed outbox event */
-        post: operations["OutboxController_replay"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/customers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List customers — the member directory, not a till lookup */
-        get: operations["CustomersController_findAll"];
-        put?: never;
-        /** Create customer */
-        post: operations["CustomersController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/customers/phone/{phone}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Look up one member by exact phone — the POS till path */
-        get: operations["CustomersController_findByPhone"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/customers/{id}/360": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get customer 360 view */
-        get: operations["CustomersController_getCustomer360"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/customers/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get customer by id */
-        get: operations["CustomersController_findOne"];
-        put?: never;
-        post?: never;
-        /**
-         * Erase a member on PDPA request by anonymizing the record
-         * @description Clears the phone, name and points and stamps anonymizedAt. The row itself stays so orders, revenue and the ledger are unchanged, and tax-invoice details on those orders are retained under the Revenue Code.
-         */
-        delete: operations["CustomersController_anonymize"];
-        options?: never;
-        head?: never;
-        /** Update customer */
-        patch: operations["CustomersController_update"];
-        trace?: never;
-    };
     "/accounting/accounts": {
         parameters: {
             query?: never;
@@ -522,74 +13,6 @@ export interface paths {
         };
         /** List chart of accounts */
         get: operations["AccountingController_getAccounts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounting/journal-entries": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List journal entries in a bounded, paginated window */
-        get: operations["AccountingController_getJournalEntries"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounting/vat-report": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Monthly output-VAT summary (ภ.พ.30-style) */
-        get: operations["AccountingController_getVatReport"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounting/profit-loss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get accounting profit and loss */
-        get: operations["AccountingController_getProfitLoss"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/accounting/trial-balance": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Trial balance — every account balance and the debit/credit totals */
-        get: operations["AccountingController_getTrialBalance"];
         put?: never;
         post?: never;
         delete?: never;
@@ -618,6 +41,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/accounting/journal-entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List journal entries in a bounded, paginated window */
+        get: operations["AccountingController_getJournalEntries"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accounting/profit-loss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get accounting profit and loss */
+        get: operations["AccountingController_getProfitLoss"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/accounting/seed": {
         parameters: {
             query?: never;
@@ -635,6 +92,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/accounting/trial-balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trial balance — every account balance and the debit/credit totals */
+        get: operations["AccountingController_getTrialBalance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accounting/vat-report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Monthly output-VAT summary (ภ.พ.30-style) */
+        get: operations["AccountingController_getVatReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/audit": {
         parameters: {
             query?: never;
@@ -646,24 +137,6 @@ export interface paths {
         get: operations["AuditController_getLogs"];
         put?: never;
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/settings": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get system settings */
-        get: operations["SettingsController_getAllSettings"];
-        put?: never;
-        /** Update system settings */
-        post: operations["SettingsController_updateSettings"];
         delete?: never;
         options?: never;
         head?: never;
@@ -739,23 +212,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/branches/transfers/all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List all transfers */
-        get: operations["BranchesController_getAllTransfers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/branches/transfers": {
         parameters: {
             query?: never;
@@ -767,6 +223,23 @@ export interface paths {
         put?: never;
         /** Create stock transfer */
         post: operations["BranchesController_createTransfer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/branches/transfers/all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all transfers */
+        get: operations["BranchesController_getAllTransfers"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -808,6 +281,23 @@ export interface paths {
         patch: operations["BranchesController_updateBranch"];
         trace?: never;
     };
+    "/branches/{id}/batches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add inventory batch to branch */
+        post: operations["BranchesController_addInventoryBatch"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/branches/{id}/sync-inventory": {
         parameters: {
             query?: never;
@@ -842,23 +332,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/branches/{id}/batches": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Add inventory batch to branch */
-        post: operations["BranchesController_addInventoryBatch"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/branches/{id}/waste": {
         parameters: {
             query?: never;
@@ -876,119 +349,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/promotions": {
+    "/customers": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List promotions */
-        get: operations["PromotionsController_findAll"];
+        /** List customers — the member directory, not a till lookup */
+        get: operations["CustomersController_findAll"];
         put?: never;
-        /** Create promotion */
-        post: operations["PromotionsController_create"];
+        /** Create customer */
+        post: operations["CustomersController_create"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/promotions/{id}": {
+    "/customers/phone/{phone}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete promotion */
-        delete: operations["PromotionsController_remove"];
-        options?: never;
-        head?: never;
-        /** Update promotion */
-        patch: operations["PromotionsController_update"];
-        trace?: never;
-    };
-    "/promotions/{id}/toggle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Toggle promotion active state */
-        patch: operations["PromotionsController_toggleActive"];
-        trace?: never;
-    };
-    "/promotions/validate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Validate promotion code */
-        post: operations["PromotionsController_validateCode"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/clock-in": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Clock in */
-        post: operations["HrController_clockIn"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/clock-out": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Clock out */
-        post: operations["HrController_clockOut"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/attendance/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get my attendance records in a bounded, paginated window */
-        get: operations["HrController_getMyAttendance"];
+        /** Look up one member by exact phone — the POS till path */
+        get: operations["CustomersController_findByPhone"];
         put?: never;
         post?: never;
         delete?: never;
@@ -997,502 +384,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/hr/attendance/status": {
+    "/customers/{id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get active clock-in status */
-        get: operations["HrController_getActiveClockIn"];
+        /** Get customer by id */
+        get: operations["CustomersController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/shifts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create shift */
-        post: operations["HrController_createShift"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/shifts/branch/{branchId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get shifts by branch */
-        get: operations["HrController_getShiftsByBranch"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/shifts/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get my shifts */
-        get: operations["HrController_getMyShifts"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/leave": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List leave requests */
-        get: operations["HrController_getLeaveRequests"];
-        put?: never;
-        /** Request leave */
-        post: operations["HrController_requestLeave"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/leave/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get my leave requests */
-        get: operations["HrController_getMyLeaveRequests"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/leave/bulk-status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
         /**
-         * Decide several leave requests at once
-         * @description Each request is decided independently: one failure does not undo the rest. The response reports which ids succeeded and why the others did not.
+         * Erase a member on PDPA request by anonymizing the record
+         * @description Clears the phone, name and points and stamps anonymizedAt. The row itself stays so orders, revenue and the ledger are unchanged, and tax-invoice details on those orders are retained under the Revenue Code.
          */
-        patch: operations["HrController_processLeaveRequestsBulk"];
+        delete: operations["CustomersController_anonymize"];
+        options?: never;
+        head?: never;
+        /** Update customer */
+        patch: operations["CustomersController_update"];
         trace?: never;
     };
-    "/hr/leave/{id}/status": {
+    "/customers/{id}/360": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get customer 360 view */
+        get: operations["CustomersController_getCustomer360"];
         put?: never;
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Process leave request */
-        patch: operations["HrController_processLeaveRequest"];
-        trace?: never;
-    };
-    "/hr/payroll/generate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Generate payroll run */
-        post: operations["HrController_generatePayrollRun"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/payroll-runs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List payroll runs */
-        get: operations["HrController_getPayrollRuns"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/payroll-runs/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Approve payroll run */
-        patch: operations["HrController_approvePayrollRun"];
-        trace?: never;
-    };
-    "/hr/users/{userId}/rate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Update user hourly rate */
-        patch: operations["HrController_updateHourlyRate"];
-        trace?: never;
-    };
-    "/hr/users": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List users */
-        get: operations["HrController_getAllUsers"];
-        put?: never;
-        /** Create user */
-        post: operations["HrController_createUser"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/hr/users/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Update user */
-        patch: operations["HrController_updateUser"];
-        trace?: never;
-    };
-    "/finance/expenses": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List expenses */
-        get: operations["FinanceController_getExpenses"];
-        put?: never;
-        /** Create expense */
-        post: operations["FinanceController_createExpense"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/finance/settlements/expected": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get expected settlement balances */
-        get: operations["FinanceController_getExpectedCash"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/finance/settlements": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List settlements */
-        get: operations["FinanceController_getSettlements"];
-        put?: never;
-        /** Submit settlement */
-        post: operations["FinanceController_submitSettlement"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/finance/settlements/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Approve settlement */
-        patch: operations["FinanceController_approveSettlement"];
-        trace?: never;
-    };
-    "/finance/export/sales": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Export sales report as CSV */
-        get: operations["FinanceController_exportSales"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/branch/{branchId}/balance": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get inventory balance by branch */
-        get: operations["InventoryController_getBalance"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/branch/{branchId}/stock-in": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Receive stock into branch inventory */
-        post: operations["InventoryController_receiveStock"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/branch/{branchId}/waste": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Record inventory waste */
-        post: operations["InventoryController_recordWaste"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/branch/{branchId}/stock-counts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List stock counts for a branch */
-        get: operations["InventoryController_listStockCounts"];
-        put?: never;
-        /** Start a stock count for a branch */
-        post: operations["InventoryController_createStockCount"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/stock-counts/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a stock count with its lines */
-        get: operations["InventoryController_getStockCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/stock-counts/{id}/lines": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Save counted quantities on a draft stock count */
-        patch: operations["InventoryController_updateStockCountLines"];
-        trace?: never;
-    };
-    "/inventory/stock-counts/{id}/submit": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Submit a stock count for approval (snapshots expected stock) */
-        post: operations["InventoryController_submitStockCount"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/stock-counts/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Approve a stock count and apply variance adjustments */
-        post: operations["InventoryController_approveStockCount"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/stock-counts/{id}/cancel": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Cancel an open stock count */
-        post: operations["InventoryController_cancelStockCount"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/inventory/branch/{branchId}/adjustments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List stock adjustments for a branch */
-        get: operations["InventoryController_listAdjustments"];
-        put?: never;
-        /** Record a manual stock adjustment */
-        post: operations["InventoryController_createAdjustment"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1552,15 +476,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reports/sales-trends": {
+    "/finance/expenses": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get sales trends report */
-        get: operations["ReportsController_getSalesTrends"];
+        /** List expenses */
+        get: operations["FinanceController_getExpenses"];
+        put?: never;
+        /** Create expense */
+        post: operations["FinanceController_createExpense"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/finance/export/sales": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export sales report as CSV */
+        get: operations["FinanceController_exportSales"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1569,15 +511,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reports/top-products": {
+    "/finance/settlements": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get top products report */
-        get: operations["ReportsController_getTopProducts"];
+        /** List settlements */
+        get: operations["FinanceController_getSettlements"];
+        put?: never;
+        /** Submit settlement */
+        post: operations["FinanceController_submitSettlement"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/finance/settlements/expected": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get expected settlement balances */
+        get: operations["FinanceController_getExpectedCash"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1586,94 +546,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reports/profit-loss": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get profit and loss report */
-        get: operations["ReportsController_getProfitLoss"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/reports/food-cost-actual": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Actual food cost and gross margin across recorded orders */
-        get: operations["ReportsController_getFoodCostActual"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/reports/executive-summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get executive summary report */
-        get: operations["ReportsController_getExecutiveSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/production/orders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List production orders */
-        get: operations["ProductionController_getProductionOrders"];
-        put?: never;
-        /** Create production order */
-        post: operations["ProductionController_createOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/production/boms": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List production BOMs */
-        get: operations["ProductionController_getBOMs"];
-        put?: never;
-        /** Create production BOM */
-        post: operations["ProductionController_createBOM"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/production/orders/{id}/status": {
+    "/finance/settlements/{id}/approve": {
         parameters: {
             query?: never;
             header?: never;
@@ -1686,11 +559,114 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Update production order status */
-        patch: operations["ProductionController_updateOrderStatus"];
+        /** Approve settlement */
+        patch: operations["FinanceController_approveSettlement"];
         trace?: never;
     };
-    "/production/orders/{id}/complete": {
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Health check */
+        get: operations["AppController_health"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/attendance/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get my attendance records in a bounded, paginated window */
+        get: operations["HrController_getMyAttendance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/attendance/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get active clock-in status */
+        get: operations["HrController_getActiveClockIn"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/clock-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Clock in */
+        post: operations["HrController_clockIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/clock-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Clock out */
+        post: operations["HrController_clockOut"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List leave requests */
+        get: operations["HrController_getLeaveRequests"];
+        put?: never;
+        /** Request leave */
+        post: operations["HrController_requestLeave"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/leave/bulk-status": {
         parameters: {
             query?: never;
             header?: never;
@@ -1703,8 +679,459 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Complete production order */
-        patch: operations["ProductionController_completeOrder"];
+        /**
+         * Decide several leave requests at once
+         * @description Each request is decided independently: one failure does not undo the rest. The response reports which ids succeeded and why the others did not.
+         */
+        patch: operations["HrController_processLeaveRequestsBulk"];
+        trace?: never;
+    };
+    "/hr/leave/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get my leave requests */
+        get: operations["HrController_getMyLeaveRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/leave/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Process leave request */
+        patch: operations["HrController_processLeaveRequest"];
+        trace?: never;
+    };
+    "/hr/payroll-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List payroll runs */
+        get: operations["HrController_getPayrollRuns"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/payroll-runs/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Approve payroll run */
+        patch: operations["HrController_approvePayrollRun"];
+        trace?: never;
+    };
+    "/hr/payroll/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate payroll run */
+        post: operations["HrController_generatePayrollRun"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/shifts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create shift */
+        post: operations["HrController_createShift"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/shifts/branch/{branchId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get shifts by branch */
+        get: operations["HrController_getShiftsByBranch"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/shifts/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get my shifts */
+        get: operations["HrController_getMyShifts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List users */
+        get: operations["HrController_getAllUsers"];
+        put?: never;
+        /** Create user */
+        post: operations["HrController_createUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hr/users/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update user */
+        patch: operations["HrController_updateUser"];
+        trace?: never;
+    };
+    "/hr/users/{userId}/rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update user hourly rate */
+        patch: operations["HrController_updateHourlyRate"];
+        trace?: never;
+    };
+    "/ingredients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List ingredients */
+        get: operations["IngredientsController_findAll"];
+        put?: never;
+        /** Create ingredient */
+        post: operations["IngredientsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingredients/inventory/branch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get branch ingredient inventory */
+        get: operations["IngredientsController_getBranchInventory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingredients/waste/logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get ingredient waste logs */
+        get: operations["IngredientsController_getWasteLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ingredients/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get ingredient by id */
+        get: operations["IngredientsController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete ingredient */
+        delete: operations["IngredientsController_remove"];
+        options?: never;
+        head?: never;
+        /** Update ingredient */
+        patch: operations["IngredientsController_update"];
+        trace?: never;
+    };
+    "/ingredients/{id}/sync-inventory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sync ingredient inventory for all branches */
+        post: operations["IngredientsController_syncBranchInventory"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/branch/{branchId}/adjustments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List stock adjustments for a branch */
+        get: operations["InventoryController_listAdjustments"];
+        put?: never;
+        /** Record a manual stock adjustment */
+        post: operations["InventoryController_createAdjustment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/branch/{branchId}/balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get inventory balance by branch */
+        get: operations["InventoryController_getBalance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/branch/{branchId}/stock-counts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List stock counts for a branch */
+        get: operations["InventoryController_listStockCounts"];
+        put?: never;
+        /** Start a stock count for a branch */
+        post: operations["InventoryController_createStockCount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/branch/{branchId}/stock-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Receive stock into branch inventory */
+        post: operations["InventoryController_receiveStock"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/branch/{branchId}/waste": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record inventory waste */
+        post: operations["InventoryController_recordWaste"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/stock-counts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a stock count with its lines */
+        get: operations["InventoryController_getStockCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/stock-counts/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve a stock count and apply variance adjustments */
+        post: operations["InventoryController_approveStockCount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/stock-counts/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel an open stock count */
+        post: operations["InventoryController_cancelStockCount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory/stock-counts/{id}/lines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Save counted quantities on a draft stock count */
+        patch: operations["InventoryController_updateStockCountLines"];
+        trace?: never;
+    };
+    "/inventory/stock-counts/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit a stock count for approval (snapshots expected stock) */
+        post: operations["InventoryController_submitStockCount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/modifiers": {
@@ -1828,23 +1255,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/notifications/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Mark a notification as read */
-        patch: operations["NotificationsController_markRead"];
-        trace?: never;
-    };
     "/notifications/read-all": {
         parameters: {
             query?: never;
@@ -1862,570 +1272,611 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Mark a notification as read */
+        patch: operations["NotificationsController_markRead"];
+        trace?: never;
+    };
+    "/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List orders in a bounded, paginated window */
+        get: operations["OrdersController_findAll"];
+        put?: never;
+        /** Create order */
+        post: operations["OrdersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/kds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List kitchen display orders */
+        get: operations["OrdersController_getKdsOrders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get order by id */
+        get: operations["OrdersController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{id}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refund order */
+        post: operations["OrdersController_refundOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update order status */
+        patch: operations["OrdersController_updateOrderStatus"];
+        trace?: never;
+    };
+    "/orders/{id}/void": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Void order */
+        post: operations["OrdersController_voidOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outbox/failed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List outbox events that exhausted their retries */
+        get: operations["OutboxController_listFailed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outbox/{id}/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Requeue a failed outbox event */
+        post: operations["OutboxController_replay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/production/boms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List production BOMs */
+        get: operations["ProductionController_getBOMs"];
+        put?: never;
+        /** Create production BOM */
+        post: operations["ProductionController_createBOM"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/production/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List production orders */
+        get: operations["ProductionController_getProductionOrders"];
+        put?: never;
+        /** Create production order */
+        post: operations["ProductionController_createOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/production/orders/{id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Complete production order */
+        patch: operations["ProductionController_completeOrder"];
+        trace?: never;
+    };
+    "/production/orders/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update production order status */
+        patch: operations["ProductionController_updateOrderStatus"];
+        trace?: never;
+    };
+    "/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List products */
+        get: operations["ProductsController_findAll"];
+        put?: never;
+        /** Create product */
+        post: operations["ProductsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get product by id */
+        get: operations["ProductsController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete product */
+        delete: operations["ProductsController_remove"];
+        options?: never;
+        head?: never;
+        /** Update product */
+        patch: operations["ProductsController_update"];
+        trace?: never;
+    };
+    "/promotions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List promotions */
+        get: operations["PromotionsController_findAll"];
+        put?: never;
+        /** Create promotion */
+        post: operations["PromotionsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/promotions/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Validate promotion code */
+        post: operations["PromotionsController_validateCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/promotions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete promotion */
+        delete: operations["PromotionsController_remove"];
+        options?: never;
+        head?: never;
+        /** Update promotion */
+        patch: operations["PromotionsController_update"];
+        trace?: never;
+    };
+    "/promotions/{id}/toggle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Toggle promotion active state */
+        patch: operations["PromotionsController_toggleActive"];
+        trace?: never;
+    };
+    "/purchase-orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List purchase orders */
+        get: operations["PurchaseOrdersController_findAll"];
+        put?: never;
+        /** Create purchase order */
+        post: operations["PurchaseOrdersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/purchase-orders/ap-aging": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Accounts-payable aging for unpaid received POs */
+        get: operations["PurchaseOrdersController_apAging"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/purchase-orders/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Approve purchase order */
+        patch: operations["PurchaseOrdersController_approve"];
+        trace?: never;
+    };
+    "/purchase-orders/{id}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record supplier payment for a received PO */
+        post: operations["PurchaseOrdersController_pay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/purchase-orders/{id}/receive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Receive purchase order */
+        post: operations["PurchaseOrdersController_receive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/purchase-orders/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Reject purchase order */
+        patch: operations["PurchaseOrdersController_reject"];
+        trace?: never;
+    };
+    "/purchase-orders/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Submit purchase order */
+        patch: operations["PurchaseOrdersController_submit"];
+        trace?: never;
+    };
+    "/reports/executive-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get executive summary report */
+        get: operations["ReportsController_getExecutiveSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/food-cost-actual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Actual food cost and gross margin across recorded orders */
+        get: operations["ReportsController_getFoodCostActual"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/profit-loss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get profit and loss report */
+        get: operations["ReportsController_getProfitLoss"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/sales-trends": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get sales trends report */
+        get: operations["ReportsController_getSalesTrends"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reports/top-products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get top products report */
+        get: operations["ReportsController_getTopProducts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get system settings */
+        get: operations["SettingsController_getAllSettings"];
+        put?: never;
+        /** Update system settings */
+        post: operations["SettingsController_updateSettings"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/suppliers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List suppliers */
+        get: operations["SuppliersController_findAll"];
+        put?: never;
+        /** Create supplier */
+        post: operations["SuppliersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/suppliers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete supplier */
+        delete: operations["SuppliersController_remove"];
+        options?: never;
+        head?: never;
+        /** Update supplier */
+        patch: operations["SuppliersController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        HealthOkResponseDto: {
-            /** @example ok */
-            status: string;
-        };
-        HealthErrorResponseDto: {
-            /** @example error */
-            status: string;
-            /** @example Database unreachable */
-            message: string;
-        };
-        ApiErrorResponseDto: {
-            /** @example 400 */
-            statusCode: number;
-            /**
-             * @example VALIDATION_ERROR
-             * @enum {string}
-             */
-            code: "INTERNAL_ERROR" | "VALIDATION_ERROR" | "NOT_FOUND" | "FORBIDDEN" | "UNAUTHORIZED" | "RATE_LIMITED" | "CONFLICT" | "ORDER_NOT_FOUND" | "ORDER_ALREADY_REVERSED" | "ORDER_VOID_SAME_DAY_ONLY" | "ORDER_REFUND_NOT_COMPLETED" | "ORDER_REFUND_SAME_DAY" | "ORDER_REFUND_NOT_ALLOWED" | "ORDER_STATUS_INVALID" | "PRODUCT_NOT_FOUND" | "PRODUCT_RECIPE_REQUIRED" | "INVALID_MODIFIER_SELECTION" | "CUSTOMER_NOT_FOUND" | "CUSTOMER_PHONE_REQUIRED" | "INSUFFICIENT_LOYALTY_POINTS" | "PROMOTION_INVALID" | "PROMOTION_NOT_STARTED" | "PROMOTION_EXPIRED" | "PROMOTION_MIN_PURCHASE" | "BRANCH_ACCESS_DENIED" | "BRANCH_NOT_ASSIGNED" | "SETTLEMENT_NOT_FOUND" | "SETTLEMENT_ALREADY_APPROVED";
-            /** @example Validation failed. */
-            message: string;
-            /** @example req-1234 */
-            requestId?: string;
-            /**
-             * @example {
-             *       "field": "email"
-             *     }
-             */
-            details?: Record<string, never>;
-            /** @example 2026-07-02T08:01:00.000Z */
-            timestamp: string;
-            /** @example /orders/1/void */
-            path: string;
-        };
-        RecipeItemDto: {
-            ingredientId: number;
-            quantity: number;
-        };
-        CreateProductDto: {
-            name: string;
-            description?: string;
-            price: number;
-            category: string;
-            isActive?: boolean;
-            recipeItems?: components["schemas"]["RecipeItemDto"][];
-        };
-        IngredientSummaryDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Whole milk */
-            name: string;
-            /** @example L */
-            unit: string;
-            /** @example 45 */
-            costPerUnit?: number;
-        };
-        RecipeItemResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            productId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 0.25 */
-            quantity: number;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
-        };
-        ProductResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Latte */
-            name: string;
-            /** @example 120 */
-            price: number;
-            /** @example Coffee */
-            category: string;
-            /** @example true */
-            isActive: boolean;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            recipeItems?: components["schemas"]["RecipeItemResponseDto"][];
-        };
-        UpdateProductDto: {
-            name?: string;
-            description?: string;
-            price?: number;
-            category?: string;
-            isActive?: boolean;
-            recipeItems?: components["schemas"]["RecipeItemDto"][];
-        };
-        SupplierResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Fresh Farms Co. */
-            name: string;
-            /** @example orders@freshfarms.dev */
-            contactEmail: string | null;
-            /** @example +66 2 123 4567 */
-            phone: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        IngredientResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Whole milk */
-            name: string;
-            /** @example L */
-            unit: string;
-            /** @example 45 */
-            costPerUnit: number;
-            /** @example 2 */
-            primarySupplierId: number | null;
-            /** @example true */
-            isActive: boolean;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            primarySupplier?: components["schemas"]["SupplierResponseDto"];
-        };
-        BranchInventoryWithIngredientResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 24.5 */
-            stock: number;
-            /** @example 10 */
-            minStock: number;
-            /** Format: date-time */
-            updatedAt?: string;
-            ingredient?: components["schemas"]["IngredientResponseDto"];
-        };
-        WasteLogRecordedByDto: {
-            /** @example Branch Manager */
-            name: string | null;
-        };
-        WasteLogResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 2.5 */
-            quantity: number;
-            /** @example Expired batch disposal */
-            reason: string;
-            /** @example 4 */
-            recordedById: number;
-            /** Format: date-time */
-            createdAt: string;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
-            recordedBy?: components["schemas"]["WasteLogRecordedByDto"];
-        };
-        CreateIngredientDto: {
-            name: string;
-            unit: string;
-            costPerUnit?: number;
-            primarySupplierId?: number;
-            isActive?: boolean;
-        };
-        SyncIngredientInventoryResponseDto: {
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 4 */
-            rowsCreated: number;
-        };
-        UpdateIngredientDto: {
-            name?: string;
-            unit?: string;
-            costPerUnit?: number;
-            primarySupplierId?: number;
-            isActive?: boolean;
-        };
-        OrderItemDto: {
-            productId: number;
-            quantity: number;
-            notes?: string;
-            modifierOptionIds?: number[];
-        };
-        CreateOrderDto: {
-            branchId?: number;
-            items: components["schemas"]["OrderItemDto"][];
-            customerPhone?: string;
-            promotionCode?: string;
-            pointsToRedeem?: number;
-            /** @enum {string} */
-            paymentMethod?: "CASH" | "CREDIT_CARD" | "QR_PROMPTPAY";
-            isTaxInvoiceRequested?: boolean;
-            taxInvoiceName?: string;
-            taxInvoiceTaxId?: string;
-            taxInvoiceAddress?: string;
-            /** Format: uuid */
-            clientRequestId?: string;
-        };
-        OrderProductSummaryDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Latte */
-            name: string;
-            /** @example 120 */
-            price: number;
-            /** @example Coffee */
-            category: string;
-        };
-        OrderItemModifierResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            orderItemId: number;
-            /** @example 3 */
-            optionId: number;
-            /** @example Extra shot */
-            optionName: string;
-            /** @example 15 */
-            priceDelta: number;
-        };
-        OrderItemResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 100 */
-            orderId: number;
-            /** @example 1 */
-            productId: number;
-            /** @example 2 */
-            quantity: number;
-            /** @example 120 */
-            price: number;
-            /** @example Less ice */
-            notes: string | null;
-            product?: components["schemas"]["OrderProductSummaryDto"];
-            modifiers?: components["schemas"]["OrderItemModifierResponseDto"][];
-        };
-        OrderCustomerSummaryDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Jane Customer */
-            name: string;
-            /**
-             * @example REGULAR
-             * @enum {string}
-             */
-            tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
-        };
-        BranchResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Downtown */
-            name: string;
-            /** @example Bangkok */
-            location: string | null;
-            /** @example false */
-            isCentralKitchen: boolean;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        OrderPromotionSummaryDto: {
-            /** @example 1 */
-            id: number;
-            /** @example SUMMER10 */
-            code: string;
-            /** @example 10% off summer drinks */
-            description: string;
-        };
-        OrderResponseDto: {
-            /** @example 100 */
-            id: number;
-            /** @example 240 */
-            totalAmount: number;
-            /** @example 24 */
-            discountAmount: number;
-            /** @example 216 */
-            netAmount: number;
-            /** @example 0 */
-            taxAmount: number;
-            /** @example 80 */
-            totalCogs: number;
-            /** @example 21 */
-            pointsEarned: number;
-            /** @example 0 */
-            pointsRedeemed: number;
-            /**
-             * @example PENDING
-             * @enum {string}
-             */
-            status: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
-            /**
-             * @example CASH
-             * @enum {string}
-             */
-            paymentMethod: "CASH" | "CREDIT_CARD" | "QR_PROMPTPAY";
-            /** @example false */
-            isTaxInvoiceRequested?: boolean;
-            taxInvoiceName?: string | null;
-            taxInvoiceTaxId?: string | null;
-            taxInvoiceAddress?: string | null;
-            /** @example 1 */
-            userId: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 5 */
-            customerId?: number | null;
-            /** @example 2 */
-            promotionId?: number | null;
-            /** @example 42 */
-            queueNumber?: number | null;
-            /** Format: date */
-            queueDate?: string | null;
-            refundReason?: string | null;
-            /** Format: date-time */
-            refundedAt?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            items?: components["schemas"]["OrderItemResponseDto"][];
-            customer?: components["schemas"]["OrderCustomerSummaryDto"] | null;
-            branch?: components["schemas"]["BranchResponseDto"];
-            promotion?: components["schemas"]["OrderPromotionSummaryDto"] | null;
-        };
-        PaginatedResponseDto: {
-            /**
-             * @description Rows matching the query
-             * @example 412
-             */
-            total: number;
-            /**
-             * @description Rows returned in this page
-             * @example 50
-             */
-            limit: number;
-            /** @example 0 */
-            offset: number;
-        };
-        UpdateOrderStatusDto: {
-            /** @enum {string} */
-            status: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
-        };
-        RefundOrderDto: {
-            reason?: string;
-        };
-        CreateSupplierDto: {
-            name: string;
-            /** Format: email */
-            contactEmail?: string;
-            phone?: string;
-        };
-        UpdateSupplierDto: {
-            name?: string;
-            /** Format: email */
-            contactEmail?: string;
-            phone?: string;
-        };
-        PurchaseOrderItemResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            poId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 24 */
-            quantityRequested: number;
-            /** @example 45.5 */
-            unitPrice: number;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
-        };
-        SupplierPaymentResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            poId: number;
-            /** @example 2 */
-            supplierId: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 450 */
-            amount: number;
-            /**
-             * @example BANK_TRANSFER
-             * @enum {string}
-             */
-            method: "CASH" | "BANK_TRANSFER";
-            notes?: string | null;
-            /** @example 4 */
-            paidByUserId: number;
-            /** Format: date-time */
-            createdAt: string;
-        };
-        PurchaseOrderResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example PO-2026-0001 */
-            poNumber: string;
-            /** @example 1 */
-            branchId: number;
-            /** @example 2 */
-            supplierId: number;
-            /**
-             * @example DRAFT
-             * @enum {string}
-             */
-            status: "DRAFT" | "PENDING" | "APPROVED" | "RECEIVED";
-            /**
-             * @example UNPAID
-             * @enum {string}
-             */
-            paymentStatus: "UNPAID" | "PAID";
-            /** Format: date-time */
-            paidAt?: string | null;
-            /** @example false */
-            isAutoGenerated: boolean;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            supplier?: components["schemas"]["SupplierResponseDto"];
-            branch?: components["schemas"]["BranchResponseDto"];
-            items?: components["schemas"]["PurchaseOrderItemResponseDto"][];
-            payment?: components["schemas"]["SupplierPaymentResponseDto"] | null;
-        };
-        ApAgingBucketDto: {
-            /** @example 0-30 */
-            range: string;
-            /** @example 1250.5 */
-            amount: number;
-            /** @example 3 */
-            count: number;
-        };
-        ApAgingResponseDto: {
-            /** @example 2450.75 */
-            totalOutstanding: number;
-            /** @example 5 */
-            poCount: number;
-            buckets: components["schemas"]["ApAgingBucketDto"][];
-        };
-        PurchaseOrderItemDto: {
-            ingredientId: number;
-            quantity: number;
-            unitPrice: number;
-        };
-        CreatePurchaseOrderDto: {
-            branchId: number;
-            supplierId: number;
-            expectedDate?: string;
-            items: components["schemas"]["PurchaseOrderItemDto"][];
-        };
-        ReceivePOItemDto: {
-            ingredientId: number;
-            expiryDate?: string;
-        };
-        ReceivePurchaseOrderDto: {
-            items?: components["schemas"]["ReceivePOItemDto"][];
-        };
-        PayPurchaseOrderDto: {
-            /** @enum {string} */
-            method: "CASH" | "BANK_TRANSFER";
-            notes?: string;
-        };
-        OutboxEventResponseDto: {
-            /** @example 7 */
-            id: number;
-            /** @example order.created */
-            eventType: string;
-            /**
-             * @example FAILED
-             * @enum {string}
-             */
-            status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
-            /** @example 5 */
-            attempts: number;
-            lastError: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            claimedAt: string | null;
-            /** Format: date-time */
-            processedAt: string | null;
-        };
-        CreateCustomerDto: {
-            name: string;
-            phone: string;
-        };
-        CustomerResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 0812345678 */
-            phone: string;
-            /** @example Jane Customer */
-            name: string;
-            /** @example 120 */
-            points: number;
-            /**
-             * @example REGULAR
-             * @enum {string}
-             */
-            tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        Customer360FavoriteDrinkDto: {
-            /** @example Latte */
-            name: string;
-            /** @example 8 */
-            count: number;
-        };
-        Customer360OrderItemDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            productId: number;
-            /** @example 2 */
-            quantity: number;
-        };
-        Customer360OrderDto: {
-            /** @example 100 */
-            id: number;
-            /** @example 150 */
-            netAmount: number;
-            /** Format: date-time */
-            createdAt: string;
-            items?: components["schemas"]["Customer360OrderItemDto"][];
-        };
-        Customer360ResponseDto: {
-            customer: components["schemas"]["CustomerResponseDto"];
-            /** @example 12500 */
-            lifetimeSpend: number;
-            /** @example GOLD */
-            nextTier: string | null;
-            /** @example 7500 */
-            amountToNextTier: number;
-            /** @example 62.5 */
-            progressPercentage: number;
-            favoriteDrinks: components["schemas"]["Customer360FavoriteDrinkDto"][];
-            /**
-             * @example LOW
-             * @enum {string}
-             */
-            churnRisk: "LOW" | "MEDIUM" | "HIGH";
-            /** @example 3 */
-            daysSinceLastOrder: number;
-            recentOrders: components["schemas"]["Customer360OrderDto"][];
-        };
-        UpdateCustomerDto: {
-            name?: string;
-            phone?: string;
-        };
         AccountResponseDto: {
-            /** @example 1 */
-            id: number;
             /** @example 1010 */
             code: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example Petty cash and register float */
+            description: string | null;
+            /** @example 1 */
+            id: number;
+            /** @example true */
+            isActive: boolean;
             /** @example Cash */
             name: string;
             /**
@@ -2433,247 +1884,113 @@ export interface components {
              * @enum {string}
              */
             type: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE";
-            /** @example Petty cash and register float */
-            description: string | null;
-            /** @example true */
-            isActive: boolean;
-            /** Format: date-time */
-            createdAt: string;
             /** Format: date-time */
             updatedAt: string;
         };
-        JournalLineResponseDto: {
+        AddInventoryBatchDto: {
+            expiryDate?: string;
+            ingredientId: number;
+            quantity: number;
+        };
+        ApAgingBucketDto: {
+            /** @example 1250.5 */
+            amount: number;
+            /** @example 3 */
+            count: number;
+            /** @example 0-30 */
+            range: string;
+        };
+        ApAgingResponseDto: {
+            buckets: components["schemas"]["ApAgingBucketDto"][];
+            /** @example 5 */
+            poCount: number;
+            /** @example 2450.75 */
+            totalOutstanding: number;
+        };
+        ApiErrorResponseDto: {
+            /**
+             * @example VALIDATION_ERROR
+             * @enum {string}
+             */
+            code: "INTERNAL_ERROR" | "VALIDATION_ERROR" | "NOT_FOUND" | "FORBIDDEN" | "UNAUTHORIZED" | "RATE_LIMITED" | "CONFLICT" | "ORDER_NOT_FOUND" | "ORDER_ALREADY_REVERSED" | "ORDER_VOID_SAME_DAY_ONLY" | "ORDER_REFUND_NOT_COMPLETED" | "ORDER_REFUND_SAME_DAY" | "ORDER_REFUND_NOT_ALLOWED" | "ORDER_STATUS_INVALID" | "PRODUCT_NOT_FOUND" | "PRODUCT_RECIPE_REQUIRED" | "INVALID_MODIFIER_SELECTION" | "CUSTOMER_NOT_FOUND" | "CUSTOMER_PHONE_REQUIRED" | "INSUFFICIENT_LOYALTY_POINTS" | "PROMOTION_INVALID" | "PROMOTION_NOT_STARTED" | "PROMOTION_EXPIRED" | "PROMOTION_MIN_PURCHASE" | "BRANCH_ACCESS_DENIED" | "BRANCH_NOT_ASSIGNED" | "SETTLEMENT_NOT_FOUND" | "SETTLEMENT_ALREADY_APPROVED";
+            /**
+             * @example {
+             *       "field": "email"
+             *     }
+             */
+            details?: Record<string, never>;
+            /** @example Validation failed. */
+            message: string;
+            /** @example /orders/1/void */
+            path: string;
+            /** @example req-1234 */
+            requestId?: string;
+            /** @example 400 */
+            statusCode: number;
+            /** @example 2026-07-02T08:01:00.000Z */
+            timestamp: string;
+        };
+        AttendanceRecordResponseDto: {
+            branch?: components["schemas"]["HrBranchSummaryDto"];
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            clockIn: string;
+            /** Format: date-time */
+            clockOut: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example 7.5 */
+            totalHours: number | null;
+            /** Format: date-time */
+            updatedAt: string;
+            /** @example 4 */
+            userId: number;
+        };
+        AuditLogResponseDto: {
+            /** @example APPROVE_PO */
+            action: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example {"poNumber":"PO-2026-0001"} */
+            details: string | null;
             /** @example 1 */
             id: number;
             /** @example 10 */
-            journalEntryId: number;
-            /** @example 3 */
-            accountId: number;
-            /** @example 1200 */
-            debit: number;
-            /** @example 0 */
-            credit: number;
-            /** @example Cash payment */
-            description: string | null;
-            account?: components["schemas"]["AccountResponseDto"];
-        };
-        JournalEntryResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number | null;
-            /** Format: date */
-            date: string;
-            /** @example ORD-100 */
-            reference: string | null;
-            /** @example Sales revenue for order 100 */
-            description: string;
-            /**
-             * @example POSTED
-             * @enum {string}
-             */
-            status: "DRAFT" | "POSTED" | "VOIDED";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            lines?: components["schemas"]["JournalLineResponseDto"][];
-        };
-        VatReportMonthResponseDto: {
-            /** @example 2026-06 */
-            month: string;
-            /** @example 198500 */
-            grossSales: number;
-            /** @example 185514.02 */
-            salesExVat: number;
-            /** @example 12985.98 */
-            outputVat: number;
-            /** @example 412 */
-            orderCount: number;
-        };
-        ProfitLossMonthResponseDto: {
-            /** @example 2026-06 */
-            month: string;
-            /** @example 185000 */
-            revenue: number;
-            /** @example 92000 */
-            expense: number;
-        };
-        TrialBalanceAccountResponseDto: {
-            /** @example 3 */
-            accountId: number;
-            /** @example 1030 */
-            code: string;
-            /** @example Inventory */
-            name: string;
-            /**
-             * @example ASSET
-             * @enum {string}
-             */
-            type: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE";
-            /**
-             * @description Side the account balance normally sits on
-             * @example DEBIT
-             * @enum {string}
-             */
-            normalBalance: "DEBIT" | "CREDIT";
-            /**
-             * @description Sum of all debit lines
-             * @example 48250.75
-             */
-            debit: number;
-            /**
-             * @description Sum of all credit lines
-             * @example 12100.5
-             */
-            credit: number;
-            /**
-             * @description Net balance on the account's normal side
-             * @example 36150.25
-             */
-            balance: number;
-        };
-        TrialBalanceResponseDto: {
-            /**
-             * @description BRANCH excludes chain-level entries, so it is a partial view
-             * @example CHAIN
-             * @enum {string}
-             */
-            scope: "CHAIN" | "BRANCH";
-            /** @example 1 */
-            branchId: number | null;
-            /**
-             * @description Inclusive cut-off date; null means every posted entry
-             * @example 2026-07-25
-             */
-            asOf: string | null;
-            accounts: components["schemas"]["TrialBalanceAccountResponseDto"][];
-            /** @example 412500.25 */
-            totalDebit: number;
-            /** @example 412500.25 */
-            totalCredit: number;
-            /**
-             * @description True when total debits equal total credits
-             * @example true
-             */
-            isBalanced: boolean;
-        };
-        BalanceSheetLineResponseDto: {
-            /**
-             * @description Null on a computed line that has no account behind it
-             * @example 3
-             */
-            accountId: number | null;
-            /** @example 1030 */
-            code: string | null;
-            /** @example Inventory */
-            name: string;
-            /**
-             * @description Balance on the account's normal side
-             * @example 36150.25
-             */
-            amount: number;
-            /**
-             * @description True for retained earnings, which is derived from the revenue and expense accounts rather than posted
-             * @example false
-             */
-            isComputed: boolean;
-        };
-        BalanceSheetResponseDto: {
-            /**
-             * @description BRANCH excludes chain-level entries, so it is a partial view
-             * @example CHAIN
-             * @enum {string}
-             */
-            scope: "CHAIN" | "BRANCH";
-            /** @example 1 */
-            branchId: number | null;
-            /**
-             * @description Inclusive cut-off date; null means every posted entry
-             * @example 2026-07-25
-             */
-            asOf: string | null;
-            assets: components["schemas"]["BalanceSheetLineResponseDto"][];
-            liabilities: components["schemas"]["BalanceSheetLineResponseDto"][];
-            /** @description Posted equity accounts plus the computed retained earnings */
-            equity: components["schemas"]["BalanceSheetLineResponseDto"][];
-            /**
-             * @description Revenue less expenses for every posted entry up to the cut-off. There is no period close, so this accumulates from go-live rather than resetting each year
-             * @example 128400.5
-             */
-            retainedEarnings: number;
-            /** @example 412500.25 */
-            totalAssets: number;
-            /** @example 84100 */
-            totalLiabilities: number;
-            /** @example 328400.25 */
-            totalEquity: number;
-            /** @example 412500.25 */
-            totalLiabilitiesAndEquity: number;
-            /**
-             * @description True when assets equal liabilities plus equity. It follows from the trial balance being balanced, so a false here means the ledger itself is broken
-             * @example true
-             */
-            isBalanced: boolean;
-        };
-        SeedAccountsResponseDto: {
-            /** @example true */
-            success: boolean;
-            /** @example Accounts seeded successfully */
-            message: string;
+            targetId: number | null;
+            /** @example PurchaseOrder */
+            targetType: string;
+            user?: components["schemas"]["AuditLogUserSummaryDto"];
+            /** @example 4 */
+            userId: number;
         };
         AuditLogUserSummaryDto: {
+            /** @example manager@branchbrew.dev */
+            email: string;
             /** @example 1 */
             id: number;
             /** @example Jane Staff */
             name: string | null;
-            /** @example manager@branchbrew.dev */
-            email: string;
             /**
              * @example MANAGER
              * @enum {string}
              */
             role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
         };
-        AuditLogResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 4 */
-            userId: number;
-            /** @example APPROVE_PO */
-            action: string;
-            /** @example PurchaseOrder */
-            targetType: string;
-            /** @example 10 */
-            targetId: number | null;
-            /** @example {"poNumber":"PO-2026-0001"} */
-            details: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            user?: components["schemas"]["AuditLogUserSummaryDto"];
-        };
-        SettingsResponseDto: {
-            /** @example BranchBrew Co. */
-            companyName?: string;
-            /** @example 0105551234567 */
-            taxId?: string;
-            /** @example 7 */
-            vatRate?: string;
-            /** @example THB */
-            currency?: string;
-            /** @example Thank you for visiting BranchBrew */
-            receiptFooter?: string;
-        };
-        LoginDto: {
-            /** Format: email */
-            email: string;
-            password: string;
+        AuthLoginResponseDto: {
+            user: components["schemas"]["AuthUserResponseDto"];
         };
         AuthUserResponseDto: {
+            /** @example Downtown */
+            branch: string | null;
             /** @example 1 */
-            id: number;
+            branchId: number | null;
             /** @example manager@branchbrew.dev */
             email: string;
+            /** @example 1 */
+            id: number;
             /** @example Branch Manager */
             name: string | null;
             /**
@@ -2681,269 +1998,108 @@ export interface components {
              * @enum {string}
              */
             role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        };
+        BalanceSheetLineResponseDto: {
+            /**
+             * @description Null on a computed line that has no account behind it
+             * @example 3
+             */
+            accountId: number | null;
+            /**
+             * @description Balance on the account's normal side
+             * @example 36150.25
+             */
+            amount: number;
+            /** @example 1030 */
+            code: string | null;
+            /**
+             * @description True for retained earnings, which is derived from the revenue and expense accounts rather than posted
+             * @example false
+             */
+            isComputed: boolean;
+            /** @example Inventory */
+            name: string;
+        };
+        BalanceSheetResponseDto: {
+            /**
+             * @description Inclusive cut-off date; null means every posted entry
+             * @example 2026-07-25
+             */
+            asOf: string | null;
+            assets: components["schemas"]["BalanceSheetLineResponseDto"][];
             /** @example 1 */
             branchId: number | null;
-            /** @example Downtown */
-            branch: string | null;
-        };
-        AuthLoginResponseDto: {
-            user: components["schemas"]["AuthUserResponseDto"];
-        };
-        CreateBranchDto: {
-            name: string;
-            location?: string;
-            isCentralKitchen?: boolean;
-        };
-        HrUserSummaryDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Jane Staff */
-            name: string | null;
-            /** @example staff@branchbrew.dev */
-            email: string;
+            /** @description Posted equity accounts plus the computed retained earnings */
+            equity: components["schemas"]["BalanceSheetLineResponseDto"][];
             /**
-             * @example STAFF
+             * @description True when assets equal liabilities plus equity. It follows from the trial balance being balanced, so a false here means the ledger itself is broken
+             * @example true
+             */
+            isBalanced: boolean;
+            liabilities: components["schemas"]["BalanceSheetLineResponseDto"][];
+            /**
+             * @description Revenue less expenses for every posted entry up to the cut-off. There is no period close, so this accumulates from go-live rather than resetting each year
+             * @example 128400.5
+             */
+            retainedEarnings: number;
+            /**
+             * @description BRANCH excludes chain-level entries, so it is a partial view
+             * @example CHAIN
              * @enum {string}
              */
-            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
-            /** @example 1 */
-            branchId: number | null;
-            /** @enum {string} */
-            employmentType?: "FULL_TIME" | "PART_TIME";
-            /** @example 85 */
-            hourlyRate?: number;
-            /** @example 25000 */
-            baseSalary?: number;
+            scope: "CHAIN" | "BRANCH";
+            /** @example 412500.25 */
+            totalAssets: number;
+            /** @example 328400.25 */
+            totalEquity: number;
+            /** @example 84100 */
+            totalLiabilities: number;
+            /** @example 412500.25 */
+            totalLiabilitiesAndEquity: number;
         };
-        StockTransferResponseDto: {
+        BranchInventoryResponseDto: {
+            /** @example 1 */
+            branchId: number;
             /** @example 1 */
             id: number;
-            /** @example 1 */
-            fromBranchId: number;
-            /** @example 2 */
-            toBranchId: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
             /** @example 3 */
             ingredientId: number;
-            /** @example 12 */
-            quantity: number;
-            /**
-             * @example PENDING
-             * @enum {string}
-             */
-            status: "PENDING" | "SHIPPED" | "COMPLETED" | "CANCELLED";
-            /** @example 4 */
-            requestedById: number;
-            /** @example 5 */
-            approvedById: number | null;
+            /** @example 10 */
+            minStock: number;
+            /** @example 24.5 */
+            stock: number;
             /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            fromBranch?: components["schemas"]["BranchResponseDto"];
-            toBranch?: components["schemas"]["BranchResponseDto"];
+            updatedAt?: string;
+        };
+        BranchInventoryWithIngredientResponseDto: {
+            /** @example 1 */
+            branchId: number;
+            /** @example 1 */
+            id: number;
             ingredient?: components["schemas"]["IngredientResponseDto"];
-            requestedBy?: components["schemas"]["HrUserSummaryDto"];
-        };
-        CreateTransferDto: {
-            fromBranchId: number;
-            toBranchId: number;
+            /** @example 3 */
             ingredientId: number;
-            quantity: number;
-        };
-        UpdateBranchDto: {
-            name?: string;
-            location?: string;
-            isCentralKitchen?: boolean;
-        };
-        SyncBranchInventoryResponseDto: {
-            /** @example 1 */
-            branchId: number;
-            /** @example 12 */
-            rowsCreated: number;
-        };
-        AddInventoryBatchDto: {
-            ingredientId: number;
-            quantity: number;
-            expiryDate?: string;
-        };
-        ReportWasteDto: {
-            batchId?: number;
-            ingredientId: number;
-            quantity: number;
-            reason: string;
-        };
-        CreatePromotionDto: {
-            code: string;
-            description: string;
-            /** @enum {string} */
-            discountType: "PERCENTAGE" | "FIXED_AMOUNT";
-            discountValue: number;
-            minPurchase?: number;
-            startDate?: string;
-            endDate?: string;
-        };
-        PromotionResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example SUMMER10 */
-            code: string;
-            /** @example 10% off summer drinks */
-            description: string;
-            /**
-             * @example PERCENTAGE
-             * @enum {string}
-             */
-            discountType: "PERCENTAGE" | "FIXED_AMOUNT";
             /** @example 10 */
-            discountValue: number;
-            /** @example 500 */
-            minPurchase: number | null;
-            /** @example true */
-            isActive: boolean;
+            minStock: number;
+            /** @example 24.5 */
+            stock: number;
             /** Format: date-time */
-            startDate: string | null;
-            /** Format: date-time */
-            endDate: string | null;
+            updatedAt?: string;
+        };
+        BranchResponseDto: {
             /** Format: date-time */
             createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-        };
-        UpdatePromotionDto: {
-            description?: string;
-            /** @enum {string} */
-            discountType?: "PERCENTAGE" | "FIXED_AMOUNT";
-            discountValue?: number;
-            minPurchase?: number;
-            startDate?: string | null;
-            endDate?: string | null;
-        };
-        TogglePromotionDto: {
-            isActive: boolean;
-        };
-        ValidatePromotionDto: {
-            code: string;
-            subtotal: number;
-        };
-        ValidatePromotionResponseDto: {
             /** @example 1 */
             id: number;
-            /** @example SUMMER10 */
-            code: string;
-            /** @example 85 */
-            discountAmount: number;
-            /**
-             * @example PERCENTAGE
-             * @enum {string}
-             */
-            type: "PERCENTAGE" | "FIXED_AMOUNT";
-            /** @example 10 */
-            value: number;
-        };
-        ClockInDto: {
-            branchId: number;
-        };
-        HrBranchSummaryDto: {
-            /** @example 1 */
-            id: number;
+            /** @example false */
+            isCentralKitchen: boolean;
+            /** @example Bangkok */
+            location: string | null;
             /** @example Downtown */
             name: string;
-        };
-        AttendanceRecordResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 4 */
-            userId: number;
-            /** @example 1 */
-            branchId: number;
-            /** Format: date-time */
-            clockIn: string;
-            /** Format: date-time */
-            clockOut: string | null;
-            /** @example 7.5 */
-            totalHours: number | null;
-            /** Format: date-time */
-            createdAt: string;
             /** Format: date-time */
             updatedAt: string;
-            branch?: components["schemas"]["HrBranchSummaryDto"];
-        };
-        CreateShiftDto: {
-            userId: number;
-            branchId: number;
-            startTime: string;
-            endTime: string;
-        };
-        ShiftResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 4 */
-            userId: number;
-            /** @example 1 */
-            branchId: number;
-            /** Format: date-time */
-            startTime: string;
-            /** Format: date-time */
-            endTime: string;
-            /**
-             * @example SCHEDULED
-             * @enum {string}
-             */
-            status: "SCHEDULED" | "COMPLETED" | "ABSENT" | "CANCELLED";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            user?: components["schemas"]["HrUserSummaryDto"];
-            branch?: components["schemas"]["BranchResponseDto"];
-        };
-        RequestLeaveDto: {
-            /** @enum {string} */
-            type: "SICK" | "ANNUAL" | "UNPAID";
-            startDate: string;
-            endDate: string;
-            reason?: string;
-        };
-        LeaveRequestUserSummaryDto: {
-            /** @example Jane Staff */
-            name: string | null;
-            /** @example staff@branchbrew.dev */
-            email: string;
-            /** @example 1 */
-            branchId: number | null;
-        };
-        LeaveRequestResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 4 */
-            userId: number;
-            /**
-             * @example ANNUAL
-             * @enum {string}
-             */
-            type: "SICK" | "ANNUAL" | "UNPAID";
-            /** Format: date */
-            startDate: string;
-            /** Format: date */
-            endDate: string;
-            /** @example Family trip */
-            reason: string | null;
-            /**
-             * @example PENDING
-             * @enum {string}
-             */
-            status: "PENDING" | "APPROVED" | "REJECTED";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            user?: components["schemas"]["LeaveRequestUserSummaryDto"];
-        };
-        BulkProcessLeaveDto: {
-            /** @description Leave request ids to decide in one action */
-            ids: number[];
-            /** @enum {string} */
-            status: "APPROVED" | "REJECTED";
         };
         BulkLeaveFailureDto: {
             /** @example 12 */
@@ -2952,6 +2108,7 @@ export interface components {
             reason: string;
         };
         BulkLeaveResultDto: {
+            failed: components["schemas"]["BulkLeaveFailureDto"][];
             /**
              * @description Distinct ids submitted
              * @example 20
@@ -2965,404 +2122,232 @@ export interface components {
              *     ]
              */
             succeeded: number[];
-            failed: components["schemas"]["BulkLeaveFailureDto"][];
         };
-        ProcessLeaveDto: {
+        BulkProcessLeaveDto: {
+            /** @description Leave request ids to decide in one action */
+            ids: number[];
             /** @enum {string} */
             status: "APPROVED" | "REJECTED";
         };
-        GeneratePayrollDto: {
+        ClockInDto: {
             branchId: number;
-            month: number;
-            year: number;
         };
-        PayslipResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 10 */
-            payrollRunId: number;
-            /** @example 4 */
-            userId: number;
-            /** @example 160 */
-            standardHours: number;
-            /** @example 8 */
-            otHours: number;
-            /** @example 13600 */
-            basePay: number;
-            /** @example 1020 */
-            otPay: number;
-            /** @example 0 */
-            bonuses: number;
-            /** @example 14620 */
-            grossPay: number;
-            /** @example 438.6 */
-            taxDeduction: number;
-            /** @example 680 */
-            socialSecurity: number;
-            /** @example 0 */
-            otherDeductions: number;
-            /** @example 13501.4 */
-            netPay: number;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            user?: components["schemas"]["HrUserSummaryDto"];
+        CreateBomDto: {
+            quantityNeeded: number;
+            rawIngredientId: number;
+            targetIngredientId: number;
         };
-        PayrollRunResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 6 */
-            month: number;
-            /** @example 2026 */
-            year: number;
-            /**
-             * @example DRAFT
-             * @enum {string}
-             */
-            status: "DRAFT" | "APPROVED" | "PAID";
-            /** @example 1 */
-            branchId: number | null;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            payslips?: components["schemas"]["PayslipResponseDto"][];
-            branch?: components["schemas"]["BranchResponseDto"];
-        };
-        UpdateHourlyRateDto: {
-            hourlyRate: number;
-        };
-        HrUserResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example Jane Staff */
-            name: string | null;
-            /** @example staff@branchbrew.dev */
-            email: string;
-            /**
-             * @example STAFF
-             * @enum {string}
-             */
-            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
-            /** @example 1 */
-            branchId: number | null;
-            /** @enum {string} */
-            employmentType?: "FULL_TIME" | "PART_TIME";
-            /** @example 85 */
-            hourlyRate?: number;
-            /** @example 25000 */
-            baseSalary?: number;
-        };
-        CreateUserDto: {
+        CreateBranchDto: {
+            isCentralKitchen?: boolean;
+            location?: string;
             name: string;
-            /** Format: email */
-            email: string;
-            password: string;
-            /** @enum {string} */
-            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
-            branchId?: number;
-            hourlyRate?: number;
-            /** @enum {string} */
-            employmentType?: "FULL_TIME" | "PART_TIME";
-            baseSalary?: number;
         };
-        UpdateUserDto: {
-            name?: string;
-            /** Format: email */
-            email?: string;
-            password?: string;
-            /** @enum {string} */
-            role?: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        CreateCustomerDto: {
+            name: string;
+            phone: string;
+        };
+        CreateEquipmentDto: {
             branchId?: number;
-            hourlyRate?: number;
+            name: string;
+            nextMaintenanceDate?: string;
+            purchaseDate?: string;
+            serialNumber?: string;
             /** @enum {string} */
-            employmentType?: "FULL_TIME" | "PART_TIME";
-            baseSalary?: number;
+            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
+            warrantyExpiry?: string;
         };
         CreateExpenseDto: {
-            branchId?: number;
             amount: number;
+            branchId?: number;
             category: string;
             description?: string;
         };
-        ExpenseRecordedByDto: {
-            /** @example Branch Manager */
-            name: string | null;
-        };
-        ExpenseResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 250 */
-            amount: number;
-            /** @example Supplies */
-            category: string;
-            /** @example Cleaning supplies */
-            description: string | null;
-            /** @example 4 */
-            recordedById: number;
-            /** Format: date-time */
-            createdAt: string;
-            recordedBy?: components["schemas"]["ExpenseRecordedByDto"];
-        };
-        SettlementExpectedResponseDto: {
-            /** @example 12500 */
-            expectedCash: number;
-            /** @example 8200 */
-            expectedCreditCard: number;
-            /** @example 3100 */
-            expectedQR: number;
-            /** @example 12500 */
-            sales: number;
-            /** @example 450 */
-            expenses: number;
-        };
-        SubmitSettlementDto: {
-            branchId?: number;
-            actualCash: number;
-            actualCreditCard?: number;
-            actualQR?: number;
-        };
-        SettlementBranchSummaryDto: {
-            /** @example Downtown */
+        CreateIngredientDto: {
+            costPerUnit?: number;
+            isActive?: boolean;
             name: string;
+            primarySupplierId?: number;
+            unit: string;
         };
-        SettlementSubmittedByDto: {
-            /** @example Jane Staff */
-            name: string | null;
+        CreateModifierGroupDto: {
+            category?: string;
+            name: string;
+            options?: components["schemas"]["CreateModifierOptionDto"][];
+            sortOrder?: number;
+            swapIngredientId?: number;
         };
-        SettlementResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
+        CreateModifierOptionDto: {
+            isDefault?: boolean;
+            name: string;
+            priceDelta?: number;
+            sortOrder?: number;
+            swapToIngredientId?: number;
+        };
+        CreateModifierOptionForGroupDto: {
+            groupId: number;
+            isDefault?: boolean;
+            name: string;
+            priceDelta?: number;
+            sortOrder?: number;
+            swapToIngredientId?: number;
+        };
+        CreateOrderDto: {
+            branchId?: number;
+            /** Format: uuid */
+            clientRequestId?: string;
+            customerPhone?: string;
+            isTaxInvoiceRequested?: boolean;
+            items: components["schemas"]["OrderItemDto"][];
+            /** @enum {string} */
+            paymentMethod?: "CASH" | "CREDIT_CARD" | "QR_PROMPTPAY";
+            pointsToRedeem?: number;
+            promotionCode?: string;
+            taxInvoiceAddress?: string;
+            taxInvoiceName?: string;
+            taxInvoiceTaxId?: string;
+        };
+        CreateProductDto: {
+            category: string;
+            description?: string;
+            isActive?: boolean;
+            name: string;
+            price: number;
+            recipeItems?: components["schemas"]["RecipeItemDto"][];
+        };
+        CreateProductionOrderDto: {
             branchId: number;
-            /** Format: date */
-            date: string;
-            /** @example 12500 */
-            expectedCash: number;
-            /** @example 12480 */
-            actualCash: number;
-            /** @example 8200 */
-            expectedCreditCard: number;
-            /** @example 8200 */
-            actualCreditCard: number;
-            /** @example 3100 */
-            expectedQR: number;
-            /** @example 3100 */
-            actualQR: number;
-            /** @example -20 */
-            difference: number;
-            /**
-             * @example PENDING
-             * @enum {string}
-             */
-            status: "PENDING" | "APPROVED" | "REJECTED";
-            /** @example 4 */
-            submittedById: number;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            branch?: components["schemas"]["SettlementBranchSummaryDto"];
-            submittedBy?: components["schemas"]["SettlementSubmittedByDto"];
+            plannedStartDate?: string;
+            quantityToProduce: number;
+            targetIngredientId: number;
         };
-        BranchInventoryResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
+        CreatePromotionDto: {
+            code: string;
+            description: string;
+            /** @enum {string} */
+            discountType: "PERCENTAGE" | "FIXED_AMOUNT";
+            discountValue: number;
+            endDate?: string;
+            minPurchase?: number;
+            startDate?: string;
+        };
+        CreatePurchaseOrderDto: {
             branchId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 24.5 */
-            stock: number;
-            /** @example 10 */
-            minStock: number;
-            /** Format: date-time */
-            updatedAt?: string;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            expectedDate?: string;
+            items: components["schemas"]["PurchaseOrderItemDto"][];
+            supplierId: number;
         };
-        StockInItemDto: {
-            ingredientId: number;
-            quantity: number;
-            expiryDate?: string;
-        };
-        StockInDto: {
-            items: components["schemas"]["StockInItemDto"][];
-        };
-        InventoryBatchResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
+        CreateShiftDto: {
             branchId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example 12 */
-            quantity: number;
-            /** Format: date-time */
-            expiryDate?: string | null;
-            poId?: number | null;
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "DEPLETED" | "EXPIRED";
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        StockInResultDto: {
-            batch: components["schemas"]["InventoryBatchResponseDto"];
-            inventory: components["schemas"]["BranchInventoryResponseDto"];
-        };
-        WasteItemDto: {
-            ingredientId: number;
-            quantity: number;
-            reason: string;
-        };
-        RecordWasteDto: {
-            items: components["schemas"]["WasteItemDto"][];
+            endTime: string;
+            startTime: string;
+            userId: number;
         };
         CreateStockCountDto: {
             isBlind?: boolean;
             notes?: string;
         };
-        StockCountUserDto: {
-            /** @example Branch Manager */
-            name: string | null;
-        };
-        StockCountLineResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 3 */
-            ingredientId: number;
-            expectedQty?: number | null;
-            countedQty?: number | null;
-            /** @description Live stock at read time; hidden while a blind count is in draft */
-            currentStock?: number | null;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
-        };
-        StockCountResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /**
-             * @example DRAFT
-             * @enum {string}
-             */
-            status: "DRAFT" | "SUBMITTED" | "APPROVED" | "CANCELLED";
-            /** @example false */
-            isBlind: boolean;
-            notes?: string | null;
-            /** Format: date-time */
-            submittedAt?: string | null;
-            /** Format: date-time */
-            approvedAt?: string | null;
-            /** Format: date-time */
-            createdAt: string;
-            createdBy?: components["schemas"]["StockCountUserDto"];
-            approvedBy?: components["schemas"]["StockCountUserDto"] | null;
-            lines?: components["schemas"]["StockCountLineResponseDto"][];
-        };
-        StockCountLineInputDto: {
-            ingredientId: number;
-            countedQty: number;
-        };
-        UpdateStockCountLinesDto: {
-            lines: components["schemas"]["StockCountLineInputDto"][];
-        };
-        ManualAdjustmentDto: {
-            ingredientId: number;
-            quantityDelta: number;
-            /** @enum {string} */
-            reason: "DAMAGE" | "CORRECTION";
-            notes?: string;
-        };
-        StockAdjustmentResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example 3 */
-            ingredientId: number;
-            /** @example -2.5 */
-            quantityDelta: number;
-            /**
-             * @example COUNT_VARIANCE
-             * @enum {string}
-             */
-            reason: "COUNT_VARIANCE" | "DAMAGE" | "CORRECTION";
-            notes?: string | null;
-            stockCountId?: number | null;
-            /** Format: date-time */
-            createdAt: string;
-            ingredient?: components["schemas"]["IngredientSummaryDto"];
-            createdBy?: components["schemas"]["StockCountUserDto"];
-        };
-        EquipmentResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 1 */
-            branchId: number;
-            /** @example La Marzocco Linea */
+        CreateSupplierDto: {
+            /** Format: email */
+            contactEmail?: string;
             name: string;
-            /**
-             * @example ESPRESSO_MACHINE
-             * @enum {string}
-             */
-            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
-            /** @example LM-2024-001 */
-            serialNumber: string | null;
-            /**
-             * @example ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
-            /** Format: date-time */
-            purchaseDate: string | null;
-            /** Format: date-time */
-            warrantyExpiry: string | null;
-            /** Format: date-time */
-            nextMaintenanceDate: string | null;
+            phone?: string;
+        };
+        CreateTransferDto: {
+            fromBranchId: number;
+            ingredientId: number;
+            quantity: number;
+            toBranchId: number;
+        };
+        CreateUserDto: {
+            baseSalary?: number;
+            branchId?: number;
+            /** Format: email */
+            email: string;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            hourlyRate?: number;
+            name: string;
+            password: string;
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        };
+        Customer360FavoriteDrinkDto: {
+            /** @example 8 */
+            count: number;
+            /** @example Latte */
+            name: string;
+        };
+        Customer360OrderDto: {
             /** Format: date-time */
             createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
-            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 100 */
+            id: number;
+            items?: components["schemas"]["Customer360OrderItemDto"][];
+            /** @example 150 */
+            netAmount: number;
         };
-        MaintenanceLogResponseDto: {
+        Customer360OrderItemDto: {
             /** @example 1 */
             id: number;
             /** @example 10 */
-            equipmentId: number;
-            /** @example Replaced group gasket */
-            description: string;
-            /** @example 850 */
-            cost: number;
-            /** @example TechServe Co. */
-            performedBy: string | null;
-            /** Format: date-time */
-            date: string;
+            productId: number;
+            /** @example 2 */
+            quantity: number;
+        };
+        Customer360ResponseDto: {
+            /** @example 7500 */
+            amountToNextTier: number;
+            /**
+             * @example LOW
+             * @enum {string}
+             */
+            churnRisk: "LOW" | "MEDIUM" | "HIGH";
+            customer: components["schemas"]["CustomerResponseDto"];
+            /** @example 3 */
+            daysSinceLastOrder: number;
+            favoriteDrinks: components["schemas"]["Customer360FavoriteDrinkDto"][];
+            /** @example 12500 */
+            lifetimeSpend: number;
+            /** @example GOLD */
+            nextTier: string | null;
+            /** @example 62.5 */
+            progressPercentage: number;
+            recentOrders: components["schemas"]["Customer360OrderDto"][];
+        };
+        CustomerResponseDto: {
             /** Format: date-time */
             createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example Jane Customer */
+            name: string;
+            /** @example 0812345678 */
+            phone: string;
+            /** @example 120 */
+            points: number;
+            /**
+             * @example REGULAR
+             * @enum {string}
+             */
+            tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
             /** Format: date-time */
             updatedAt: string;
         };
         EquipmentDetailResponseDto: {
-            /** @example 1 */
-            id: number;
+            branch?: components["schemas"]["BranchResponseDto"];
             /** @example 1 */
             branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            maintenanceLogs?: components["schemas"]["MaintenanceLogResponseDto"][];
             /** @example La Marzocco Linea */
             name: string;
-            /**
-             * @example ESPRESSO_MACHINE
-             * @enum {string}
-             */
-            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
+            /** Format: date-time */
+            nextMaintenanceDate: string | null;
+            /** Format: date-time */
+            purchaseDate: string | null;
             /** @example LM-2024-001 */
             serialNumber: string | null;
             /**
@@ -3370,94 +2355,100 @@ export interface components {
              * @enum {string}
              */
             status: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+            /**
+             * @example ESPRESSO_MACHINE
+             * @enum {string}
+             */
+            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
             /** Format: date-time */
-            purchaseDate: string | null;
+            updatedAt: string;
             /** Format: date-time */
             warrantyExpiry: string | null;
+        };
+        EquipmentResponseDto: {
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example La Marzocco Linea */
+            name: string;
             /** Format: date-time */
             nextMaintenanceDate: string | null;
             /** Format: date-time */
-            createdAt: string;
+            purchaseDate: string | null;
+            /** @example LM-2024-001 */
+            serialNumber: string | null;
+            /**
+             * @example ACTIVE
+             * @enum {string}
+             */
+            status: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+            /**
+             * @example ESPRESSO_MACHINE
+             * @enum {string}
+             */
+            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
             /** Format: date-time */
             updatedAt: string;
-            branch?: components["schemas"]["BranchResponseDto"];
-            maintenanceLogs?: components["schemas"]["MaintenanceLogResponseDto"][];
+            /** Format: date-time */
+            warrantyExpiry: string | null;
         };
-        CreateEquipmentDto: {
-            branchId?: number;
-            name: string;
-            /** @enum {string} */
-            type: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
-            serialNumber?: string;
-            purchaseDate?: string;
-            warrantyExpiry?: string;
-            nextMaintenanceDate?: string;
+        ExecutiveSummaryExpiryAlertDto: {
+            /** @example Downtown */
+            branchName: string;
+            /** Format: date-time */
+            expiryDate: string;
+            /** @example 44 */
+            id: number;
+            /** @example Fresh cream */
+            ingredientName: string;
+            /** @example 6 */
+            quantity: number;
+            /**
+             * @example ACTIVE
+             * @enum {string}
+             */
+            status: "ACTIVE" | "DEPLETED" | "EXPIRED";
         };
-        UpdateEquipmentDto: {
-            name?: string;
-            /** @enum {string} */
-            type?: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
-            serialNumber?: string;
-            /** @enum {string} */
-            status?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
-            purchaseDate?: string;
-            warrantyExpiry?: string;
-            nextMaintenanceDate?: string;
+        ExecutiveSummaryLowStockAlertDto: {
+            /** @example Downtown */
+            branchName: string;
+            /** @example 12 */
+            id: number;
+            /** @example Whole milk */
+            ingredientName: string;
+            /** @example 10 */
+            minStock: number;
+            /** @example 4 */
+            stock: number;
         };
-        LogMaintenanceDto: {
-            description: string;
-            cost: number;
-            performedBy?: string;
-            date?: string;
-            nextMaintenanceDate?: string;
-            /** @enum {string} */
-            newStatus?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
-        };
-        SalesTrendPointResponseDto: {
-            /** @example 2026-07-01 */
-            date: string;
-            /** @example 24500 */
-            total: number;
-            /** @example 128 */
-            orders: number;
-        };
-        TopProductReportResponseDto: {
+        ExecutiveSummaryResponseDto: {
+            /** @example 191.4 */
+            avgTicketToday: number;
+            /** @example 189.6 */
+            avgTicketYesterday: number;
+            expiryAlerts: components["schemas"]["ExecutiveSummaryExpiryAlertDto"][];
             /** @example 3 */
-            productId: number;
-            /** @example Latte */
-            name: string;
-            /** @example 86 */
-            totalQuantity: number;
-            /** @example 5160 */
-            totalRevenue: number;
-        };
-        ReportsProfitLossResponseDto: {
-            /** @example 185000 */
-            revenue: number;
-            /** @example 52000 */
-            cogs: number;
-            /** @example 133000 */
-            grossProfit: number;
-            /** @example 18000 */
-            expenses: number;
-            /** @example 45000 */
-            payroll: number;
-            /** @example 70000 */
-            netProfit: number;
-        };
-        FoodCostActualResponseDto: {
-            /** @example 412 */
-            orderCount: number;
-            /** @example 198500 */
-            totalRevenue: number;
-            /** @example 61535 */
-            totalCogs: number;
-            /** @example 136965 */
-            grossProfit: number;
-            /** @example 31 */
-            actualFoodCostPercent: number;
-            /** @example 69 */
-            grossMarginPercent: number;
+            expiryCount: number;
+            lowStockAlerts: components["schemas"]["ExecutiveSummaryLowStockAlertDto"][];
+            /** @example 8 */
+            lowStockCount: number;
+            /** @example 11.3 */
+            ordersGrowth: number;
+            /** @example 128 */
+            ordersToday: number;
+            /** @example 115 */
+            ordersYesterday: number;
+            /** @example 12.4 */
+            salesGrowth: number;
+            /** @example 24500 */
+            salesToday: number;
+            /** @example 21800 */
+            salesYesterday: number;
+            topBranch: components["schemas"]["ExecutiveSummaryTopBranchDto"] | null;
         };
         ExecutiveSummaryTopBranchDto: {
             /** @example 1 */
@@ -3467,121 +2458,275 @@ export interface components {
             /** @example 32500 */
             totalSales: number;
         };
-        ExecutiveSummaryLowStockAlertDto: {
-            /** @example 12 */
+        ExpenseRecordedByDto: {
+            /** @example Branch Manager */
+            name: string | null;
+        };
+        ExpenseResponseDto: {
+            /** @example 250 */
+            amount: number;
+            /** @example 1 */
+            branchId: number;
+            /** @example Supplies */
+            category: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example Cleaning supplies */
+            description: string | null;
+            /** @example 1 */
+            id: number;
+            recordedBy?: components["schemas"]["ExpenseRecordedByDto"];
+            /** @example 4 */
+            recordedById: number;
+        };
+        FoodCostActualResponseDto: {
+            /** @example 31 */
+            actualFoodCostPercent: number;
+            /** @example 69 */
+            grossMarginPercent: number;
+            /** @example 136965 */
+            grossProfit: number;
+            /** @example 412 */
+            orderCount: number;
+            /** @example 61535 */
+            totalCogs: number;
+            /** @example 198500 */
+            totalRevenue: number;
+        };
+        GeneratePayrollDto: {
+            branchId: number;
+            month: number;
+            year: number;
+        };
+        HealthErrorResponseDto: {
+            /** @example Database unreachable */
+            message: string;
+            /** @example error */
+            status: string;
+        };
+        HealthOkResponseDto: {
+            /** @example ok */
+            status: string;
+        };
+        HrBranchSummaryDto: {
+            /** @example 1 */
+            id: number;
+            /** @example Downtown */
+            name: string;
+        };
+        HrUserResponseDto: {
+            /** @example 25000 */
+            baseSalary?: number;
+            /** @example 1 */
+            branchId: number | null;
+            /** @example staff@branchbrew.dev */
+            email: string;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            /** @example 85 */
+            hourlyRate?: number;
+            /** @example 1 */
+            id: number;
+            /** @example Jane Staff */
+            name: string | null;
+            /**
+             * @example STAFF
+             * @enum {string}
+             */
+            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        };
+        HrUserSummaryDto: {
+            /** @example 25000 */
+            baseSalary?: number;
+            /** @example 1 */
+            branchId: number | null;
+            /** @example staff@branchbrew.dev */
+            email: string;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            /** @example 85 */
+            hourlyRate?: number;
+            /** @example 1 */
+            id: number;
+            /** @example Jane Staff */
+            name: string | null;
+            /**
+             * @example STAFF
+             * @enum {string}
+             */
+            role: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        };
+        IngredientResponseDto: {
+            /** @example 45 */
+            costPerUnit: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example true */
+            isActive: boolean;
+            /** @example Whole milk */
+            name: string;
+            primarySupplier?: components["schemas"]["SupplierResponseDto"];
+            /** @example 2 */
+            primarySupplierId: number | null;
+            /** @example L */
+            unit: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        IngredientSummaryDto: {
+            /** @example 45 */
+            costPerUnit?: number;
+            /** @example 1 */
             id: number;
             /** @example Whole milk */
-            ingredientName: string;
-            /** @example Downtown */
-            branchName: string;
-            /** @example 4 */
-            stock: number;
-            /** @example 10 */
-            minStock: number;
+            name: string;
+            /** @example L */
+            unit: string;
         };
-        ExecutiveSummaryExpiryAlertDto: {
-            /** @example 44 */
-            id: number;
-            /** @example Fresh cream */
-            ingredientName: string;
-            /** @example Downtown */
-            branchName: string;
-            /** @example 6 */
-            quantity: number;
+        InventoryBatchResponseDto: {
+            /** @example 1 */
+            branchId: number;
             /** Format: date-time */
-            expiryDate: string;
+            createdAt?: string;
+            /** Format: date-time */
+            expiryDate?: string | null;
+            /** @example 1 */
+            id: number;
+            /** @example 3 */
+            ingredientId: number;
+            poId?: number | null;
+            /** @example 12 */
+            quantity: number;
             /**
              * @example ACTIVE
              * @enum {string}
              */
             status: "ACTIVE" | "DEPLETED" | "EXPIRED";
+            /** Format: date-time */
+            updatedAt?: string;
         };
-        ExecutiveSummaryResponseDto: {
-            /** @example 24500 */
-            salesToday: number;
-            /** @example 21800 */
-            salesYesterday: number;
-            /** @example 12.4 */
-            salesGrowth: number;
-            /** @example 128 */
-            ordersToday: number;
-            /** @example 115 */
-            ordersYesterday: number;
-            /** @example 11.3 */
-            ordersGrowth: number;
-            /** @example 191.4 */
-            avgTicketToday: number;
-            /** @example 189.6 */
-            avgTicketYesterday: number;
-            topBranch: components["schemas"]["ExecutiveSummaryTopBranchDto"] | null;
-            lowStockAlerts: components["schemas"]["ExecutiveSummaryLowStockAlertDto"][];
-            /** @example 8 */
-            lowStockCount: number;
-            expiryAlerts: components["schemas"]["ExecutiveSummaryExpiryAlertDto"][];
-            /** @example 3 */
-            expiryCount: number;
-        };
-        ProductionOrderResponseDto: {
+        JournalEntryResponseDto: {
+            /** @example 1 */
+            branchId: number | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date */
+            date: string;
+            /** @example Sales revenue for order 100 */
+            description: string;
             /** @example 1 */
             id: number;
-            /** @example PRD-000042 */
-            orderNumber: string;
-            /** @example 2 */
-            branchId: number;
-            /** @example 5 */
-            targetIngredientId: number;
-            /** @example 50 */
-            quantityToProduce: number;
+            lines?: components["schemas"]["JournalLineResponseDto"][];
+            /** @example ORD-100 */
+            reference: string | null;
             /**
-             * @example PLANNED
+             * @example POSTED
              * @enum {string}
              */
-            status: "DRAFT" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
-            /** @example 1250 */
-            actualCost: number;
-            /** Format: date-time */
-            plannedStartDate: string | null;
-            /** Format: date-time */
-            completedAt: string | null;
-            /** @example 4 */
-            createdByUserId: number | null;
-            /** Format: date-time */
-            createdAt: string;
+            status: "DRAFT" | "POSTED" | "VOIDED";
             /** Format: date-time */
             updatedAt: string;
-            branch?: components["schemas"]["BranchResponseDto"];
-            targetIngredient?: components["schemas"]["IngredientResponseDto"];
         };
-        ProductionBomResponseDto: {
+        JournalLineResponseDto: {
+            account?: components["schemas"]["AccountResponseDto"];
+            /** @example 3 */
+            accountId: number;
+            /** @example 0 */
+            credit: number;
+            /** @example 1200 */
+            debit: number;
+            /** @example Cash payment */
+            description: string | null;
             /** @example 1 */
             id: number;
-            /** @example 5 */
-            targetIngredientId: number;
-            /** @example 3 */
-            rawIngredientId: number;
-            /** @example 0.25 */
-            quantityNeeded: number;
+            /** @example 10 */
+            journalEntryId: number;
+        };
+        LeaveRequestResponseDto: {
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date */
+            endDate: string;
+            /** @example 1 */
+            id: number;
+            /** @example Family trip */
+            reason: string | null;
+            /** Format: date */
+            startDate: string;
+            /**
+             * @example PENDING
+             * @enum {string}
+             */
+            status: "PENDING" | "APPROVED" | "REJECTED";
+            /**
+             * @example ANNUAL
+             * @enum {string}
+             */
+            type: "SICK" | "ANNUAL" | "UNPAID";
+            /** Format: date-time */
+            updatedAt: string;
+            user?: components["schemas"]["LeaveRequestUserSummaryDto"];
+            /** @example 4 */
+            userId: number;
+        };
+        LeaveRequestUserSummaryDto: {
+            /** @example 1 */
+            branchId: number | null;
+            /** @example staff@branchbrew.dev */
+            email: string;
+            /** @example Jane Staff */
+            name: string | null;
+        };
+        LogMaintenanceDto: {
+            cost: number;
+            date?: string;
+            description: string;
+            /** @enum {string} */
+            newStatus?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+            nextMaintenanceDate?: string;
+            performedBy?: string;
+        };
+        LoginDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        MaintenanceLogResponseDto: {
+            /** @example 850 */
+            cost: number;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
+            date: string;
+            /** @example Replaced group gasket */
+            description: string;
+            /** @example 10 */
+            equipmentId: number;
+            /** @example 1 */
+            id: number;
+            /** @example TechServe Co. */
+            performedBy: string | null;
+            /** Format: date-time */
             updatedAt: string;
-            targetIngredient?: components["schemas"]["IngredientResponseDto"];
-            rawIngredient?: components["schemas"]["IngredientResponseDto"];
         };
-        CreateProductionOrderDto: {
-            branchId: number;
-            targetIngredientId: number;
-            quantityToProduce: number;
-            plannedStartDate?: string;
-        };
-        UpdateProductionStatusDto: {
+        ManualAdjustmentDto: {
+            ingredientId: number;
+            notes?: string;
+            quantityDelta: number;
             /** @enum {string} */
-            status: "COMPLETED" | "CANCELLED" | "DRAFT" | "PLANNED" | "IN_PROGRESS";
+            reason: "DAMAGE" | "CORRECTION";
         };
-        CreateBomDto: {
-            targetIngredientId: number;
-            rawIngredientId: number;
-            quantityNeeded: number;
+        MarkAllReadResponseDto: {
+            /** @example 4 */
+            updated: number;
+        };
+        ModifierDeleteResponseDto: {
+            /** @example true */
+            deleted: boolean;
+            /** @example 1 */
+            id: number;
         };
         ModifierGroupRefDto: {
             /** @example 1 */
@@ -3589,132 +2734,987 @@ export interface components {
             /** @example Milk options */
             name: string;
         };
-        ModifierOptionResponseDto: {
-            /** @example 1 */
-            id: number;
-            /** @example 2 */
-            groupId: number;
-            /** @example Oat milk */
-            name: string;
-            /** @example 15 */
-            priceDelta: number;
-            /** @example false */
-            isDefault: boolean;
-            /** @example 1 */
-            sortOrder: number;
-            /** @example 5 */
-            swapToIngredientId: number | null;
-            swapToIngredient?: components["schemas"]["IngredientSummaryDto"];
-            group?: components["schemas"]["ModifierGroupRefDto"];
-        };
         ModifierGroupResponseDto: {
+            /** @example Coffee */
+            category: string | null;
+            /** Format: date-time */
+            createdAt: string;
             /** @example 1 */
             id: number;
             /** @example Milk options */
             name: string;
-            /** @example Coffee */
-            category: string | null;
+            options: components["schemas"]["ModifierOptionResponseDto"][];
             /** @example 0 */
             sortOrder: number;
+            swapIngredient?: components["schemas"]["IngredientSummaryDto"];
             /** @example 3 */
             swapIngredientId: number | null;
             /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
             updatedAt: string;
-            swapIngredient?: components["schemas"]["IngredientSummaryDto"];
-            options: components["schemas"]["ModifierOptionResponseDto"][];
         };
-        CreateModifierOptionDto: {
-            name: string;
-            priceDelta?: number;
-            isDefault?: boolean;
-            sortOrder?: number;
-            swapToIngredientId?: number;
-        };
-        CreateModifierGroupDto: {
-            name: string;
-            category?: string;
-            sortOrder?: number;
-            swapIngredientId?: number;
-            options?: components["schemas"]["CreateModifierOptionDto"][];
-        };
-        UpdateModifierGroupDto: {
-            name?: string;
-            category?: string | null;
-            sortOrder?: number;
-            swapIngredientId?: number | null;
-        };
-        ModifierDeleteResponseDto: {
+        ModifierOptionResponseDto: {
+            group?: components["schemas"]["ModifierGroupRefDto"];
+            /** @example 2 */
+            groupId: number;
             /** @example 1 */
             id: number;
-            /** @example true */
-            deleted: boolean;
-        };
-        CreateModifierOptionForGroupDto: {
+            /** @example false */
+            isDefault: boolean;
+            /** @example Oat milk */
             name: string;
-            priceDelta?: number;
-            isDefault?: boolean;
-            sortOrder?: number;
-            swapToIngredientId?: number;
-            groupId: number;
-        };
-        UpdateModifierOptionDto: {
-            name?: string;
-            priceDelta?: number;
-            isDefault?: boolean;
-            sortOrder?: number;
-            swapToIngredientId?: number | null;
+            /** @example 15 */
+            priceDelta: number;
+            /** @example 1 */
+            sortOrder: number;
+            swapToIngredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 5 */
+            swapToIngredientId: number | null;
         };
         NavCountsResponseDto: {
             /** @example 1 */
             branchId: number | null;
-            /** @example 4 */
-            lowStock: number;
             /** @example 2 */
             expiringBatches: number;
-            /** @example 3 */
-            pendingTransfers: number;
             /** @example 6 */
             kdsOrders: number;
+            /** @example 4 */
+            lowStock: number;
+            /** @example 0 */
+            pendingLeave: number;
             /** @example 1 */
             pendingPurchaseOrders: number;
             /** @example 1 */
             pendingSettlements: number;
-            /** @example 0 */
-            pendingLeave: number;
             /** @example 1 */
             pendingStockCounts: number;
+            /** @example 3 */
+            pendingTransfers: number;
             /** @example 3 */
             unreadNotifications: number;
         };
         NotificationResponseDto: {
+            body?: string | null;
+            branchId?: number | null;
+            /** Format: date-time */
+            createdAt: string;
             /** @example 1 */
             id: number;
-            /**
-             * @example LOW_STOCK
-             * @enum {string}
-             */
-            type: "LOW_STOCK" | "BATCH_EXPIRING" | "MAINTENANCE_DUE" | "LEAVE_DECIDED" | "PO_PENDING_APPROVAL" | "STOCK_COUNT_PENDING" | "OUTBOX_FAILED";
-            /** @example Espresso Beans is running low */
-            title: string;
-            body?: string | null;
             link?: string | null;
-            branchId?: number | null;
             /**
              * @example MANAGER
              * @enum {string}
              */
             minRole: "SUPER_ADMIN" | "MANAGER" | "STAFF";
-            userId?: number | null;
             /** Format: date-time */
             readAt?: string | null;
+            /** @example Espresso Beans is running low */
+            title: string;
+            /**
+             * @example LOW_STOCK
+             * @enum {string}
+             */
+            type: "LOW_STOCK" | "BATCH_EXPIRING" | "MAINTENANCE_DUE" | "LEAVE_DECIDED" | "PO_PENDING_APPROVAL" | "STOCK_COUNT_PENDING" | "OUTBOX_FAILED";
+            userId?: number | null;
+        };
+        OrderCustomerSummaryDto: {
+            /** @example 1 */
+            id: number;
+            /** @example Jane Customer */
+            name: string;
+            /**
+             * @example REGULAR
+             * @enum {string}
+             */
+            tier: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
+        };
+        OrderItemDto: {
+            modifierOptionIds?: number[];
+            notes?: string;
+            productId: number;
+            quantity: number;
+        };
+        OrderItemModifierResponseDto: {
+            /** @example 1 */
+            id: number;
+            /** @example 3 */
+            optionId: number;
+            /** @example Extra shot */
+            optionName: string;
+            /** @example 10 */
+            orderItemId: number;
+            /** @example 15 */
+            priceDelta: number;
+        };
+        OrderItemResponseDto: {
+            /** @example 1 */
+            id: number;
+            modifiers?: components["schemas"]["OrderItemModifierResponseDto"][];
+            /** @example Less ice */
+            notes: string | null;
+            /** @example 100 */
+            orderId: number;
+            /** @example 120 */
+            price: number;
+            product?: components["schemas"]["OrderProductSummaryDto"];
+            /** @example 1 */
+            productId: number;
+            /** @example 2 */
+            quantity: number;
+        };
+        OrderProductSummaryDto: {
+            /** @example Coffee */
+            category: string;
+            /** @example 1 */
+            id: number;
+            /** @example Latte */
+            name: string;
+            /** @example 120 */
+            price: number;
+        };
+        OrderPromotionSummaryDto: {
+            /** @example SUMMER10 */
+            code: string;
+            /** @example 10% off summer drinks */
+            description: string;
+            /** @example 1 */
+            id: number;
+        };
+        OrderResponseDto: {
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            branchId: number;
             /** Format: date-time */
             createdAt: string;
+            customer?: components["schemas"]["OrderCustomerSummaryDto"] | null;
+            /** @example 5 */
+            customerId?: number | null;
+            /** @example 24 */
+            discountAmount: number;
+            /** @example 100 */
+            id: number;
+            /** @example false */
+            isTaxInvoiceRequested?: boolean;
+            items?: components["schemas"]["OrderItemResponseDto"][];
+            /** @example 216 */
+            netAmount: number;
+            /**
+             * @example CASH
+             * @enum {string}
+             */
+            paymentMethod: "CASH" | "CREDIT_CARD" | "QR_PROMPTPAY";
+            /** @example 21 */
+            pointsEarned: number;
+            /** @example 0 */
+            pointsRedeemed: number;
+            promotion?: components["schemas"]["OrderPromotionSummaryDto"] | null;
+            /** @example 2 */
+            promotionId?: number | null;
+            /** Format: date */
+            queueDate?: string | null;
+            /** @example 42 */
+            queueNumber?: number | null;
+            refundReason?: string | null;
+            /** Format: date-time */
+            refundedAt?: string | null;
+            /**
+             * @example PENDING
+             * @enum {string}
+             */
+            status: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
+            /** @example 0 */
+            taxAmount: number;
+            taxInvoiceAddress?: string | null;
+            taxInvoiceName?: string | null;
+            taxInvoiceTaxId?: string | null;
+            /** @example 240 */
+            totalAmount: number;
+            /** @example 80 */
+            totalCogs: number;
+            /** @example 1 */
+            userId: number;
         };
-        MarkAllReadResponseDto: {
+        OutboxEventResponseDto: {
+            /** @example 5 */
+            attempts: number;
+            /** Format: date-time */
+            claimedAt: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example order.created */
+            eventType: string;
+            /** @example 7 */
+            id: number;
+            lastError: string | null;
+            /** Format: date-time */
+            processedAt: string | null;
+            /**
+             * @example FAILED
+             * @enum {string}
+             */
+            status: "PENDING" | "PROCESSING" | "COMPLETED" | "FAILED";
+        };
+        PaginatedResponseDto: {
+            /**
+             * @description Rows returned in this page
+             * @example 50
+             */
+            limit: number;
+            /** @example 0 */
+            offset: number;
+            /**
+             * @description Rows matching the query
+             * @example 412
+             */
+            total: number;
+        };
+        PayPurchaseOrderDto: {
+            /** @enum {string} */
+            method: "CASH" | "BANK_TRANSFER";
+            notes?: string;
+        };
+        PayrollRunResponseDto: {
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            branchId: number | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example 6 */
+            month: number;
+            payslips?: components["schemas"]["PayslipResponseDto"][];
+            /**
+             * @example DRAFT
+             * @enum {string}
+             */
+            status: "DRAFT" | "APPROVED" | "PAID";
+            /** Format: date-time */
+            updatedAt: string;
+            /** @example 2026 */
+            year: number;
+        };
+        PayslipResponseDto: {
+            /** @example 13600 */
+            basePay: number;
+            /** @example 0 */
+            bonuses: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 14620 */
+            grossPay: number;
+            /** @example 1 */
+            id: number;
+            /** @example 13501.4 */
+            netPay: number;
+            /** @example 8 */
+            otHours: number;
+            /** @example 1020 */
+            otPay: number;
+            /** @example 0 */
+            otherDeductions: number;
+            /** @example 10 */
+            payrollRunId: number;
+            /** @example 680 */
+            socialSecurity: number;
+            /** @example 160 */
+            standardHours: number;
+            /** @example 438.6 */
+            taxDeduction: number;
+            /** Format: date-time */
+            updatedAt: string;
+            user?: components["schemas"]["HrUserSummaryDto"];
             /** @example 4 */
-            updated: number;
+            userId: number;
+        };
+        ProcessLeaveDto: {
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+        };
+        ProductResponseDto: {
+            /** @example Coffee */
+            category: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example true */
+            isActive: boolean;
+            /** @example Latte */
+            name: string;
+            /** @example 120 */
+            price: number;
+            recipeItems?: components["schemas"]["RecipeItemResponseDto"][];
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        ProductionBomResponseDto: {
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example 0.25 */
+            quantityNeeded: number;
+            rawIngredient?: components["schemas"]["IngredientResponseDto"];
+            /** @example 3 */
+            rawIngredientId: number;
+            targetIngredient?: components["schemas"]["IngredientResponseDto"];
+            /** @example 5 */
+            targetIngredientId: number;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        ProductionOrderResponseDto: {
+            /** @example 1250 */
+            actualCost: number;
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 2 */
+            branchId: number;
+            /** Format: date-time */
+            completedAt: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 4 */
+            createdByUserId: number | null;
+            /** @example 1 */
+            id: number;
+            /** @example PRD-000042 */
+            orderNumber: string;
+            /** Format: date-time */
+            plannedStartDate: string | null;
+            /** @example 50 */
+            quantityToProduce: number;
+            /**
+             * @example PLANNED
+             * @enum {string}
+             */
+            status: "DRAFT" | "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+            targetIngredient?: components["schemas"]["IngredientResponseDto"];
+            /** @example 5 */
+            targetIngredientId: number;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        ProfitLossMonthResponseDto: {
+            /** @example 92000 */
+            expense: number;
+            /** @example 2026-06 */
+            month: string;
+            /** @example 185000 */
+            revenue: number;
+        };
+        PromotionResponseDto: {
+            /** @example SUMMER10 */
+            code: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 10% off summer drinks */
+            description: string;
+            /**
+             * @example PERCENTAGE
+             * @enum {string}
+             */
+            discountType: "PERCENTAGE" | "FIXED_AMOUNT";
+            /** @example 10 */
+            discountValue: number;
+            /** Format: date-time */
+            endDate: string | null;
+            /** @example 1 */
+            id: number;
+            /** @example true */
+            isActive: boolean;
+            /** @example 500 */
+            minPurchase: number | null;
+            /** Format: date-time */
+            startDate: string | null;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        PurchaseOrderItemDto: {
+            ingredientId: number;
+            quantity: number;
+            unitPrice: number;
+        };
+        PurchaseOrderItemResponseDto: {
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 3 */
+            ingredientId: number;
+            /** @example 10 */
+            poId: number;
+            /** @example 24 */
+            quantityRequested: number;
+            /** @example 45.5 */
+            unitPrice: number;
+        };
+        PurchaseOrderResponseDto: {
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example false */
+            isAutoGenerated: boolean;
+            items?: components["schemas"]["PurchaseOrderItemResponseDto"][];
+            /** Format: date-time */
+            paidAt?: string | null;
+            payment?: components["schemas"]["SupplierPaymentResponseDto"] | null;
+            /**
+             * @example UNPAID
+             * @enum {string}
+             */
+            paymentStatus: "UNPAID" | "PAID";
+            /** @example PO-2026-0001 */
+            poNumber: string;
+            /**
+             * @example DRAFT
+             * @enum {string}
+             */
+            status: "DRAFT" | "PENDING" | "APPROVED" | "RECEIVED";
+            supplier?: components["schemas"]["SupplierResponseDto"];
+            /** @example 2 */
+            supplierId: number;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        ReceivePOItemDto: {
+            expiryDate?: string;
+            ingredientId: number;
+        };
+        ReceivePurchaseOrderDto: {
+            items?: components["schemas"]["ReceivePOItemDto"][];
+        };
+        RecipeItemDto: {
+            ingredientId: number;
+            quantity: number;
+        };
+        RecipeItemResponseDto: {
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 3 */
+            ingredientId: number;
+            /** @example 10 */
+            productId: number;
+            /** @example 0.25 */
+            quantity: number;
+        };
+        RecordWasteDto: {
+            items: components["schemas"]["WasteItemDto"][];
+        };
+        RefundOrderDto: {
+            reason?: string;
+        };
+        ReportWasteDto: {
+            batchId?: number;
+            ingredientId: number;
+            quantity: number;
+            reason: string;
+        };
+        ReportsProfitLossResponseDto: {
+            /** @example 52000 */
+            cogs: number;
+            /** @example 18000 */
+            expenses: number;
+            /** @example 133000 */
+            grossProfit: number;
+            /** @example 70000 */
+            netProfit: number;
+            /** @example 45000 */
+            payroll: number;
+            /** @example 185000 */
+            revenue: number;
+        };
+        RequestLeaveDto: {
+            endDate: string;
+            reason?: string;
+            startDate: string;
+            /** @enum {string} */
+            type: "SICK" | "ANNUAL" | "UNPAID";
+        };
+        SalesTrendPointResponseDto: {
+            /** @example 2026-07-01 */
+            date: string;
+            /** @example 128 */
+            orders: number;
+            /** @example 24500 */
+            total: number;
+        };
+        SeedAccountsResponseDto: {
+            /** @example Accounts seeded successfully */
+            message: string;
+            /** @example true */
+            success: boolean;
+        };
+        SettingsResponseDto: {
+            /** @example BranchBrew Co. */
+            companyName?: string;
+            /** @example THB */
+            currency?: string;
+            /** @example Thank you for visiting BranchBrew */
+            receiptFooter?: string;
+            /** @example 0105551234567 */
+            taxId?: string;
+            /** @example 7 */
+            vatRate?: string;
+        };
+        SettlementBranchSummaryDto: {
+            /** @example Downtown */
+            name: string;
+        };
+        SettlementExpectedResponseDto: {
+            /** @example 12500 */
+            expectedCash: number;
+            /** @example 8200 */
+            expectedCreditCard: number;
+            /** @example 3100 */
+            expectedQR: number;
+            /** @example 450 */
+            expenses: number;
+            /** @example 12500 */
+            sales: number;
+        };
+        SettlementResponseDto: {
+            /** @example 12480 */
+            actualCash: number;
+            /** @example 8200 */
+            actualCreditCard: number;
+            /** @example 3100 */
+            actualQR: number;
+            branch?: components["schemas"]["SettlementBranchSummaryDto"];
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date */
+            date: string;
+            /** @example -20 */
+            difference: number;
+            /** @example 12500 */
+            expectedCash: number;
+            /** @example 8200 */
+            expectedCreditCard: number;
+            /** @example 3100 */
+            expectedQR: number;
+            /** @example 1 */
+            id: number;
+            /**
+             * @example PENDING
+             * @enum {string}
+             */
+            status: "PENDING" | "APPROVED" | "REJECTED";
+            submittedBy?: components["schemas"]["SettlementSubmittedByDto"];
+            /** @example 4 */
+            submittedById: number;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        SettlementSubmittedByDto: {
+            /** @example Jane Staff */
+            name: string | null;
+        };
+        ShiftResponseDto: {
+            branch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            endTime: string;
+            /** @example 1 */
+            id: number;
+            /** Format: date-time */
+            startTime: string;
+            /**
+             * @example SCHEDULED
+             * @enum {string}
+             */
+            status: "SCHEDULED" | "COMPLETED" | "ABSENT" | "CANCELLED";
+            /** Format: date-time */
+            updatedAt: string;
+            user?: components["schemas"]["HrUserSummaryDto"];
+            /** @example 4 */
+            userId: number;
+        };
+        StockAdjustmentResponseDto: {
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            createdBy?: components["schemas"]["StockCountUserDto"];
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 3 */
+            ingredientId: number;
+            notes?: string | null;
+            /** @example -2.5 */
+            quantityDelta: number;
+            /**
+             * @example COUNT_VARIANCE
+             * @enum {string}
+             */
+            reason: "COUNT_VARIANCE" | "DAMAGE" | "CORRECTION";
+            stockCountId?: number | null;
+        };
+        StockCountLineInputDto: {
+            countedQty: number;
+            ingredientId: number;
+        };
+        StockCountLineResponseDto: {
+            countedQty?: number | null;
+            /** @description Live stock at read time; hidden while a blind count is in draft */
+            currentStock?: number | null;
+            expectedQty?: number | null;
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 3 */
+            ingredientId: number;
+        };
+        StockCountResponseDto: {
+            /** Format: date-time */
+            approvedAt?: string | null;
+            approvedBy?: components["schemas"]["StockCountUserDto"] | null;
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            createdBy?: components["schemas"]["StockCountUserDto"];
+            /** @example 1 */
+            id: number;
+            /** @example false */
+            isBlind: boolean;
+            lines?: components["schemas"]["StockCountLineResponseDto"][];
+            notes?: string | null;
+            /**
+             * @example DRAFT
+             * @enum {string}
+             */
+            status: "DRAFT" | "SUBMITTED" | "APPROVED" | "CANCELLED";
+            /** Format: date-time */
+            submittedAt?: string | null;
+        };
+        StockCountUserDto: {
+            /** @example Branch Manager */
+            name: string | null;
+        };
+        StockInDto: {
+            items: components["schemas"]["StockInItemDto"][];
+        };
+        StockInItemDto: {
+            expiryDate?: string;
+            ingredientId: number;
+            quantity: number;
+        };
+        StockInResultDto: {
+            batch: components["schemas"]["InventoryBatchResponseDto"];
+            inventory: components["schemas"]["BranchInventoryResponseDto"];
+        };
+        StockTransferResponseDto: {
+            /** @example 5 */
+            approvedById: number | null;
+            /** Format: date-time */
+            createdAt: string;
+            fromBranch?: components["schemas"]["BranchResponseDto"];
+            /** @example 1 */
+            fromBranchId: number;
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientResponseDto"];
+            /** @example 3 */
+            ingredientId: number;
+            /** @example 12 */
+            quantity: number;
+            requestedBy?: components["schemas"]["HrUserSummaryDto"];
+            /** @example 4 */
+            requestedById: number;
+            /**
+             * @example PENDING
+             * @enum {string}
+             */
+            status: "PENDING" | "SHIPPED" | "COMPLETED" | "CANCELLED";
+            toBranch?: components["schemas"]["BranchResponseDto"];
+            /** @example 2 */
+            toBranchId: number;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        SubmitSettlementDto: {
+            actualCash: number;
+            actualCreditCard?: number;
+            actualQR?: number;
+            branchId?: number;
+        };
+        SupplierPaymentResponseDto: {
+            /** @example 450 */
+            amount: number;
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /**
+             * @example BANK_TRANSFER
+             * @enum {string}
+             */
+            method: "CASH" | "BANK_TRANSFER";
+            notes?: string | null;
+            /** @example 4 */
+            paidByUserId: number;
+            /** @example 10 */
+            poId: number;
+            /** @example 2 */
+            supplierId: number;
+        };
+        SupplierResponseDto: {
+            /** @example orders@freshfarms.dev */
+            contactEmail: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            /** @example Fresh Farms Co. */
+            name: string;
+            /** @example +66 2 123 4567 */
+            phone: string | null;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        SyncBranchInventoryResponseDto: {
+            /** @example 1 */
+            branchId: number;
+            /** @example 12 */
+            rowsCreated: number;
+        };
+        SyncIngredientInventoryResponseDto: {
+            /** @example 3 */
+            ingredientId: number;
+            /** @example 4 */
+            rowsCreated: number;
+        };
+        TogglePromotionDto: {
+            isActive: boolean;
+        };
+        TopProductReportResponseDto: {
+            /** @example Latte */
+            name: string;
+            /** @example 3 */
+            productId: number;
+            /** @example 86 */
+            totalQuantity: number;
+            /** @example 5160 */
+            totalRevenue: number;
+        };
+        TrialBalanceAccountResponseDto: {
+            /** @example 3 */
+            accountId: number;
+            /**
+             * @description Net balance on the account's normal side
+             * @example 36150.25
+             */
+            balance: number;
+            /** @example 1030 */
+            code: string;
+            /**
+             * @description Sum of all credit lines
+             * @example 12100.5
+             */
+            credit: number;
+            /**
+             * @description Sum of all debit lines
+             * @example 48250.75
+             */
+            debit: number;
+            /** @example Inventory */
+            name: string;
+            /**
+             * @description Side the account balance normally sits on
+             * @example DEBIT
+             * @enum {string}
+             */
+            normalBalance: "DEBIT" | "CREDIT";
+            /**
+             * @example ASSET
+             * @enum {string}
+             */
+            type: "ASSET" | "LIABILITY" | "EQUITY" | "REVENUE" | "EXPENSE";
+        };
+        TrialBalanceResponseDto: {
+            accounts: components["schemas"]["TrialBalanceAccountResponseDto"][];
+            /**
+             * @description Inclusive cut-off date; null means every posted entry
+             * @example 2026-07-25
+             */
+            asOf: string | null;
+            /** @example 1 */
+            branchId: number | null;
+            /**
+             * @description True when total debits equal total credits
+             * @example true
+             */
+            isBalanced: boolean;
+            /**
+             * @description BRANCH excludes chain-level entries, so it is a partial view
+             * @example CHAIN
+             * @enum {string}
+             */
+            scope: "CHAIN" | "BRANCH";
+            /** @example 412500.25 */
+            totalCredit: number;
+            /** @example 412500.25 */
+            totalDebit: number;
+        };
+        UpdateBranchDto: {
+            isCentralKitchen?: boolean;
+            location?: string;
+            name?: string;
+        };
+        UpdateCustomerDto: {
+            name?: string;
+            phone?: string;
+        };
+        UpdateEquipmentDto: {
+            name?: string;
+            nextMaintenanceDate?: string;
+            purchaseDate?: string;
+            serialNumber?: string;
+            /** @enum {string} */
+            status?: "ACTIVE" | "MAINTENANCE" | "BROKEN" | "RETIRED";
+            /** @enum {string} */
+            type?: "ESPRESSO_MACHINE" | "GRINDER" | "BLENDER" | "POS_SYSTEM" | "REFRIGERATOR" | "OTHER";
+            warrantyExpiry?: string;
+        };
+        UpdateHourlyRateDto: {
+            hourlyRate: number;
+        };
+        UpdateIngredientDto: {
+            costPerUnit?: number;
+            isActive?: boolean;
+            name?: string;
+            primarySupplierId?: number;
+            unit?: string;
+        };
+        UpdateModifierGroupDto: {
+            category?: string | null;
+            name?: string;
+            sortOrder?: number;
+            swapIngredientId?: number | null;
+        };
+        UpdateModifierOptionDto: {
+            isDefault?: boolean;
+            name?: string;
+            priceDelta?: number;
+            sortOrder?: number;
+            swapToIngredientId?: number | null;
+        };
+        UpdateOrderStatusDto: {
+            /** @enum {string} */
+            status: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
+        };
+        UpdateProductDto: {
+            category?: string;
+            description?: string;
+            isActive?: boolean;
+            name?: string;
+            price?: number;
+            recipeItems?: components["schemas"]["RecipeItemDto"][];
+        };
+        UpdateProductionStatusDto: {
+            /** @enum {string} */
+            status: "COMPLETED" | "CANCELLED" | "DRAFT" | "PLANNED" | "IN_PROGRESS";
+        };
+        UpdatePromotionDto: {
+            description?: string;
+            /** @enum {string} */
+            discountType?: "PERCENTAGE" | "FIXED_AMOUNT";
+            discountValue?: number;
+            endDate?: string | null;
+            minPurchase?: number;
+            startDate?: string | null;
+        };
+        UpdateStockCountLinesDto: {
+            lines: components["schemas"]["StockCountLineInputDto"][];
+        };
+        UpdateSupplierDto: {
+            /** Format: email */
+            contactEmail?: string;
+            name?: string;
+            phone?: string;
+        };
+        UpdateUserDto: {
+            baseSalary?: number;
+            branchId?: number;
+            /** Format: email */
+            email?: string;
+            /** @enum {string} */
+            employmentType?: "FULL_TIME" | "PART_TIME";
+            hourlyRate?: number;
+            name?: string;
+            password?: string;
+            /** @enum {string} */
+            role?: "SUPER_ADMIN" | "MANAGER" | "STAFF";
+        };
+        ValidatePromotionDto: {
+            code: string;
+            subtotal: number;
+        };
+        ValidatePromotionResponseDto: {
+            /** @example SUMMER10 */
+            code: string;
+            /** @example 85 */
+            discountAmount: number;
+            /** @example 1 */
+            id: number;
+            /**
+             * @example PERCENTAGE
+             * @enum {string}
+             */
+            type: "PERCENTAGE" | "FIXED_AMOUNT";
+            /** @example 10 */
+            value: number;
+        };
+        VatReportMonthResponseDto: {
+            /** @example 198500 */
+            grossSales: number;
+            /** @example 2026-06 */
+            month: string;
+            /** @example 412 */
+            orderCount: number;
+            /** @example 12985.98 */
+            outputVat: number;
+            /** @example 185514.02 */
+            salesExVat: number;
+        };
+        WasteItemDto: {
+            ingredientId: number;
+            quantity: number;
+            reason: string;
+        };
+        WasteLogRecordedByDto: {
+            /** @example Branch Manager */
+            name: string | null;
+        };
+        WasteLogResponseDto: {
+            /** @example 1 */
+            branchId: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @example 1 */
+            id: number;
+            ingredient?: components["schemas"]["IngredientSummaryDto"];
+            /** @example 3 */
+            ingredientId: number;
+            /** @example 2.5 */
+            quantity: number;
+            /** @example Expired batch disposal */
+            reason: string;
+            recordedBy?: components["schemas"]["WasteLogRecordedByDto"];
+            /** @example 4 */
+            recordedById: number;
         };
     };
     responses: never;
@@ -3725,2838 +3725,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    AppController_health: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HealthOkResponseDto"];
-                };
-            };
-            503: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HealthErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductsController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Products retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateProductDto"];
-            };
-        };
-        responses: {
-            /** @description Product created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductsController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Product retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Product deleted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductsController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateProductDto"];
-            };
-        };
-        responses: {
-            /** @description Product updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_getBranchInventory: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Inventory retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BranchInventoryWithIngredientResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_getWasteLogs: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Waste logs retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WasteLogResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Ingredients retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IngredientResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateIngredientDto"];
-            };
-        };
-        responses: {
-            /** @description Ingredient created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IngredientResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_syncBranchInventory: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Ingredient inventory synchronized */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SyncIngredientInventoryResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Ingredient retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IngredientResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Ingredient deleted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IngredientResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    IngredientsController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateIngredientDto"];
-            };
-        };
-        responses: {
-            /** @description Ingredient updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["IngredientResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_findAll: {
-        parameters: {
-            query?: {
-                /** @description Rows to return, capped at 500 */
-                limit?: number;
-                /** @description Rows to skip */
-                offset?: number;
-                branchId?: number;
-                /** @description Oldest order date to include; defaults to 14 days back */
-                since?: string;
-                /** @description Restrict to a single order status */
-                status?: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
-                /** @description Matches order id, queue number or payment method */
-                search?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Orders retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
-                        items: components["schemas"]["OrderResponseDto"][];
-                    };
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateOrderDto"];
-            };
-        };
-        responses: {
-            /** @description Order created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_getKdsOrders: {
-        parameters: {
-            query: {
-                branchId: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description KDS orders retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_updateOrderStatus: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateOrderStatusDto"];
-            };
-        };
-        responses: {
-            /** @description Order status updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_voidOrder: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Order voided */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_refundOrder: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RefundOrderDto"];
-            };
-        };
-        responses: {
-            /** @description Order refunded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OrdersController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Order retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SuppliersController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Suppliers retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SupplierResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SuppliersController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateSupplierDto"];
-            };
-        };
-        responses: {
-            /** @description Supplier created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SupplierResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SuppliersController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Supplier deleted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SupplierResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SuppliersController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateSupplierDto"];
-            };
-        };
-        responses: {
-            /** @description Supplier updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SupplierResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Purchase orders retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePurchaseOrderDto"];
-            };
-        };
-        responses: {
-            /** @description Purchase order created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_apAging: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description AP aging retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApAgingResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_submit: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Purchase order submitted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_approve: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Purchase order approved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_reject: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Purchase order rejected */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_receive: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReceivePurchaseOrderDto"];
-            };
-        };
-        responses: {
-            /** @description Purchase order received */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PurchaseOrdersController_pay: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PayPurchaseOrderDto"];
-            };
-        };
-        responses: {
-            /** @description Purchase order paid */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OutboxController_listFailed: {
-        parameters: {
-            query?: {
-                /** @description Rows to return, capped at 500 */
-                limit?: number;
-                /** @description Rows to skip */
-                offset?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Failed outbox events retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OutboxEventResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    OutboxController_replay: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Outbox event requeued */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["OutboxEventResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_findAll: {
-        parameters: {
-            query?: {
-                /** @description Rows to return, capped at 500 */
-                limit?: number;
-                /** @description Rows to skip */
-                offset?: number;
-                /** @description Matches member name or phone */
-                search?: string;
-                /** @description Restrict to one loyalty tier */
-                tier?: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Customers retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
-                        items: components["schemas"]["CustomerResponseDto"][];
-                    };
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateCustomerDto"];
-            };
-        };
-        responses: {
-            /** @description Customer created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_findByPhone: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                phone: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Customer retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_getCustomer360: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Customer profile retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Customer360ResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Customer retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_anonymize: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Customer anonymized */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    CustomersController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateCustomerDto"];
-            };
-        };
-        responses: {
-            /** @description Customer updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
     AccountingController_getAccounts: {
         parameters: {
             query?: never;
@@ -6573,6 +3741,75 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AccountResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AccountingController_getBalanceSheet: {
+        parameters: {
+            query?: {
+                branchId?: number;
+                /** @description Inclusive cut-off date in YYYY-MM-DD form */
+                asOf?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Balance sheet retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BalanceSheetResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -6699,7 +3936,7 @@ export interface operations {
             };
         };
     };
-    AccountingController_getVatReport: {
+    AccountingController_getProfitLoss: {
         parameters: {
             query?: {
                 branchId?: string;
@@ -6710,13 +3947,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description VAT report retrieved */
+            /** @description Profit and loss retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["VatReportMonthResponseDto"][];
+                    "application/json": components["schemas"]["ProfitLossMonthResponseDto"][];
                 };
             };
             /** @description Bad request */
@@ -6766,24 +4003,22 @@ export interface operations {
             };
         };
     };
-    AccountingController_getProfitLoss: {
+    AccountingController_seedAccounts: {
         parameters: {
-            query?: {
-                branchId?: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Profit and loss retrieved */
+            /** @description Accounts seeded */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProfitLossMonthResponseDto"][];
+                    "application/json": components["schemas"]["SeedAccountsResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -6902,12 +4137,10 @@ export interface operations {
             };
         };
     };
-    AccountingController_getBalanceSheet: {
+    AccountingController_getVatReport: {
         parameters: {
             query?: {
-                branchId?: number;
-                /** @description Inclusive cut-off date in YYYY-MM-DD form */
-                asOf?: string;
+                branchId?: string;
             };
             header?: never;
             path?: never;
@@ -6915,78 +4148,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Balance sheet retrieved */
+            /** @description VAT report retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BalanceSheetResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    AccountingController_seedAccounts: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Accounts seeded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SeedAccountsResponseDto"];
+                    "application/json": components["schemas"]["VatReportMonthResponseDto"][];
                 };
             };
             /** @description Bad request */
@@ -7055,136 +4223,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AuditLogResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SettingsController_getAllSettings: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Settings retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SettingsResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    SettingsController_updateSettings: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Settings updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SettingsResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -7484,22 +4522,26 @@ export interface operations {
             };
         };
     };
-    BranchesController_getAllTransfers: {
+    BranchesController_createTransfer: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTransferDto"];
+            };
+        };
         responses: {
-            /** @description Transfers retrieved */
+            /** @description Transfer created */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockTransferResponseDto"][];
+                    "application/json": components["schemas"]["StockTransferResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -7549,26 +4591,22 @@ export interface operations {
             };
         };
     };
-    BranchesController_createTransfer: {
+    BranchesController_getAllTransfers: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateTransferDto"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Transfer created */
+            /** @description Transfers retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockTransferResponseDto"];
+                    "application/json": components["schemas"]["StockTransferResponseDto"][];
                 };
             };
             /** @description Bad request */
@@ -7823,6 +4861,75 @@ export interface operations {
             };
         };
     };
+    BranchesController_addInventoryBatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddInventoryBatchDto"];
+            };
+        };
+        responses: {
+            /** @description Inventory batch added */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
     BranchesController_syncBranchInventory: {
         parameters: {
             query?: never;
@@ -7957,75 +5064,6 @@ export interface operations {
             };
         };
     };
-    BranchesController_addInventoryBatch: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AddInventoryBatchDto"];
-            };
-        };
-        responses: {
-            /** @description Inventory batch added */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
     BranchesController_reportWaste: {
         parameters: {
             query?: never;
@@ -8095,563 +5133,17 @@ export interface operations {
             };
         };
     };
-    PromotionsController_findAll: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Promotions retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PromotionResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PromotionsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePromotionDto"];
-            };
-        };
-        responses: {
-            /** @description Promotion created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PromotionResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PromotionsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Promotion deleted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PromotionResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PromotionsController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdatePromotionDto"];
-            };
-        };
-        responses: {
-            /** @description Promotion updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PromotionResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PromotionsController_toggleActive: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TogglePromotionDto"];
-            };
-        };
-        responses: {
-            /** @description Promotion state updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PromotionResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    PromotionsController_validateCode: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ValidatePromotionDto"];
-            };
-        };
-        responses: {
-            /** @description Promotion validation result */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ValidatePromotionResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_clockIn: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClockInDto"];
-            };
-        };
-        responses: {
-            /** @description Clock-in recorded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_clockOut: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Clock-out recorded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_getMyAttendance: {
+    CustomersController_findAll: {
         parameters: {
             query?: {
                 /** @description Rows to return, capped at 500 */
                 limit?: number;
                 /** @description Rows to skip */
                 offset?: number;
-                /** @description Earliest clock-in date */
-                from?: string;
-                /** @description Latest clock-in date */
-                to?: string;
+                /** @description Matches member name or phone */
+                search?: string;
+                /** @description Restrict to one loyalty tier */
+                tier?: "REGULAR" | "SILVER" | "GOLD" | "PLATINUM";
             };
             header?: never;
             path?: never;
@@ -8659,14 +5151,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Attendance records retrieved */
+            /** @description Customers retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["PaginatedResponseDto"] & {
-                        items: components["schemas"]["AttendanceRecordResponseDto"][];
+                        items: components["schemas"]["CustomerResponseDto"][];
                     };
                 };
             };
@@ -8717,72 +5209,7 @@ export interface operations {
             };
         };
     };
-    HrController_getActiveClockIn: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Clock-in status retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_createShift: {
+    CustomersController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -8791,17 +5218,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateShiftDto"];
+                "application/json": components["schemas"]["CreateCustomerDto"];
             };
         };
         responses: {
-            /** @description Shift created */
+            /** @description Customer created */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ShiftResponseDto"];
+                    "application/json": components["schemas"]["CustomerResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -8851,24 +5278,24 @@ export interface operations {
             };
         };
     };
-    HrController_getShiftsByBranch: {
+    CustomersController_findByPhone: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                branchId: number;
+                phone: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Branch shifts retrieved */
+            /** @description Customer retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ShiftResponseDto"][];
+                    "application/json": components["schemas"]["CustomerResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -8918,549 +5345,7 @@ export interface operations {
             };
         };
     };
-    HrController_getMyShifts: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description My shifts retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ShiftResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_getLeaveRequests: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Leave requests retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LeaveRequestResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_requestLeave: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RequestLeaveDto"];
-            };
-        };
-        responses: {
-            /** @description Leave request submitted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LeaveRequestResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_getMyLeaveRequests: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description My leave requests retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LeaveRequestResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_processLeaveRequestsBulk: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BulkProcessLeaveDto"];
-            };
-        };
-        responses: {
-            /** @description Bulk decision applied */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BulkLeaveResultDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_processLeaveRequest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProcessLeaveDto"];
-            };
-        };
-        responses: {
-            /** @description Leave request updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LeaveRequestResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_generatePayrollRun: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["GeneratePayrollDto"];
-            };
-        };
-        responses: {
-            /** @description Payroll run generated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PayrollRunResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_getPayrollRuns: {
-        parameters: {
-            query: {
-                branchId: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Payroll runs retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PayrollRunResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_approvePayrollRun: {
+    CustomersController_findOne: {
         parameters: {
             query?: never;
             header?: never;
@@ -9471,13 +5356,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Payroll run approved */
+            /** @description Customer retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PayrollRunResponseDto"];
+                    "application/json": components["schemas"]["CustomerResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -9527,625 +5412,7 @@ export interface operations {
             };
         };
     };
-    HrController_updateHourlyRate: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                userId: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateHourlyRateDto"];
-            };
-        };
-        responses: {
-            /** @description Hourly rate updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HrUserResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_getAllUsers: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Users retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HrUserResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_createUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateUserDto"];
-            };
-        };
-        responses: {
-            /** @description User created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HrUserResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    HrController_updateUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateUserDto"];
-            };
-        };
-        responses: {
-            /** @description User updated */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HrUserResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_getExpenses: {
-        parameters: {
-            query?: {
-                date?: string;
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Expenses retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ExpenseResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_createExpense: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateExpenseDto"];
-            };
-        };
-        responses: {
-            /** @description Expense created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ExpenseResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_getExpectedCash: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Expected balances retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SettlementExpectedResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_getSettlements: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Settlements retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SettlementResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_submitSettlement: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SubmitSettlementDto"];
-            };
-        };
-        responses: {
-            /** @description Settlement submitted */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SettlementResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    FinanceController_approveSettlement: {
+    CustomersController_anonymize: {
         parameters: {
             query?: never;
             header?: never;
@@ -10156,13 +5423,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Settlement approved */
+            /** @description Customer anonymized */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SettlementResponseDto"];
+                    "application/json": components["schemas"]["CustomerResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -10212,488 +5479,7 @@ export interface operations {
             };
         };
     };
-    FinanceController_exportSales: {
-        parameters: {
-            query?: {
-                startDate?: string;
-                endDate?: string;
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description CSV export returned */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_getBalance: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Inventory balance retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BranchInventoryResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_receiveStock: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["StockInDto"];
-            };
-        };
-        responses: {
-            /** @description Stock received */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockInResultDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_recordWaste: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RecordWasteDto"];
-            };
-        };
-        responses: {
-            /** @description Waste recorded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["WasteLogResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_listStockCounts: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Stock counts retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_createStockCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateStockCountDto"];
-            };
-        };
-        responses: {
-            /** @description Stock count created */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_getStockCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Stock count retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_updateStockCountLines: {
+    CustomersController_update: {
         parameters: {
             query?: never;
             header?: never;
@@ -10704,17 +5490,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UpdateStockCountLinesDto"];
+                "application/json": components["schemas"]["UpdateCustomerDto"];
             };
         };
         responses: {
-            /** @description Counted quantities saved */
+            /** @description Customer updated */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
+                    "application/json": components["schemas"]["CustomerResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -10764,7 +5550,7 @@ export interface operations {
             };
         };
     };
-    InventoryController_submitStockCount: {
+    CustomersController_getCustomer360: {
         parameters: {
             query?: never;
             header?: never;
@@ -10775,285 +5561,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Stock count submitted */
+            /** @description Customer profile retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_approveStockCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Stock count approved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_cancelStockCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Stock count cancelled */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockCountResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_listAdjustments: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Adjustments retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockAdjustmentResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    InventoryController_createAdjustment: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                branchId: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ManualAdjustmentDto"];
-            };
-        };
-        responses: {
-            /** @description Adjustment recorded */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StockAdjustmentResponseDto"];
+                    "application/json": components["schemas"]["Customer360ResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -11448,77 +5962,10 @@ export interface operations {
             };
         };
     };
-    ReportsController_getSalesTrends: {
+    FinanceController_getExpenses: {
         parameters: {
             query?: {
-                branchId?: string;
-                days?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Sales trends retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SalesTrendPointResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ReportsController_getTopProducts: {
-        parameters: {
-            query?: {
+                date?: string;
                 branchId?: string;
             };
             header?: never;
@@ -11527,13 +5974,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Top products retrieved */
+            /** @description Expenses retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TopProductReportResponseDto"][];
+                    "application/json": components["schemas"]["ExpenseResponseDto"][];
                 };
             };
             /** @description Bad request */
@@ -11583,273 +6030,7 @@ export interface operations {
             };
         };
     };
-    ReportsController_getProfitLoss: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Profit and loss retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReportsProfitLossResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ReportsController_getFoodCostActual: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Actual food cost retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FoodCostActualResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ReportsController_getExecutiveSummary: {
-        parameters: {
-            query?: {
-                branchId?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Executive summary retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ExecutiveSummaryResponseDto"];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductionController_getProductionOrders: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Production orders retrieved */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductionOrderResponseDto"][];
-                };
-            };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Not found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-            /** @description Too many requests */
-            429: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiErrorResponseDto"];
-                };
-            };
-        };
-    };
-    ProductionController_createOrder: {
+    FinanceController_createExpense: {
         parameters: {
             query?: never;
             header?: never;
@@ -11858,17 +6039,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateProductionOrderDto"];
+                "application/json": components["schemas"]["CreateExpenseDto"];
             };
         };
         responses: {
-            /** @description Production order created */
+            /** @description Expense created */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                    "application/json": components["schemas"]["ExpenseResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -11918,22 +6099,91 @@ export interface operations {
             };
         };
     };
-    ProductionController_getBOMs: {
+    FinanceController_exportSales: {
         parameters: {
-            query?: never;
+            query?: {
+                startDate?: string;
+                endDate?: string;
+                branchId?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description BOMs retrieved */
+            /** @description CSV export returned */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    FinanceController_getSettlements: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Settlements retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductionBomResponseDto"][];
+                    "application/json": components["schemas"]["SettlementResponseDto"][];
                 };
             };
             /** @description Bad request */
@@ -11983,7 +6233,7 @@ export interface operations {
             };
         };
     };
-    ProductionController_createBOM: {
+    FinanceController_submitSettlement: {
         parameters: {
             query?: never;
             header?: never;
@@ -11992,17 +6242,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateBomDto"];
+                "application/json": components["schemas"]["SubmitSettlementDto"];
             };
         };
         responses: {
-            /** @description BOM created */
+            /** @description Settlement submitted */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductionBomResponseDto"];
+                    "application/json": components["schemas"]["SettlementResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -12052,28 +6302,24 @@ export interface operations {
             };
         };
     };
-    ProductionController_updateOrderStatus: {
+    FinanceController_getExpectedCash: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
+            query?: {
+                branchId?: string;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateProductionStatusDto"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Production order status updated */
+            /** @description Expected balances retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                    "application/json": components["schemas"]["SettlementExpectedResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -12123,7 +6369,7 @@ export interface operations {
             };
         };
     };
-    ProductionController_completeOrder: {
+    FinanceController_approveSettlement: {
         parameters: {
             query?: never;
             header?: never;
@@ -12134,13 +6380,2702 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Production order completed */
+            /** @description Settlement approved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                    "application/json": components["schemas"]["SettlementResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AppController_health: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthOkResponseDto"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getMyAttendance: {
+        parameters: {
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                /** @description Earliest clock-in date */
+                from?: string;
+                /** @description Latest clock-in date */
+                to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Attendance records retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["AttendanceRecordResponseDto"][];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getActiveClockIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Clock-in status retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_clockIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClockInDto"];
+            };
+        };
+        responses: {
+            /** @description Clock-in recorded */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_clockOut: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Clock-out recorded */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttendanceRecordResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getLeaveRequests: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Leave requests retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaveRequestResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_requestLeave: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RequestLeaveDto"];
+            };
+        };
+        responses: {
+            /** @description Leave request submitted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaveRequestResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_processLeaveRequestsBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkProcessLeaveDto"];
+            };
+        };
+        responses: {
+            /** @description Bulk decision applied */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkLeaveResultDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getMyLeaveRequests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description My leave requests retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaveRequestResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_processLeaveRequest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProcessLeaveDto"];
+            };
+        };
+        responses: {
+            /** @description Leave request updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeaveRequestResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getPayrollRuns: {
+        parameters: {
+            query: {
+                branchId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Payroll runs retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayrollRunResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_approvePayrollRun: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Payroll run approved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayrollRunResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_generatePayrollRun: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GeneratePayrollDto"];
+            };
+        };
+        responses: {
+            /** @description Payroll run generated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayrollRunResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_createShift: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateShiftDto"];
+            };
+        };
+        responses: {
+            /** @description Shift created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShiftResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getShiftsByBranch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Branch shifts retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShiftResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getMyShifts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description My shifts retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShiftResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_getAllUsers: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Users retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HrUserResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_createUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserDto"];
+            };
+        };
+        responses: {
+            /** @description User created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HrUserResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_updateUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserDto"];
+            };
+        };
+        responses: {
+            /** @description User updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HrUserResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HrController_updateHourlyRate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateHourlyRateDto"];
+            };
+        };
+        responses: {
+            /** @description Hourly rate updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HrUserResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ingredients retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIngredientDto"];
+            };
+        };
+        responses: {
+            /** @description Ingredient created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_getBranchInventory: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Inventory retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BranchInventoryWithIngredientResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_getWasteLogs: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Waste logs retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WasteLogResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ingredient retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ingredient deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateIngredientDto"];
+            };
+        };
+        responses: {
+            /** @description Ingredient updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    IngredientsController_syncBranchInventory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ingredient inventory synchronized */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncIngredientInventoryResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_listAdjustments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Adjustments retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockAdjustmentResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_createAdjustment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ManualAdjustmentDto"];
+            };
+        };
+        responses: {
+            /** @description Adjustment recorded */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockAdjustmentResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_getBalance: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Inventory balance retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BranchInventoryResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_listStockCounts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stock counts retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_createStockCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStockCountDto"];
+            };
+        };
+        responses: {
+            /** @description Stock count created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_receiveStock: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockInDto"];
+            };
+        };
+        responses: {
+            /** @description Stock received */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockInResultDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_recordWaste: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                branchId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecordWasteDto"];
+            };
+        };
+        responses: {
+            /** @description Waste recorded */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WasteLogResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_getStockCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stock count retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_approveStockCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stock count approved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_cancelStockCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stock count cancelled */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_updateStockCountLines: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateStockCountLinesDto"];
+            };
+        };
+        responses: {
+            /** @description Counted quantities saved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    InventoryController_submitStockCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stock count submitted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockCountResponseDto"];
                 };
             };
             /** @description Bad request */
@@ -12805,6 +9740,73 @@ export interface operations {
             };
         };
     };
+    NotificationsController_markAllRead: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Notifications marked read */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkAllReadResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
     NotificationsController_markRead: {
         parameters: {
             query?: never;
@@ -12872,7 +9874,2334 @@ export interface operations {
             };
         };
     };
-    NotificationsController_markAllRead: {
+    OrdersController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+                branchId?: number;
+                /** @description Oldest order date to include; defaults to 14 days back */
+                since?: string;
+                /** @description Restrict to a single order status */
+                status?: "PENDING" | "PREPARING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
+                /** @description Matches order id, queue number or payment method */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Orders retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
+                        items: components["schemas"]["OrderResponseDto"][];
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Order created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_getKdsOrders: {
+        parameters: {
+            query: {
+                branchId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description KDS orders retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Order retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_refundOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Order refunded */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_updateOrderStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateOrderStatusDto"];
+            };
+        };
+        responses: {
+            /** @description Order status updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OrdersController_voidOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Order voided */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OutboxController_listFailed: {
+        parameters: {
+            query?: {
+                /** @description Rows to return, capped at 500 */
+                limit?: number;
+                /** @description Rows to skip */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Failed outbox events retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxEventResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    OutboxController_replay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Outbox event requeued */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxEventResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_getBOMs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description BOMs retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionBomResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_createBOM: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBomDto"];
+            };
+        };
+        responses: {
+            /** @description BOM created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionBomResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_getProductionOrders: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Production orders retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionOrderResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_createOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductionOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Production order created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_completeOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Production order completed */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductionController_updateOrderStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductionStatusDto"];
+            };
+        };
+        responses: {
+            /** @description Production order status updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductionOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Products retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductDto"];
+            };
+        };
+        responses: {
+            /** @description Product created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Product retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Product deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ProductsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductDto"];
+            };
+        };
+        responses: {
+            /** @description Product updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Promotions retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromotionResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePromotionDto"];
+            };
+        };
+        responses: {
+            /** @description Promotion created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromotionResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_validateCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ValidatePromotionDto"];
+            };
+        };
+        responses: {
+            /** @description Promotion validation result */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ValidatePromotionResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Promotion deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromotionResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePromotionDto"];
+            };
+        };
+        responses: {
+            /** @description Promotion updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromotionResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PromotionsController_toggleActive: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TogglePromotionDto"];
+            };
+        };
+        responses: {
+            /** @description Promotion state updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromotionResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Purchase orders retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePurchaseOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Purchase order created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_apAging: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description AP aging retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApAgingResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_approve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Purchase order approved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_pay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PayPurchaseOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Purchase order paid */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_receive: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReceivePurchaseOrderDto"];
+            };
+        };
+        responses: {
+            /** @description Purchase order received */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_reject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Purchase order rejected */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PurchaseOrdersController_submit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Purchase order submitted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PurchaseOrderResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getExecutiveSummary: {
         parameters: {
             query?: {
                 branchId?: string;
@@ -12883,13 +12212,684 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Notifications marked read */
+            /** @description Executive summary retrieved */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MarkAllReadResponseDto"];
+                    "application/json": components["schemas"]["ExecutiveSummaryResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getFoodCostActual: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Actual food cost retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FoodCostActualResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getProfitLoss: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Profit and loss retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportsProfitLossResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getSalesTrends: {
+        parameters: {
+            query?: {
+                branchId?: string;
+                days?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sales trends retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SalesTrendPointResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ReportsController_getTopProducts: {
+        parameters: {
+            query?: {
+                branchId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Top products retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopProductReportResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SettingsController_getAllSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Settings retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SettingsResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SettingsController_updateSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Settings updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SettingsResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SuppliersController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Suppliers retrieved */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SupplierResponseDto"][];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SuppliersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSupplierDto"];
+            };
+        };
+        responses: {
+            /** @description Supplier created */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SupplierResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SuppliersController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Supplier deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SupplierResponseDto"];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponseDto"];
+                };
+            };
+        };
+    };
+    SuppliersController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSupplierDto"];
+            };
+        };
+        responses: {
+            /** @description Supplier updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SupplierResponseDto"];
                 };
             };
             /** @description Bad request */
