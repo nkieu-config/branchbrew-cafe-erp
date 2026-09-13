@@ -83,7 +83,6 @@ jobs:
     timeout-minutes: 45
     needs: [changes]
     if: >-
-      github.ref == 'refs/heads/main' ||
       needs.changes.outputs.docker == 'true' ||
       needs.changes.outputs.backend == 'true' ||
       needs.changes.outputs.frontend == 'true' ||
