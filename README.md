@@ -10,169 +10,143 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?logo=typescript&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-**A multi-branch coffee-shop ERP, built solo.** One checkout has to move stock, loyalty, the kitchen display, and the accounting ledger at once, so any side effect that fails quietly leaves the books disagreeing with operations. A transactional outbox writes the order and its side effects in the same commit, so they cannot split.
+**A multi-branch cafe operations platform for point of sale, inventory, kitchen operations, finance, and HR.**
 
-**Live demo:** https://branchbrew-cafe-erp.vercel.app
+Built independently to connect everyday cafe workflows across multiple branches.
 
-## Screenshots
-
-<p align="center">
-  <img src="docs/images/demo.gif" alt="One sale end to end — an Iced Latte rung up at the BranchBrew POS with modifiers, paid in cash, appearing on the kitchen display, and settling into a balanced journal entry in the general ledger" width="100%" />
-</p>
-
-<p align="center"><em>One latte, end to end: dashboard → POS checkout → kitchen display → general ledger (1.5× speed).</em></p>
+[Live Demo](https://branchbrew-cafe-erp.vercel.app) · [Demo Guide](docs/demo.md) · [Architecture](docs/architecture.md)
 
 <p align="center">
-  <img src="docs/images/pos-terminal.png" alt="The BranchBrew POS terminal with a menu grid, an open cart holding an Iced Latte with its modifiers, and the payment panel" width="100%" />
+  <img src="docs/images/dashboard.png" alt="BranchBrew dashboard showing branch sales, orders, gross margin, revenue trends, and inventory alerts" width="100%" />
 </p>
 
-<p align="center"><em>POS terminal — modifiers priced into the cart before the order is committed.</em></p>
+<p align="center"><em>A single dashboard for a branch's daily operations.</em></p>
+
+## Overview
+
+BranchBrew brings the main workflows of a growing cafe chain into one system. Teams can take orders, send them to the kitchen, keep ingredient stock up to date, manage suppliers and staff, and review financial performance from the same platform.
+
+The core workflow is:
+
+```text
+POS sale → inventory update → kitchen ticket → loyalty and accounting updates
+```
+
+## Key features
+
+- **Point of Sale** — sell products with modifiers, promotions, member lookup, and payment tracking.
+- **Kitchen Display** — track new and in-progress orders with live updates.
+- **Inventory** — manage batches and expiry dates, deduct stock from the batch that expires first (FEFO), and record stocktakes, transfers, and waste.
+- **Procurement and production** — manage purchase orders, supplier payments, bills of materials, and central kitchen production.
+- **Finance and reporting** — review journal entries, profit and loss (P&L) trends, accounts payable aging reports, and output VAT reports.
+- **Staff and customers** — manage shifts, attendance, leave, payroll, customer loyalty, and branch-level access.
+
+## Try the live demo
+
+1. Open the [live demo](https://branchbrew-cafe-erp.vercel.app).
+2. Choose the one-click **Manager** demo account, or sign in with `manager@branchbrew.dev` / `password123`.
+3. Go to **POS → Terminal**, add an **Iced Latte**, and complete the sale.
+4. Open **Kitchen Display** to see the ticket, then open **Finance → Ledger** to find the posted journal entry.
+
+> [!NOTE]
+> The demo runs on free-tier hosting. The first API request after inactivity can take about 30 seconds, and demo data is reset on a schedule.
+
+More roles, seeded scenarios, and a 15-minute walkthrough are available in the [demo guide](docs/demo.md).
+
+## See it in action
 
 <p align="center">
-  <img src="docs/images/finance-ledger.png" alt="The BranchBrew general ledger listing journal entries with balanced debit and credit columns, including an ORD-prefixed entry posted from a sale" width="100%" />
+  <img src="docs/images/demo.gif" alt="A BranchBrew sale moving from the dashboard and POS to the kitchen display and general ledger" width="100%" />
 </p>
 
-<p align="center"><em>The same sale in the general ledger — posted by a handler, never typed by a human.</em></p>
+<p align="center"><em>One sale from product selection to kitchen preparation and a posted ledger entry.</em></p>
+
+## Feature snapshots
 
 <table>
   <tr>
-    <td width="50%" valign="middle"><img src="docs/images/inventory-batches.png" alt="The BranchBrew batch inventory screen: an expiry calendar colour-coded by days remaining next to a table of ingredients showing stock on hand, reorder minimum, and how many batches each one is split across" width="100%" /></td>
-    <td width="50%" valign="middle"><img src="docs/images/procurement-po.png" alt="The BranchBrew purchase order list, where each order carries a receipt status and a payment status as separate badges" width="100%" /></td>
+    <td width="50%" valign="top">
+      <img src="docs/images/pos-terminal.png" alt="BranchBrew POS terminal with menu items, modifiers, member lookup, promotion code, and checkout summary" width="100%" />
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/images/kds.png" alt="BranchBrew kitchen display with tickets grouped into New and Cooking lanes and a live connection indicator" width="100%" />
+    </td>
   </tr>
   <tr>
-    <td align="center"><em>Ingredients are held as batches — a sale deducts the one that expires first.</em></td>
-    <td align="center"><em>Receipt and payment are tracked apart, so a received unpaid order stays an open payable.</em></td>
+    <td align="center"><em>POS terminal — modifiers and checkout in one workflow.</em></td>
+    <td align="center"><em>Kitchen display — tickets update as work moves through the kitchen.</em></td>
   </tr>
 </table>
 
 <p align="center">
-  <img src="docs/images/kds.png" alt="The BranchBrew kitchen display board with tickets grouped into status lanes and updating live" width="100%" />
+  <img src="docs/images/finance-ledger.png" alt="BranchBrew general ledger showing posted journal entries generated from cafe operations" width="100%" />
 </p>
 
-<p align="center"><em>Kitchen display — pushed over WebSocket, not polled.</em></p>
+<p align="center"><em>Finance ledger — operational activity becomes traceable financial records.</em></p>
 
-<p align="center">
-  <img src="docs/images/mobile-pos.png" alt="The BranchBrew POS on a phone, with the cart collapsed into a bottom sheet" width="240" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/images/mobile-kds.png" alt="The BranchBrew kitchen display on a phone, with an all-day item tally above tickets split into New and Cooking tabs" width="240" />
-</p>
+## My role
 
-<p align="center"><em>The same two screens on a phone — one layout, not a separate mobile build.</em></p>
+I designed and built the application end-to-end:
 
-## Try it in 60 seconds
-
-1. Open the [live demo](https://branchbrew-cafe-erp.vercel.app) and select the one-click **Manager** account — or sign in as `manager@branchbrew.dev` / `password123`.
-2. In **POS → Terminal**, sell an **Iced Latte**, then watch the ticket reach **Kitchen Display** without a reload.
-3. Open **Finance → Ledger** and find the balanced `ORD-*` entry that same sale just posted.
-
-> [!NOTE]
-> Free-tier hosting: the first API request after inactivity can take about 30 seconds, and the demo data resets on a schedule.
-
-More roles, seeded scenarios, and a 15-minute walkthrough are in the [demo guide](docs/demo.md).
-
-## How it works
-
-```mermaid
-flowchart LR
-  POS["POS terminal"] -->|"REST + httpOnly JWT"| API["NestJS API"]
-  subgraph TX["PostgreSQL — one commit"]
-    BIZ[("Order, stock, customer")]
-    OB[("Outbox events")]
-  end
-  API --> BIZ
-  API --> OB
-  OB --> ACC["Accounting — journal entries"]
-  OB --> LOY["Loyalty — points and tier"]
-  OB --> PROC["Procurement — auto-reorder"]
-  OB --> NOTIF["Notifications — alerts"]
-  OB --> RT["Realtime gateway"]
-  RT -->|WebSocket| KDS["Kitchen display"]
-```
-
-- **An order and its side effects commit together.** One transaction validates the order, deducts ingredient batches first-expired-first-out, and enqueues the outbox events every downstream handler runs on. [Transactional outbox](docs/architecture.md#transactional-outbox).
-- **The ledger is derived, not duplicated.** Handlers post balanced journal entries from the same committed facts as operations, deduping on a unique reference so at-least-once delivery cannot double-post. [Accounting](docs/architecture.md#event-driven-double-entry-accounting).
-- **Branch scope is enforced, not remembered.** `resolveBranchId` and `assertBranchAccess` centralize every access decision, so no handler is trusted to remember the check. [Security model](docs/architecture.md#authentication-and-authorization).
-- **The kitchen board patches, it never refetches.** Socket.IO events update the TanStack Query cache in place, so a busy service does not refetch the whole board per ticket. [Frontend](docs/architecture.md#frontend-architecture).
-
-## Project structure
-
-The diagram above is the runtime path. This is the source tree, which is a different question: not what calls what at run time, but what `import`s what at build time.
-
-Twenty-three feature modules, sliced by business domain rather than by technical role. Each repeats one shape, so the layer a file belongs to is legible from its path:
-
-```text
-backend/src/orders/           23 modules, this shape
-  orders.controller.ts          HTTP in, HTTP out — never touches the ORM
-  dto/                          request validation and the documented response shape
-  order-creation.service.ts     the use case — load, decide, write, enqueue
-  domain/                       business rules, no framework imports
-  helpers/                      the parts that genuinely speak Prisma.TransactionClient
-  events/                       what this module announces to everyone else
-
-frontend/src/
-  app/ components/              routes and presentation
-  hooks/domains/ lib/api/       one hook set per backend domain; the only place fetch is called
-  types/                        the API contract, generated from the exported OpenAPI spec
-```
-
-**`domain/` is a promise the linter keeps.** ESLint refuses any import of `@prisma/client` or `@nestjs/*` inside those 15 files, so the rules that gate a refund, explode a recipe, and decide an account’s normal balance stay portable — and the boundary fails in CI rather than in review. The 9 files left in `helpers/` are the ones that take a `Prisma.TransactionClient`; sorting by "does this touch the database" is the whole distinction.
-
-Below that line, services still query Prisma directly rather than through a repository interface — a deliberate trade at one service and one Postgres. [Layers and the Dependency Rule](docs/architecture.md#layers-and-the-dependency-rule) has the full edge-by-edge table, including the one leak the lint rule does not catch.
-
-## Evidence
-
-| Guarantee | Proof |
-| --- | --- |
-| A committed operation and its side effects cannot split | Orders and outbox events share one transaction, and [a dead worker's stale claim](backend/test/outbox-stale-claim.e2e-spec.ts) is reclaimed by the next dispatcher rather than stranding the event. |
-| Stock cannot go negative and redelivery cannot double-post | PostgreSQL `CHECK` constraints and unique journal references make both states impossible to store, not merely unlikely. [Database invariants](docs/data-model.md#invariants-the-database-enforces). |
-| The books stay balanced | [A real-Postgres trial balance](backend/test/trial-balance.e2e-spec.ts) sells through the POS and asserts exact debit and credit equality. |
-| Branch data cannot leak across branches | [A cross-branch request](backend/test/finance.e2e-spec.ts) returns 403, and the access decision lives in one utility rather than in each handler. |
-| API contracts fail in CI, not at runtime | Swagger exports the spec, the frontend generates its types from it, and [CI](.github/workflows/ci.yml) rejects any drift before tests run. |
-| The ledger keeps pace with the till | A 30-second rush at 20 orders/s once left it **9m34s** behind; a drain-until-empty processor cut measured maximum lag to **under one second**, tracking arrival rate up to the 150 orders/s tested. [Method and reproduction](loadtest/README.md). |
-
-The [architecture deep dive](docs/architecture.md) covers the alternatives considered and the trade-off behind each choice.
+- the product workflows and multi-branch domain model
+- the Next.js frontend and responsive interfaces for daily operations
+- the NestJS API, database schema, authentication, and authorization
+- inventory, procurement, production, HR, CRM, and accounting workflows
+- unit, integration, end-to-end, and load-test coverage
+- Docker-based local development and the hosted demo deployment
 
 ## Tech stack
 
-| Layer | Stack |
+| Area | Technologies |
 | --- | --- |
-| **Frontend** | Next.js 16 (App Router), React 19, TanStack Query, Tailwind CSS v4 |
+| **Frontend** | Next.js 16, React 19, TanStack Query, Ant Design, Tailwind CSS |
 | **Backend** | NestJS 11, Prisma 7, Socket.IO, transactional outbox |
-| **Data** | PostgreSQL — `CHECK` constraints, unique journal references, `Decimal` money |
-| **Contracts** | Swagger/OpenAPI export, generated frontend types, a shared types workspace |
-| **Quality & delivery** | Jest, Vitest, Playwright, k6, Docker, GitHub Actions, Trivy |
+| **Database** | PostgreSQL |
+| **Contracts** | Swagger/OpenAPI export, generated frontend API types, shared TypeScript enums |
+| **Quality and delivery** | Jest, Vitest, Playwright, k6, Docker, GitHub Actions, Trivy |
 
-## Run it locally
+## Run locally
 
-Requires Docker, or Node 22 with your own PostgreSQL.
+Requires Docker Desktop and Node.js 22 with npm.
 
 ```bash
 cp infra/.env.compose.example infra/.env.compose
 npm run docker:up
 ```
 
-The web app starts at http://localhost:3001/login, the API at http://localhost:3000, and local Swagger at http://localhost:3000/docs. Migrations and the demo seed run automatically. Running against your own Postgres is covered in the [demo guide](docs/demo.md#quick-start).
+The web app starts at [localhost:3001/login](http://localhost:3001/login), the API at [localhost:3000](http://localhost:3000), and Swagger UI at [localhost:3000/docs](http://localhost:3000/docs). Database migrations and demo data seeding run automatically.
 
 > [!CAUTION]
-> `npm run db:seed` wipes its target database. Use a local or intentional demo database only.
+> Seeding wipes the target database. Use a local or intentional demo database only.
+
+For manual setup, environment variables, deployment, and alternative Docker Compose modes, see the [infrastructure guide](infra/README.md).
+
+## Engineering highlights
+
+- **Reliable side effects** — a sale and its related events are committed together, so inventory, kitchen, loyalty, and accounting can update from the same operation. [Architecture details](docs/architecture.md#transactional-outbox)
+- **Branch-aware access control** — roles and branch scope are enforced consistently across operational data. [Security model](docs/architecture.md#authentication-and-authorization)
+- **Typed frontend–backend contract** — frontend API types are generated from the backend's OpenAPI contract, with CI checks for drift. [Contract flow](docs/architecture.md#typed-contract-across-the-stack)
+- **Real-time operational UI** — Kitchen Display updates through Socket.IO and updates existing data without reloading the entire board. [Frontend architecture](docs/architecture.md#frontend-architecture)
+
+## Performance investigation: 9m34s to under one second
+
+A load test exposed an outbox bottleneck that left the ledger several minutes behind during a sustained rush. After changing the processor to drain until empty, measured lag stayed under one second while handling the tested arrival rate of up to 150 events per second. [Load-test method and results](loadtest/README.md)
 
 ## Documentation
 
-- [Architecture](docs/architecture.md) — boundaries, the transactional outbox, and the alternatives rejected on the way here.
-- [Data model](docs/data-model.md) — the ERD and the invariants the database itself enforces.
-- [Demo guide](docs/demo.md) — a reviewer walkthrough, demo accounts, and the seeded edge cases worth breaking.
-- [Load test](loadtest/README.md) — the k6 harness that found the outbox bottleneck, and how to reproduce it.
-- [Infrastructure](infra/README.md) — Docker, environment files, and deployment.
+- [Architecture](docs/architecture.md) — system boundaries, event flow, consistency decisions, and trade-offs.
+- [Data model](docs/data-model.md) — ERD, database invariants, numeric types, and branch scoping.
+- [Demo guide](docs/demo.md) — demo accounts, walkthroughs, and seeded scenarios.
+- [Design system](docs/design-system.md) — design tokens, forms, responsive behavior, and UI conventions.
+- [Infrastructure](infra/README.md) — Docker, environment files, and deployment reference.
+- [Load test](loadtest/README.md) — checkout and outbox performance testing.
+- [Privacy](docs/privacy.md) — personal-data handling and known privacy gaps.
 
-## Limitations
+## Limitations and next steps
 
-- Portfolio-scale infrastructure: one API instance and poll-based outbox delivery rather than `LISTEN`/`NOTIFY`.
-- Standard costing rather than weighted average, whole-order refunds only, and output VAT only.
-- No fiscal periods and no period close — the largest single gap against a production ERP.
-- Stock quantities are still `Float`; moving them to `Decimal` and reconciling against batches is roadmap work.
+- Single-instance deployment with poll-based outbox delivery.
+- Uses standard costing instead of weighted-average costing, supports whole-order refunds only, and currently covers output VAT only.
+- No fiscal periods or period close yet.
+- Stock quantities still use `Float`; moving them to `Decimal` and adding reconciliation remain roadmap items.
 
-The reasoning and next steps for each are in [deliberate trade-offs](docs/architecture.md#deliberate-trade-offs).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+The reasoning behind these choices is documented in the [architecture trade-offs](docs/architecture.md#deliberate-trade-offs).
